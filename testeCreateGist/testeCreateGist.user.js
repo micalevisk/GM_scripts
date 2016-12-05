@@ -11,7 +11,7 @@
 // ==/UserScript==
 
 //	FIXME   só detecta a partir do segundo movimento
-//      FIXME   usar o setTimeout para esperar o post antes de redirecionar
+//  FIXME   usar o setTimeout para esperar o post antes de redirecionar
 //	FIXME   não criar novo Gist, apenas alterar (acrescentar arquivo?)
 //	FIXME   salvar somente ao submeter senha (adciona-lá ao conteudo do gist), ou fazer download (ao inves de POST) http://danml.com/download.html,			@require http://danml.com/js/download.js
 //
@@ -184,5 +184,4 @@ Array.prototype.contemEmail = function ( emailstr ) {
 
 ///////////////////////////////// [ MAIN ] ////////////////////////////////
 if(document.getElementById('meulog') === null) initgistachioAPI('meulog', true);
-
 window.addEventListener("load", GM_main, false);
