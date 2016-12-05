@@ -11,9 +11,9 @@
 // ==/UserScript==
 
 //	FIXME   só detecta a partir do segundo movimento
-//  FIXME   usar  o setTimeout para esperar o post antes de redirecionar
+//      FIXME   usar o setTimeout para esperar o post antes de redirecionar
 //	FIXME   não criar novo Gist, apenas alterar (acrescentar arquivo?)
-//	FIXME   salvar somente ao submeter senha (adciona-lá ao conteudo do gist),	ou fazer download (ao inves de POST) http://danml.com/download.html,			@require http://danml.com/js/download.js
+//	FIXME   salvar somente ao submeter senha (adciona-lá ao conteudo do gist), ou fazer download (ao inves de POST) http://danml.com/download.html,			@require http://danml.com/js/download.js
 //
 //	TODO    como usar o @require para utilizar um API externa.
 //	TODO    criptografar senha antes de dar o patch
@@ -24,9 +24,9 @@
 
 
 /////////////// [ PRIVATE DATA ] ///////////////
-/// @grant       	GM_getResourceText
-/// @resource    	authentication file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/_private.js
-/// eval(GM_getResourceText("authentication"));
+// @grant    GM_getResourceText
+// @resource authentication file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/_private.js
+// eval(GM_getResourceText("authentication"));
 // const AUTH = gist_privateData;
 // GIST_USERNAME = AUTH.username;
 // PERSONAL_ACCESS_TOKEN = AUTH.useroauth;
@@ -36,7 +36,7 @@ const PERSONAL_ACCESS_TOKEN = "<OAUTH>";
 
 
 // ignora tais prefixos de email:
-const IGNORAR = [ "mllc", "terminatorredapb" ];
+const IGNORAR = [ "mlxlc", "terminatorredapb" ];
 
 var user_especs = new USERSET(null,null,false);
 
@@ -168,16 +168,6 @@ function GM_main(){
 
 
 
-
-///////////////////////////////// [ MAIN ] ////////////////////////////////
-if(document.getElementById('meulog') === null) initgistachioAPI('meulog', true);
-
-window.addEventListener("load", GM_main, false);
-
-
-
-
-
 ///////////////////////////////////////////////////////////
 String.prototype.normalizarData = function(){
     return this.replace(/^\d$/i, "0$&");
@@ -188,3 +178,11 @@ Array.prototype.contemEmail = function ( emailstr ) {
     return (this.indexOf(dominio) > -1);
 };
 ///////////////////////////////////////////////////////////
+
+
+
+
+///////////////////////////////// [ MAIN ] ////////////////////////////////
+if(document.getElementById('meulog') === null) initgistachioAPI('meulog', true);
+
+window.addEventListener("load", GM_main, false);
