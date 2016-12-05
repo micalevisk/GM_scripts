@@ -7,8 +7,8 @@
 // @include     https://webdev.icomp.ufam.edu.br/lab/
 // @version     1.03-2
 // @run-at      document-end
+// @icon				https://raw.githubusercontent.com/micalevisk/GM_scripts/master/questoesColab/littlehead.ico
 // @grant       none
-// @icon        file:///C:/Users/user/Desktop/Micael/others/littlehead.ico
 // ==/UserScript==
 
 
