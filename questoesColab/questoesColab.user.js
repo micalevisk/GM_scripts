@@ -8,7 +8,7 @@
 // @version     1.03-2
 // @run-at      document-end
 // @grant       none
-// @icon        file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/questoesColab/littlehead.ico
+// @icon        file:///C:/Users/user/Desktop/Micael/others/littlehead.ico
 // ==/UserScript==
 
 

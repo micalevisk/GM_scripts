@@ -1,5 +1,13 @@
+*.swp
 *.xml
 *.db
-Block_Youtube_Users/*
-Includes_Persist_BETA/*
-private.txt
+
+/Block_Youtube_Users/*
+/Includes_Persist_BETA/*
+
+*private.*
+testeCreateGist/*private.*
+testePostPastebin/*private.*
+
+testes/*
+testeExterno/*
