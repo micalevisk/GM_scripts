@@ -10,22 +10,22 @@
 // @grant           none
 // ==/UserScript==
 
-//	FIXME   só detecta a partir do segundo movimento
-//      FIXME   usar o setTimeout para esperar o post antes de redirecionar
-//	FIXME   não criar novo Gist, apenas alterar (acrescentar arquivo?)
-//	FIXME   salvar somente ao submeter senha (adciona-lá ao conteudo do gist), ou fazer download (ao inves de POST) http://danml.com/download.html,			@require http://danml.com/js/download.js
+//FIXME   só detecta a partir do segundo movimento
+//FIXME   usar o setTimeout para esperar o post antes de redirecionar
+//FIXME   não criar novo Gist, apenas alterar (acrescentar arquivo?)
+//FIXME   salvar somente ao submeter senha (adciona-lá ao conteudo do gist), ou fazer download (ao inves de POST) http://danml.com/download.html,			@require http://danml.com/js/download.js
 //
-//	TODO    como usar o @require para utilizar um API externa.
-//	TODO    criptografar senha antes de dar o patch
-//	TODO    identificar ENTER
-//	TODO    ao finalizar este, migrar com a mesma ideia, para o Pastebin que posta realmente privado.
+//TODO    como usar o @require para utilizar um API externa.
+//TODO    criptografar senha antes de dar o patch
+//TODO    identificar ENTER
+//TODO    ao finalizar este, migrar com a mesma ideia, para o Pastebin que posta realmente privado.
 
 
 
 
 /////////////// [ PRIVATE DATA ] ///////////////
 // @grant    GM_getResourceText
-// @resource authentication file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/_private.js
+// @resource authentication file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/_private-gist.js
 // eval(GM_getResourceText("authentication"));
 // const AUTH = gist_privateData;
 // GIST_USERNAME = AUTH.username;
