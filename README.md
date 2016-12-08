@@ -23,7 +23,7 @@
 \# testePostPastebin.user.js
 ============================
 
-### [§][CREATEGIST] FIXME
+### [§][POSTPASTEBIN] FIXME
 - [ ]	na função **getAPI_USER_KEY** definir obtenção de argumentos para a função de _callback_
 
 ### [§][POSTPASTEBIN] TODO
