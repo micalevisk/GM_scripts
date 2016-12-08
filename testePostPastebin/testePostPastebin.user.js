@@ -1,18 +1,15 @@
 // ==UserScript==
-// @name		testePostPastebin
-// @description		precisa: nome, senha; não usa API auxiliares (apenas a do Greasemonkey).
-// @namespace		https://greasyfork.org/en/forum/discussion/4897/pastebin-api-bad-api-request
-// @author		Micael Levi
-// @locale		pt-br
-// @include		*://pastebin.com/index*
-// @version		1.04-2
-// @run-at		document-end
-// @grant		GM_xmlhttpRequest
-// @require		file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/_private-pastebin.js
+// @name	testePostPastebin
+// @description	precisa: nome, senha; não usa API auxiliares (apenas a do Greasemonkey).
+// @namespace	https://greasyfork.org/en/forum/discussion/4897/pastebin-api-bad-api-request
+// @author	Micael Levi
+// @locale	pt-br
+// @include	*://pastebin.com/index*
+// @version	1.04-2
+// @run-at	document-end
+// @grant	GM_xmlhttpRequest
+// @require	file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/_private-pastebin.js
 // ==/UserScript==
-
-//TODO	como criar um post privado
-//TODO	para "editar" um paste, dado o id de um já existente, obter content raw, criar outro com o conteúdo acrescido de informações e deletar o primeiro.
 
 
 
@@ -32,11 +29,11 @@ API_DEV_KEY= AUTH.userdevkey;
 /////////////// [ GLOBAL CONFIGS ] ///////////////
 /// [ Required Parameters ]
 API_PASTE_CODE = encodeURI("Some really good code A\nBC");
-API_OPTION 	= {
-	post: "paste", // to create a new paste															[ api_dev_key, api_user_name, api_user_password ]
+API_OPTION = {
+	post: "paste", // to create a new paste								[ api_dev_key, api_user_name, api_user_password ]
 	get_raw: "show_paste", // to get raw paste output of users pastes including 'private' pastes	[ api_dev_key, api_user_key, api_paste_key ]
-	list: "list", // to list pastes created by a user												[ api_dev_key, api_user_key ]
-	delete_raw: "delete" // to delete a paste created by a user										[ api_dev_key, api_user_key, api_paste_key ]
+	list: "list", // to list pastes created by a user						[ api_dev_key, api_user_key ]
+	delete_raw: "delete" // to delete a paste created by a user					[ api_dev_key, api_user_key, api_paste_key ]
 };
 URL = {
 	post: "http://pastebin.com/api/api_login.php",
@@ -45,14 +42,14 @@ URL = {
 };
 
 /// [Optional Parameters]
-API_PASTE_NAME			= encodeURI("some cool title.here");
-API_PASTE_FORMAT		= "text";
-API_PASTE_PRIVATE		= {
+API_PASTE_NAME = encodeURI("some cool title.here");
+API_PASTE_FORMAT = "text";
+API_PASTE_PRIVATE = {
 	public: "0",
 	unlisted: "1",
 	private: "2"
 };
-API_PASTE_EXPIRE_DATE	= {
+API_PASTE_EXPIRE_DATE = {
 	never: "N", // (only allowed in combination with api_user_key, as you have to be logged into your account to access the paste)
 	ten_min: "10M",
 	one_hour: "1H",
@@ -167,6 +164,7 @@ function deleteRawPaste(API_USER_KEY, api_paste_key){
 if(DELET)
 	getAPI_USER_KEY(deleteRawPaste, "ctyg8HfH");
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 /*
