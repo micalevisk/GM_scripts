@@ -1,5 +1,5 @@
-> [jQuery Selectors](https://www.w3.org/TR/CSS2/selector.html#matching-attrs) |
-> [jQuery Cheat Sheet](https://oscarotero.com/jquery/) |
+> [jQuery Selectors](https://www.w3.org/TR/CSS2/selector.html#matching-attrs) ×
+> [jQuery Cheat Sheet](https://oscarotero.com/jquery/) ×
 > [Markdown tips & tricks](https://daringfireball.net/projects/markdown/syntax)
 
 
