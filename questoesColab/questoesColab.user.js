@@ -11,6 +11,8 @@
 // @grant       none
 // ==/UserScript==
 
+"use strict";
+(function(){
 
 /////////////////////////////////////////// [ MAIN SOURCE ] ///////////////////////////////////////////
 const gitsrc = 'https://raw.githubusercontent.com/micalevisk/TAP_feelings/issue1/gist/questoesColab.js';
@@ -22,3 +24,5 @@ var script = document.createElement('SCRIPT');
 script.type= 'text/javascript';
 script.src = gitsrc.replace(REGEX_RAW_REPO_URL, 'https://' + 'rawgit.com' + '/$1/$2');
 document.head.appendChild(script);
+
+});
