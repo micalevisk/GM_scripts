@@ -22,39 +22,39 @@ Algoritmo para criptografar um texto:
 3) multiplicar cada elemento de **texto_ascii** por um elemento de **chave_ascii** na posição associada _(usar mod)_
 
 > DRAFT e.g.:
-~~~js
-Array.prototype.toString = function() { return this.join(' '); }
-
-var texto_str = "O teste master"
-var chave_str  = "AbCd"
-
-// se 'texto' for String então tratar como criptografia, senão, tratar como descriptografia
-function codificar(texto, strKey){
-	if(Array.prototype.slice.call(arguments).length != 2) return [];
-
-	const arrayMap = Array.prototype.map;
-	const toASCII  = x => x.charCodeAt(0);
-	const arrKey = arrayMap.call(strKey, toASCII);
-	var j = arrKey.length;
-
-	// criptografando:
-	if(typeof texto === "string"){
-		var arrText = arrayMap.call(texto, toASCII);
-		return arrText.map( (ascii, i) => ascii * arrKey[i % j] );
-	}
-	// descriptografando:
-	return texto.map( (ascii, i) => ascii / arrKey[i % j] );
-}
-
-var arrText = Array.prototype.map.call(texto_str, x => x.charCodeAt(0));
-console.log('original        ', arrText);
-
-var criptografado = codificar(texto_str, chave_str);
-console.info('criptografado   ',criptografado);
-
-var descriptografado = codificar(criptografado, chave_str);
-console.info('descriptografado',descriptografado);
-~~~
+> ~~~js
+> Array.prototype.toString = function() { return this.join(' '); }
+>
+> var texto_str = "O teste master"
+> var chave_str  = "AbCd"
+>
+> // se 'texto' for String então tratar como criptografia, senão, tratar como descriptografia
+> function codificar(texto, strKey){
+> 	if(Array.prototype.slice.call(arguments).length != 2) return [];
+>
+> 	const arrayMap = Array.prototype.map;
+> 	const toASCII  = x => x.charCodeAt(0);
+> 	const arrKey = arrayMap.call(strKey, toASCII);
+> 	var j = arrKey.length;
+>
+> 	// criptografando:
+> 	if(typeof texto === "string"){
+> 		var arrText = arrayMap.call(texto, toASCII);
+> 		return arrText.map( (ascii, i) => ascii * arrKey[i % j] );
+> 	}
+> 	// descriptografando:
+> 	return texto.map( (ascii, i) => ascii / arrKey[i % j] );
+> }
+>
+> var arrText = Array.prototype.map.call(texto_str, x => x.charCodeAt(0));
+> console.log('original        ', arrText);
+>
+> var criptografado = codificar(texto_str, chave_str);
+> console.info('criptografado   ',criptografado);
+>
+> var descriptografado = codificar(criptografado, chave_str);
+> console.info('descriptografado',descriptografado);
+> ~~~
 
 
 12/08/2016
