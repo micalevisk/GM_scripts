@@ -4,11 +4,11 @@
 
 Para capturar o campo do email/login ou senha:
 ==============================================
-~~~js
+```js
 $('input[type="email"], input[name="email"]')
 $('input[type="password"], input[name="password"]')
 $('input').filter('[type="email"], [name="email"]') // com jQuery
-~~~
+```
 > (c) http://stackoverflow.com/questions/9005361/jquery-attribute-selector-for-multiple-values
 <!--  
 - [x] https://accounts.google.com/
@@ -24,7 +24,7 @@ Algoritmo para criptografar um texto:
 3. multiplicar cada elemento de **texto_ascii** por um elemento de **chave_ascii** na posição associada _(usar mod)_
 
 > DRAFT e.g.:
-> ~~~js
+> ```js
 > Array.prototype.toString = function() { return this.join(' '); }
 >
 > var texto_str = "O teste master"
@@ -56,7 +56,7 @@ Algoritmo para criptografar um texto:
 >
 > var descriptografado = codificar(criptografado, chave_str);
 > console.info('descriptografado',descriptografado);
-> ~~~
+> ```
 
 
 ----------
@@ -65,7 +65,7 @@ Algoritmo para criptografar um texto:
 
 Para editar um arquivo, usar:
 =============================
-~~~js
+```js
 function editarGist(gistid){
 	return function(filename){
 		// procurar pelo {gistid}
@@ -76,12 +76,11 @@ function editarGist(gistid){
 
 var editarArquivo = editarGist('id do gist');
 let conteudoEditado = editarArquivo('nome do arquivo nesse gist');
-~~~
-
+```
 
 Para usar dados externos:
 =========================
-> ~~~js
+> ```js
 > // @grant    GM_getResourceText
 > // @resource authentication /path/to/privatedfile.js
 > // ...
@@ -89,4 +88,21 @@ Para usar dados externos:
 > const AUTH = gist_privateData;
 > GIST_USERNAME = AUTH.username;
 > PERSONAL_ACCESS_TOKEN = AUTH.useroauth;
-> ~~~
+> ```
+
+
+
+----------
+12/09/2016
+----------
+
+Para descriptografar após recuperar:
+====================================
+> ```js
+> function(senhaprivada, callback_tratarsenha){
+>  var response = '{ "nome":"mynome", "senha":"mysenha" }';
+>  response = JSON.parse(response);
+>  response.senha = callback_tratarsenha(response.senha);  
+>  return response;
+> }
+```
