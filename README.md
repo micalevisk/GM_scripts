@@ -20,6 +20,7 @@
 - [ ]	generalizar para identificar os campos de _login_ e _senha_ de qualquer página web (JS puro)
 - [ ]	migrar com a mesma ideia, para o [PasteBin](http://pastebin.com/api) que posta realmente privado
 - [x]	alterar modo de obtenção da data/horario corrente utilizar [Formatador de Data](http://jsfromhell.com/geral/date-format)
+- [ ]	criar função que recebe uma String no formato JSON e converte para objeto com campo 'senha' descriptografado.
 
 
 \# testePostPastebin.user.js
