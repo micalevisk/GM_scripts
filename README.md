@@ -38,5 +38,5 @@
 
 
 
-[CREATEGIST]: /testeCreateGist/issues.log.md "issues testeCreateGist"
-[POSTPASTEBIN]: /testePostPastebin/issues.log.md "issues testePostPastebin"
+[CREATEGIST]: https://raw.githubusercontent.com/micalevisk/GM_scripts/master/testeCreateGist/issues.log.md "issues testeCreateGist"
+[POSTPASTEBIN]: https://raw.githubusercontent.com/micalevisk/GM_scripts/master/testePostPastebin/issues.log.md "issues testePostPastebin"
