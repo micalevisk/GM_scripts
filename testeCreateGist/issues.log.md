@@ -18,9 +18,9 @@ $('input').filter('[type="email"], [name="email"]') // com jQuery
 
 Algoritmo para criptografar um texto:
 =====================================
-1) dado o texto alvo **texto_str** converter caracteres para ASCII => **texto_ascii**
-2) dado uma chave de tamanho N bytes (caracteres) **chave_str** converter caracteres para ASCII => **chave_ascii**
-3) multiplicar cada elemento de **texto_ascii** por um elemento de **chave_ascii** na posição associada _(usar mod)_
+1. dado o texto alvo **texto_str** converter caracteres para ASCII => **texto_ascii**
+2. dado uma chave de tamanho N bytes (caracteres) **chave_str** converter caracteres para ASCII => **chave_ascii**
+3. multiplicar cada elemento de **texto_ascii** por um elemento de **chave_ascii** na posição associada _(usar mod)_
 
 > DRAFT e.g.:
 > ~~~js
