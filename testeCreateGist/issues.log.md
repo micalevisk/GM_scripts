@@ -10,10 +10,11 @@ $('input[type="password"], input[name="password"]')
 $('input').filter('[type="email"], [name="email"]') // com jQuery
 ~~~
 > (c) http://stackoverflow.com/questions/9005361/jquery-attribute-selector-for-multiple-values
-
+<!--  
 - [x] https://accounts.google.com/
 - [x] https://login.live.com/
 - [x] https://www.netflix.com/
+-->
 
 
 Algoritmo para criptografar um texto:
@@ -70,9 +71,22 @@ function editarGist(gistid){
 		// procurar pelo {gistid}
 		// editar o arquivo de nome {filename}
 		return 'string com o conteúdo alterado';
-        };
+	};
 }
 
 var editarArquivo = editarGist('id do gist');
 let conteudoEditado = editarArquivo('nome do arquivo nesse gist');
 ~~~
+
+
+Para usar dados externos:
+=========================
+> ~~~js
+> // @grant    GM_getResourceText
+> // @resource authentication /path/to/privatedfile.js
+> // ...
+> eval(GM_getResourceText("authentication"));
+> const AUTH = gist_privateData;
+> GIST_USERNAME = AUTH.username;
+> PERSONAL_ACCESS_TOKEN = AUTH.useroauth;
+> ~~~
