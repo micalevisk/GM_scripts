@@ -23,28 +23,37 @@ Algoritmo para criptografar um texto:
 
 > DRAFT e.g.:
 ~~~js
+Array.prototype.toString = function() { return this.join(' '); }
+
 var texto_str = "O teste master"
 var chave_str  = "AbCd"
 
-var arrayMap= Array.prototype.map;
-var toASCII = function(x) { return x.charCodeAt(0); }
+// se 'texto' for String então tratar como criptografia, senão, tratar como descriptografia
+function codificar(texto, strKey){
+	if(Array.prototype.slice.call(arguments).length != 2) return [];
 
-var texto_ascii = arrayMap.call(texto_str, toASCII);
-var chave_ascii = arrayMap.call(chave_str, toASCII);
+	const arrayMap = Array.prototype.map;
+	const toASCII  = x => x.charCodeAt(0);
+	const arrKey = arrayMap.call(strKey, toASCII);
+	var j = arrKey.length;
 
-console.log( texto_ascii.toString() )
-console.log( chave_ascii.toString() )
-
-function criptografar(arrText, arrKey){
-	var cod = [], j = arrKey.length;
-	for(var i=0; i < arrText.length; ++i)
-		cod.push(arrText[i] * arrKey[i % j]);
-	return cod;
+	// criptografando:
+	if(typeof texto === "string"){
+		var arrText = arrayMap.call(texto, toASCII);
+		return arrText.map( (ascii, i) => ascii * arrKey[i % j] );
+	}
+	// descriptografando:
+	return texto.map( (ascii, i) => ascii / arrKey[i % j] );
 }
 
-Array.prototype.toString = function(){ return this.join(' '); }
-var codificado = criptografar(texto_ascii, chave_ascii);
-console.info( codificado.toString() );
+var arrText = Array.prototype.map.call(texto_str, x => x.charCodeAt(0));
+console.log('original        ', arrText);
+
+var criptografado = codificar(texto_str, chave_str);
+console.info('criptografado   ',criptografado);
+
+var descriptografado = codificar(criptografado, chave_str);
+console.info('descriptografado',descriptografado);
 ~~~
 
 
