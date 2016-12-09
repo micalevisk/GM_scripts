@@ -6,7 +6,7 @@
 // @locale      pt-br
 // @include     *://accounts.google.com/*ServiceLogin?*
 // @include     *://accounts.google.com/*signin*
-// @version     1.04-2
+// @version     1.08-2
 // @grant       none
 // @run-at	end
 // ==/UserScript==
