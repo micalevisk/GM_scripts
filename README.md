@@ -4,7 +4,7 @@
 > [JSON minifier/beautify](http://codebeautify.org/jsonviewer)
 
 
-ㄇ testeCreateGist.user.js
+\# testeCreateGist.user.js
 ==========================
 
 ### [⠠⠠⠋⠊⠭⠍⠑][CREATEGIST] FIXME
@@ -13,7 +13,7 @@
 - [ ]	não criar novo Gist, apenas alterar _(PATCH incrementando)_
 
 ### [⠠⠠⠞⠕⠙⠕][CREATEGIST] TODO
-- [ ]	alterar nome do projeto/script para **managerGistJS** quando for retirar todas as funções específicas.
+- [ ]	alterar nome do projeto/script para **managerGistJS** quando for retirar todas as funções específicas
 - [x]	implementar algoritmo que criptografa/descriptografa um texto dado uma chave (privada)
 - [x]	criptografar senha antes de salvar
 - [ ]	identificar o click no ENTER
@@ -21,17 +21,17 @@
 - [ ]	generalizar para identificar os campos de _login_ e _senha_ de qualquer página web (JS puro)
 - [ ]	migrar com a mesma ideia, para o [PasteBin](http://pastebin.com/api) que posta realmente privado
 - [x]	alterar modo de obtenção da data/horario corrente utilizar [Formatador de Data](http://jsfromhell.com/geral/date-format)
-- [ ]	criar função que recebe uma String no formato JSON e converte para objeto com campo 'senha' descriptografado.
+- [ ]	criar função que recebe uma String no formato JSON e converte para objeto com campo 'senha' descriptografado
 
 
-ㄩ testePostPastebin.user.js
+\# testePostPastebin.user.js
 ============================
 
 ### [⠠⠠⠋⠊⠭⠍⠑][POSTPASTEBIN] FIXME
 - [ ]	na função **getAPI_USER_KEY** definir obtenção de argumentos para a função de _callback_
 
 ### [⠠⠠⠞⠕⠙⠕][POSTPASTEBIN] TODO
-- [ ]	alterar nome do projeto/script para **managerPasteBinJS** quando for retirar todas as funções específicas.
+- [ ]	alterar nome do projeto/script para **managerPasteBinJS** quando for retirar todas as funções específicas
 - [x]	exportar configurações privadas de outro código _.js_
 - [x]	como criar um post privado
 - [ ]	função para "editar" um paste = mostrar conteúdo atual e alterá-lo

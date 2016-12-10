@@ -20,6 +20,7 @@ var banco =
 	'1251,0912,Moisés',
 	'1527,0212,André',
 	'1896,0212,André',
+	'1001,0101,Micael',
 ];
 /* |||||||||||||||||||||||||||| */
 /* ||||||| APPEND ABOVE ||||||| */
@@ -39,6 +40,20 @@ function inserirQuestao(id, data, profAutor){
 
 
 ////////////////////////////////////////////////////////////
+
+const links = {
+	questao: function(id){
+		return 'https://www.urionlinejudge.com.br/judge/pt/problems/view/'+id;
+	},
+	raw_questao: function(id){
+		return `https://www.urionlinejudge.com.br/repository/UOJ_${id}.html`;
+	},
+	enviar_questao: function(id){
+		return 'https://www.urionlinejudge.com.br/judge/pt/runs/add/'+id;
+	}
+}
+
+
 function getElementoAlvo(){
 	var tabela = $('table');
 	var alvo = null;
@@ -55,9 +70,7 @@ function getElementoAlvo(){
 
 
 function questaoHTML(id_questao, dia_inicio, prof){
-	// const link = `../../problems/view/${id_questao}`;
-	const link = `https://www.urionlinejudge.com.br/judge/pt/problems/view/${id_questao}`;
-	var titulo= `Autor: ${prof}`;
+	var rotulo= `Autor: ${prof}`;
 
 	var dia_final= ( (inicio) => {
 		dia_inicio = dia_inicio.formatLikeDate(); // (ddmmyy) -> dd/mm/yyyy
@@ -68,9 +81,9 @@ function questaoHTML(id_questao, dia_inicio, prof){
 	})(dia_inicio);
 
 	return ""+
-		`<td class='id'><a target='_blank' href=${link}>${id_questao}</a></td>`        +
-		`<td class='large' id=${id_questao}><a href=${link}>${titulo}</a></td>` +
-		`<td class='medium'>${dia_inicio}</td>`                     +
+		`<td class='id'><a target='_blank' href=${links.questao(id_questao)}>${id_questao}</a></td>` +
+		`<td class='large' id=${id_questao}><a target='_blank' alt="${rotulo}" href=${links.enviar_questao(id_questao)}>${rotulo}</a></td>` +
+		`<td class='medium'>${dia_inicio}</td>` +
 		`<td class='medium'>${dia_final}</td>`
 	;
 }
@@ -82,12 +95,43 @@ function questaoHTML(id_questao, dia_inicio, prof){
 	}
 
 	banco = banco.reverse().map(x => x.split(','));
-	banco.forEach(x => inserirQuestao(x[0], x[1], x[2]));
+	// banco.forEach(x => inserirQuestao(x[0], x[1], x[2]));
+	banco.map(x => inserirQuestao(x[0], x[1], x[2]) );
 
-	banco.forEach(function(x){
+	banco.map(x => {
+		let id=x[0];
+		const link = links.questao(id);
+		const rawlink = links.raw_questao(id);
+		id='#'+x[0];
+
+		// Definindo os títulos nas linhas adicionadas:
+		$.get(rawlink, null, function(text){
+			let tituloQuestao = $(text).find('h1').html();
+			tituloQuestao = `&nbsp;&#187;&nbsp;<a target='_blank' href=${rawlink} style='color:#af5302;'>${tituloQuestao}</a>&nbsp;`;
+			$(id).append(tituloQuestao);
+		});
+
+		// Definindo o status de cada questão:
+		$.get(link, null, function(text){
+			let cor = "#f63333"; // vermelho
+			let qStatus = $(text).find('#place').find('h3');
+			if(qStatus.length === 0) qStatus = "PENDENTE";
+			else{  qStatus="RESOLVIDO"; cor="#08812680"; } // verde
+			qStatus = `&nbsp;<b style='color:${cor};'>${qStatus}</b>`
+			$(id).append(qStatus);
+		});
+
+		// extra:
+		$(id).find('a[alt]').hover(
+			function(){ $(this).html('enviar'); },
+			function(){ $(this).html($(this).attr('alt')); })
+
+	});
+
+	/*
+	banco.map(x => {
 		let id=x[0];
 		// alterando conteúdo da coluna "HOMEWORK"
-		// $.get('../../problems/view/'+id, null, function(text){
 		$.get('https://www.urionlinejudge.com.br/judge/pt/problems/view/'+id, null, function(text){
 			let cor = "#fc3d46";
 			let qStatus = $(text).find('#place').find('h3');
@@ -97,5 +141,6 @@ function questaoHTML(id_questao, dia_inicio, prof){
 			$('#'+id).append(qStatus);
 		});
 	});
+	*/
 })();
 ////////////////////////////////////////////////////////////
