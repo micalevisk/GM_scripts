@@ -101,7 +101,8 @@ function questaoHTML(id_questao, dia_inicio, prof){
 // ====================================================================== [ MAIN ] ====================================================================== //
 (function(){
 	String.prototype.formatLikeDate = function(lang){
-		return this.replace(/(.{2})(.{2})/, (lang==='en') ? "$2/$1/2016" : "$1/$2/2016");
+		let anoAtual=new Date().getFullYear().toString();
+		return this.replace(/(.{2})(.{2})/, (lang==='en') ? `$2/$1/${anoAtual}` : `$1/$2/${anoAtual}`);
 	}
 
 	banco = banco.reverse().map(x => x.replace(/ /g,'').split(','));
