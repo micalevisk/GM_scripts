@@ -95,10 +95,9 @@ function questaoHTML(id_questao, dia_inicio, prof){
 	}
 
 	banco = banco.reverse().map(x => x.replace(/ /g,'').split(','));
-	// banco.forEach(x => inserirQuestao(x[0], x[1], x[2]));
 	banco.map(arrDadosQuestao => inserirQuestao(...arrDadosQuestao) );
-	//TODO otimizar?
-	banco.map(x => {
+
+	for(x of banco){
 		let id=x[0];
 		const link = links.questao(id);
 		const rawlink = links.raw_questao(id);
@@ -126,6 +125,6 @@ function questaoHTML(id_questao, dia_inicio, prof){
 			function(){ $(this).html('enviar'); },
 			function(){ $(this).html($(this).attr('alt')); })
 
-	});
+	}
 })();
 ////////////////////////////////////////////////////////////
