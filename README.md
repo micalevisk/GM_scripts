@@ -1,6 +1,6 @@
-> [jQuery Selectors](https://www.w3.org/TR/CSS2/selector.html#matching-attrs) ㄨ 
-> [jQuery Cheat Sheet](https://oscarotero.com/jquery/) ㄨ 
-> [Markdown tips & tricks](https://daringfireball.net/projects/markdown/syntax) ㄨ 
+> [jQuery Selectors](https://www.w3.org/TR/CSS2/selector.html#matching-attrs) ㄨ
+> [jQuery Cheat Sheet](https://oscarotero.com/jquery/) ㄨ
+> [Markdown tips & tricks](https://daringfireball.net/projects/markdown/syntax) ㄨ
 > [JSON minifier/beautify](http://codebeautify.org/jsonviewer)
 
 
@@ -13,6 +13,7 @@
 - [ ]	não criar novo Gist, apenas alterar _(PATCH incrementando)_
 
 ### [⠠⠠⠞⠕⠙⠕][CREATEGIST] TODO
+- [ ]	alterar nome do projeto/script para **managerGistJS** quando for retirar todas as funções específicas.
 - [x]	implementar algoritmo que criptografa/descriptografa um texto dado uma chave (privada)
 - [x]	criptografar senha antes de salvar
 - [ ]	identificar o click no ENTER
@@ -30,6 +31,7 @@
 - [ ]	na função **getAPI_USER_KEY** definir obtenção de argumentos para a função de _callback_
 
 ### [⠠⠠⠞⠕⠙⠕][POSTPASTEBIN] TODO
+- [ ]	alterar nome do projeto/script para **managerPasteBinJS** quando for retirar todas as funções específicas.
 - [x]	exportar configurações privadas de outro código _.js_
 - [x]	como criar um post privado
 - [ ]	função para "editar" um paste = mostrar conteúdo atual e alterá-lo
