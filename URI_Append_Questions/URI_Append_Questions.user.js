@@ -20,8 +20,7 @@ var banco =
 	'1256,0912,Moisés',
 	'1251,0912,Moisés',
 	'1527,0212,André',
-	'1896,0212,André',
-	'1001,0101,Micael',
+	'1896,0212,André'
 ];
 /* |||||||||||||||||||||||||||| */
 /* ||||||| APPEND ABOVE ||||||| */
@@ -95,10 +94,10 @@ function questaoHTML(id_questao, dia_inicio, prof){
 		return this.replace(/(.{2})(.{2})/, (lang==='en') ? "$2/$1/2016" : "$1/$2/2016");
 	}
 
-	banco = banco.reverse().map(x => x.split(','));
+	banco = banco.reverse().map(x => x.replace(/ /g,'').split(','));
 	// banco.forEach(x => inserirQuestao(x[0], x[1], x[2]));
-	banco.map(x => inserirQuestao(x[0], x[1], x[2]) );
-
+	banco.map(arrDadosQuestao => inserirQuestao(...arrDadosQuestao) );
+	//TODO otimizar?
 	banco.map(x => {
 		let id=x[0];
 		const link = links.questao(id);
@@ -128,20 +127,5 @@ function questaoHTML(id_questao, dia_inicio, prof){
 			function(){ $(this).html($(this).attr('alt')); })
 
 	});
-
-	/*
-	banco.map(x => {
-		let id=x[0];
-		// alterando conteúdo da coluna "HOMEWORK"
-		$.get('https://www.urionlinejudge.com.br/judge/pt/problems/view/'+id, null, function(text){
-			let cor = "#fc3d46";
-			let qStatus = $(text).find('#place').find('h3');
-			if(qStatus.length === 0) qStatus = "PENDENTE";
-			else{  qStatus="RESOLVIDO"; cor="#208c3b"; }
-			qStatus = `&nbsp;<b style='color:${cor};'>${qStatus}</b>`
-			$('#'+id).append(qStatus);
-		});
-	});
-	*/
 })();
 ////////////////////////////////////////////////////////////
