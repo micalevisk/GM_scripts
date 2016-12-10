@@ -6,6 +6,7 @@
 // @locale      pt-br
 // @include     *://www.urionlinejudge.com.br/judge/pt/disciplines/view/2040*
 // @version     1.10-2
+// @icon	https://raw.githubusercontent.com/micalevisk/GM_scripts/master/URI_Append_Questions/URI.ico
 // @grant       none
 // ==/UserScript==
 
