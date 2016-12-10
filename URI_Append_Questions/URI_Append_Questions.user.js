@@ -11,7 +11,7 @@
 
 
 
-	/// [id],[ddmm],[autor] ///
+/// [id],[ddmm],[autor] ///
 var banco =
 [
 	'1077,0912,Moisés',

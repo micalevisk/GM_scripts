@@ -1,6 +1,6 @@
-> [jQuery Selectors](https://www.w3.org/TR/CSS2/selector.html#matching-attrs) ㄨ
-> [jQuery Cheat Sheet](https://oscarotero.com/jquery/) ㄨ
-> [Markdown tips & tricks](https://daringfireball.net/projects/markdown/syntax) ㄨ
+> [jQuery Selectors](https://www.w3.org/TR/CSS2/selector.html#matching-attrs) ×
+> [jQuery Cheat Sheet](https://oscarotero.com/jquery/) ×
+> [Markdown tips & tricks](https://daringfireball.net/projects/markdown/syntax) × 
 > [JSON minifier/beautify](http://codebeautify.org/jsonviewer)
 
 
