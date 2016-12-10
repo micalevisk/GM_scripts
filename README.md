@@ -13,7 +13,8 @@
 - [ ]	não criar novo Gist, apenas alterar _(PATCH incrementando)_
 
 ### [⩲][CREATEGIST] TODO
-- [ ]	alterar nome do projeto/script para **managerGistJS** quando for retirar todas as funções específicas
+- [ ]	generalizar para gerenciamento de _gists_ no Gist
+- [ ]	alterar nome do projeto/script para **managerGistJS** quando for tornar público
 - [x]	implementar algoritmo que criptografa/descriptografa um texto dado uma chave (privada)
 - [x]	criptografar senha antes de salvar
 - [ ]	identificar o click no ENTER
@@ -31,7 +32,8 @@
 - [ ]	na função **getAPI_USER_KEY** definir obtenção de argumentos para a função de _callback_
 
 ### [⩲][POSTPASTEBIN] TODO
-- [ ]	alterar nome do projeto/script para **managerPasteBinJS** quando for retirar todas as funções específicas
+- [ ]	generalizar para gerenciamento de _pastes_ no PasteBin
+- [ ]	alterar nome do projeto/script para **managerPasteBinJS** quando for tornar público
 - [x]	exportar configurações privadas de outro código _.js_
 - [x]	como criar um post privado
 - [ ]	função para "editar" um paste = mostrar conteúdo atual e alterá-lo
