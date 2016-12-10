@@ -29,8 +29,8 @@ var banco =
 
 /**
  * @param {String} id - O identificador exclusivo da questão do URI
- * @param {String} data - A data de início, no formato 'ddmm'
- * @param {String} profAutor - O nome do professor que indicou a questão
+ * @param {String} data - A data de início da atividade, no formato 'ddmm'
+ * @param {String} profAutor - O nome do professor que lançou a atividade
  */
 function inserirQuestao(id, data, profAutor){
 	var elemento = questaoHTML(id, data, profAutor);
@@ -54,6 +54,10 @@ const links = {
 }
 
 
+/**
+ * Itera entre a tabela que contém as questões (na página) até encontrar uma TR "vazia"
+ * @return {Object} - A primeira table row sem questão
+ */
 function getElementoAlvo(){
 	var tabela = $('table');
 	var alvo = null;
@@ -68,7 +72,12 @@ function getElementoAlvo(){
 	return alvo;
 }
 
-
+/**
+ * Define o código HTML que será inserido.
+ * @param {String} id_questao - O identificador exclusivo da questão do URI
+ * @param {String} dia_inicio - A data de início da atividade, no formato 'ddmm'
+ * @param {String} prof - O nome do professor que lançou a atividade
+ */
 function questaoHTML(id_questao, dia_inicio, prof){
 	var rotulo= `Autor: ${prof}`;
 
@@ -89,6 +98,7 @@ function questaoHTML(id_questao, dia_inicio, prof){
 }
 
 
+// ====================================================================== [ MAIN ] ====================================================================== //
 (function(){
 	String.prototype.formatLikeDate = function(lang){
 		return this.replace(/(.{2})(.{2})/, (lang==='en') ? "$2/$1/2016" : "$1/$2/2016");
@@ -127,4 +137,3 @@ function questaoHTML(id_questao, dia_inicio, prof){
 
 	}
 })();
-////////////////////////////////////////////////////////////
