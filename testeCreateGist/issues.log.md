@@ -105,4 +105,63 @@ Para descriptografar após recuperar:
 >  response.senha = callback_tratarsenha(response.senha);  
 >  return response;
 > }
+> ```
+
+
+
+----------
+12/11/2016
+----------
+
+Para descriptografar uma String (novo GM):
+==========================================
+```js
+String.prototype.isEmpty = function() {
+	return !(this.trim());
+}
+/**
+ * @param {?} texto - o texto a ser (de)codificado.
+ * @param {String} strKey - a chave de (de)codificação.
+ * @param {String} delim - o seprador (considerando 'texto' como {String})
+ */
+function conversor(texto, strKey, delim="/"){
+	/**
+	 * @param {?} texto - se for {String} então codifica, senão ({Array}), descodifica.
+	 * @return {Array} Os caracteres após a (de)codificação para código ASCII.
+	 */
+	this.codificar = function(){
+		if(strKey.isEmpty()) return [];
+
+		const arrayMap = Array.prototype.map;
+		const toASCII  = x => x.charCodeAt(0);
+		const arrKey = arrayMap.call(strKey, toASCII);
+		var j = arrKey.length;
+
+		// criptografando:
+		if(typeof texto === "string"){
+			var arrText = arrayMap.call(texto, toASCII);
+			return arrText.map( (ascii, i) => ascii * arrKey[i % j] );
+		}
+		// descriptografando:
+		return texto.map( (ascii, i) => ascii / arrKey[i % j] );
+	};
+
+	/**
+	 * @param {?} texto - {Array} ou {String} (com separador) que armazenam os códigos ASCII que serão convertidos.
+	 * @return {String} A conversão dos valores do argumento (ASCII) para caracteres.
+	 */
+	this.traduzir = function() { // lida com 'texto' como {String} dos ASCIIs criptografados separados por 'delim'
+		if(strKey.isEmpty()) return "";
+		var asciiValues = texto;
+		if(typeof texto === "string" ) texto = texto.split(delim);
+		asciiValues = this.codificar();
+		return String.fromCharCode(...asciiValues);
+	}
+}
+
+/* TESTES:
+new conversor("1234", "A").codificar()			 // Array [ 3185, 3250, 3315, 3380 ]
+new conversor("4225/4290/4355/4420", "A").traduzir() 	 // "ABCD"
+new conversor([ 4225, 4290, 4355, 4420 ], "A").traduzir() // "ABCD"
+*/
 ```
