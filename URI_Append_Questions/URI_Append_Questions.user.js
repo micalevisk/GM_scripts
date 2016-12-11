@@ -56,7 +56,7 @@ const links = {
 
 /**
  * Itera entre a tabela que contém as questões (na página) até encontrar uma TR "vazia"
- * @return {Object} - A primeira table row sem questão
+ * @return {Object} A primeira table row sem questão
  */
 function getElementoAlvo(){
 	var tabela = $('table');
@@ -77,6 +77,7 @@ function getElementoAlvo(){
  * @param {String} id_questao - O identificador exclusivo da questão do URI
  * @param {String} dia_inicio - A data de início da atividade, no formato 'ddmm'
  * @param {String} prof - O nome do professor que lançou a atividade
+ * @return {String} O objeto HTML que será inserido.
  */
 function questaoHTML(id_questao, dia_inicio, prof){
 	var rotulo= `Autor: ${prof}`;
