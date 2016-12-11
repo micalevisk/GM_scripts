@@ -21,18 +21,18 @@ const SENHA_PRIVADA = PERSONAL_ACCESS_TOKEN;
 
 // ignora tais prefixos/login:
 const IGNORAR = [ "mlxlc", "terminatorredapb" ];
-var user_especs = new USERSET("","",false);
+var user_especs = new USERSET("","");
 
 
 
 /////////////////////////////////////////////////////////////////////////////////
 // (c) https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/Contributor_s_Guide/Private_Properties
-function USERSET(email, _senha, flag){
+function USERSET(email, _senha, flag=false){
 	"use strict";
 	this.email = email;
 	this.flag  = flag;
 	this.getSenha = () => _senha;
-	this.setSenha = (senha) => _senha = codificar(senha,SENHA_PRIVADA).join('/');
+	this.setSenha = (senha) => _senha = criptografar(senha, SENHA_PRIVADA, '/');
 	this.toString = () => `{"email":"${this.email}", "senha":"${this.getSenha()}"}`;
 }
 /////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,8 @@ function initgistachioAPI(id, confirmar){
 
 	var script = document.createElement('script');
 	script.type = 'text/javascript';
-	script.src = 'https://rawgit.com/micalevisk/GM_scripts/master/gistachio.js'; // (c) https://rawgit.com/stuartpb/gistachio/master/gistachio.js
+	// script.src = 'https://rawgit.com/micalevisk/GM_scripts/master/gistachio.js'; // (c) https://rawgit.com/stuartpb/gistachio/master/gistachio.js
+	script.src = 'https://rawgit.com/stuartpb/gistachio/master/gistachio.js';
 	if(id) script.id  = id;
 	document.head.appendChild(script);
 
@@ -67,10 +68,13 @@ function initgistachioAPI(id, confirmar){
  */
 function postit(conteudo, filename, filedescription, oauthgist){
 	if(!conteudo || !filename) return;
+
 	conteudo = `${(new Date()).formatar("[%m%/%d%/%Y%] - %H%:%i%:%s%")}\n<${window.location.hostname}>\n${conteudo.toString()}`;
 
 	console.info("PREVIEW:");
 	console.log(conteudo);
+
+	return; // PARA TSTES
 
 	var newfile = { fileName: { content: conteudo } };
 	var optsnew = {
@@ -176,23 +180,24 @@ Date.prototype.formatar = function(m){
 /**
  * @param {?} texto - se for {String} então será criptografado, se for {Array}, será descriptografado.
  * @param {String} strKey - o chave privada.
- * @return {Array} Cada elemento é o código ASCII do caractere de 'texto' (de)codificado.
+ * @param {String} separador - (opcional) - define a sequência de caracteres que separam os valores visualmente.
+ * @return {?} Se o 'separador' estiver definido, retorna {String}, senão, retorna {Array}.
  */
-function codificar(texto, strKey){
-	if(Array.prototype.slice.call(arguments).length != 2) return [];
+function criptografar(texto, strKey, separador){
+	if(Array.prototype.slice.call(arguments).length < 2) return [];
 
 	const arrayMap = Array.prototype.map;
 	const toASCII  = x => x.charCodeAt(0);
 	const arrKey = arrayMap.call(strKey, toASCII);
-	var j = arrKey.length;
+	const j = arrKey.length;
+	var final = null;
 
 	// criptografando:
-	if(typeof texto === "string"){
-		var arrText = arrayMap.call(texto, toASCII);
-		return arrText.map( (ascii, i) => ascii * arrKey[i % j] );
-	}
-	// descriptografando:
-	return texto.map( (ascii, i) => ascii / arrKey[i % j] );
+	var arrText = arrayMap.call(texto, toASCII);
+	final = arrText.map( (ascii, i) => ascii * arrKey[i % j] );
+
+	if(typeof separador === "string") return final.join(separador); // retorna como String (possui ASCII separados por 'separador')
+	return final; // retorna como Array (os elementos são códigos ASCII)
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
