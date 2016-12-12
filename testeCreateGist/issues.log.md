@@ -165,3 +165,18 @@ new conversor("4225/4290/4355/4420", "A").traduzir() 	 // "ABCD"
 new conversor([ 4225, 4290, 4355, 4420 ], "A").traduzir() // "ABCD"
 */
 ```
+
+
+Exemplo da nova formatação (para cada arquivo no gist):
+=======================================================
+```json
+{
+   "_data":"12/11/2016 - 22:04:27",
+   "browser":"Mozilla",
+   "site":"accounts.google.com",
+   "personal":{
+      "email":"meuEmail@aqui.com",
+      "senha":"3185/3250/3315"
+   }
+}
+```

