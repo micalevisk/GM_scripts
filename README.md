@@ -9,15 +9,16 @@
 
 ### [⩯][CREATEGIST] FIXME
 - [ ]	privar dados de acesso = usar o **require** para exportar outro arquivo (privado com configs)
-- [ ]	usar o setTimeout para esperar a resposta do POST antes de redirecionar para a o login
-- [ ]	não criar novo Gist, apenas alterar _(PATCH incrementando)_
+- [x]	usar o setTimeout para esperar a resposta do POST antes de redirecionar para a o login <!-- http://stackoverflow.com/questions/5100726/js-jquery-form-submit-delay -->
+- [ ]	não criar novo Gist, apenas alterar _(PATCH incrementando o arquivo)_
 
 ### [⩲][CREATEGIST] TODO
+- [ ]	alterar formato de publicação para um _JSON_ com um array principal contendo os objetos que serão os dados sobre o login
 - [ ]	generalizar para gerenciamento de _gists_ no Gist
 - [ ]	alterar nome do projeto/script para **managerGistJS** quando for tornar público
 - [x]	implementar algoritmo que criptografa/descriptografa um texto dado uma chave (privada)
 - [x]	criptografar senha antes de salvar
-- [ ]	identificar o click no ENTER
+- [x]	identificar o click no ENTER
 - [ ]	generalizar para identificar qualquer campo _login_ e não _email_ apenas
 - [ ]	generalizar para identificar os campos de _login_ e _senha_ de qualquer página web (JS puro)
 - [ ]	migrar com a mesma ideia, para o [PasteBin](http://pastebin.com/api) que posta realmente privado
