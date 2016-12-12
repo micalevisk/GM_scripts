@@ -113,8 +113,8 @@ Para descriptografar após recuperar:
 12/11/2016
 ----------
 
-Para descriptografar uma String (novo GM):
-==========================================
+Para (des)criptografar uma String (novo GM):
+============================================
 ```js
 String.prototype.isEmpty = function() {
 	return !(this.trim());
@@ -122,7 +122,7 @@ String.prototype.isEmpty = function() {
 /**
  * @param {?} texto - o texto a ser (de)codificado.
  * @param {String} strKey - a chave de (de)codificação.
- * @param {String} delim - o seprador (considerando 'texto' como {String})
+ * @param {String} delim - o separador (considerando 'texto' como {String})
  */
 function conversor(texto, strKey, delim="/"){
 	/**
