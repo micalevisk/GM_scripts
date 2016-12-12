@@ -13,8 +13,9 @@
 - [ ]	não criar novo Gist, apenas alterar _(PATCH incrementando o arquivo)_
 
 ### [⩲][CREATEGIST] TODO
-- [ ]	alterar formato de publicação para um _JSON_ com um array principal contendo os objetos que serão os dados sobre o login
-- [ ]	generalizar para gerenciamento de _gists_ no Gist
+- [ ]	implementar uma função usando o [gistachio.getFiles](https://github.com/stuartpb/gistachio#gistachiogetfilesgistid-opts-callback)
+- [x]	alterar formato de publicação para um _JSON_ com um array principal contendo os objetos que serão os dados sobre o login
+- [ ]	generalizar para gerenciamento de _gists_ no Gist (criar, editar e recuperar _gists_)
 - [ ]	alterar nome do projeto/script para **managerGistJS** quando for tornar público
 - [x]	implementar algoritmo que criptografa/descriptografa um texto dado uma chave (privada)
 - [x]	criptografar senha antes de salvar
