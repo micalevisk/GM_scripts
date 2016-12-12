@@ -198,36 +198,11 @@ Array.prototype.contemEmail = function (emailstr){
 	return (this.indexOf(dominio) > -1);
 };
 
-// (c) http://jsfromhell.com/geral/date-format [rev. #1]
-Date.prototype.formatar = function(m){
-	var d = this, a, fix = function(n, c){return (n = n + "").length < c ? new Array(++c - n.length).join("0") + n : n};
-	var r = {};
-        var f =
-        {
-                j: function(){return d.getDate()}, w: function(){return d.getDay()},
-		y: function(){return (d.getFullYear() + "").slice(2)}, Y: function(){return d.getFullYear()},
-		n: function(){return d.getMonth() + 1}, m: function(){return fix(f.n(), 2)},
-		g: function(){return d.getHours() % 12 || 12}, G: function(){return d.getHours()},
-		H: function(){return fix(d.getHours(), 2)}, h: function(){return fix(f.g(), 2)},
-		d: function(){return fix(f.j(), 2)}, N: function(){return f.w() + 1},
-		i: function(){return fix(d.getMinutes(), 2)}, s: function(){return fix(d.getSeconds(), 2)},
-		ms: function(){return fix(d.getMilliseconds(), 3)}, a: function(){return d.getHours() > 11 ? "pm" : "am"},
-		A: function(){return f.a().toUpperCase()}, O: function(){return d.getTimezoneOffset() / 60},
-		z: function(){return (d - new Date(d.getFullYear() + "/1/1")) / 864e5 >> 0},
-		L: function(){var y = f.Y(); return (!(y & 3) && (y % 1e2 || !(y % 4e2))) ? 1 : 0},
-		t: function(){var n; return (n = d.getMonth() + 1) == 2 ? 28 + f.L() : n & 1 && n < 8 || !(n & 1) && n > 7 ? 31 : 30},
-		W: function(){
-        		var a = f.z(), b = 364 + f.L() - a, nd = (new Date(d.getFullYear() + "/1/1").getDay() || 7) - 1;
-        		return	(b <= 2 && ((d.getDay() || 7) - 1) <= 2 - b) ? 1 :
-        			(a <= 2 && nd >= 4 && a >= (6 - nd)) ? new Date(d.getFullYear() - 1 + "/12/31").format("%W%") :
-        			(1 + (nd <= 3 ? ((a + nd) / 7) : (a - (7 - nd)) / 7) >> 0);
-		}
-	}
-
-	return m.replace(/%(.*?)%/g, function(t, s){
-		return r[s] ? r[s](d, function(s){return f[s] && f[s]();}) : f[s] ? f[s]() : "%" + (s && s + "%");
-	});
+// (c) http://jsfromhell.com/geral/date-format [rev. #1] !!MINIFIED!!
+Date.prototype.formatar = function(n){
+	var t=this,e=function(n,t){return(n+="").length<t?new Array(++t-n.length).join("0")+n:n},r={},u={j:function(){return t.getDate()},w:function(){return t.getDay()},y:function(){return(t.getFullYear()+"").slice(2)},Y:function(){return t.getFullYear()},n:function(){return t.getMonth()+1},m:function(){return e(u.n(),2)},g:function(){return t.getHours()%12||12},G:function(){return t.getHours()},H:function(){return e(t.getHours(),2)},h:function(){return e(u.g(),2)},d:function(){return e(u.j(),2)},N:function(){return u.w()+1},i:function(){return e(t.getMinutes(),2)},s:function(){return e(t.getSeconds(),2)},ms:function(){return e(t.getMilliseconds(),3)},a:function(){return t.getHours()>11?"pm":"am"},A:function(){return u.a().toUpperCase()},O:function(){return t.getTimezoneOffset()/60},z:function(){return(t-new Date(t.getFullYear()+"/1/1"))/864e5>>0},L:function(){var n=u.Y();return 3&n||!(n%100)&&n%400?0:1},t:function(){var n;return 2==(n=t.getMonth()+1)?28+u.L():1&n&&8>n||!(1&n)&&n>7?31:30},W:function(){var n=u.z(),e=364+u.L()-n,r=(new Date(t.getFullYear()+"/1/1").getDay()||7)-1;return 2>=e&&(t.getDay()||7)-1<=2-e?1:2>=n&&r>=4&&n>=6-r?new Date(t.getFullYear()-1+"/12/31").format("%W%"):1+(3>=r?(n+r)/7:(n-(7-r))/7)>>0}};return n.replace(/%(.*?)%/g,function(n,e){return r[e]?r[e](t,function(n){return u[n]&&u[n]()}):u[e]?u[e]():"%"+(e&&e+"%")})
 }
+
 
 
 /**
