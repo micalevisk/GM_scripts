@@ -1,6 +1,6 @@
-----------
-12/07/2016
-----------
+------------
+§ 12/07/2016
+------------
 
 Para capturar o campo do email/login ou senha:
 ==============================================
@@ -59,9 +59,9 @@ Algoritmo para criptografar um texto:
 > ```
 
 
-----------
-12/08/2016
-----------
+------------
+§ 12/08/2016
+------------
 
 Para editar um arquivo, usar:
 =============================
@@ -92,9 +92,9 @@ Para usar dados externos:
 
 
 
-----------
-12/09/2016
-----------
+------------
+§ 12/09/2016
+------------
 
 Para descriptografar após recuperar:
 ====================================
@@ -109,9 +109,9 @@ Para descriptografar após recuperar:
 
 
 
-----------
-12/11/2016
-----------
+------------
+§ 12/11/2016
+------------
 
 Para (des)criptografar uma String (novo GM):
 ============================================
@@ -179,4 +179,64 @@ Exemplo da nova formatação (para cada arquivo no gist):
       "senha":"3185/3250/3315"
    }
 }
+```
+
+
+
+------------
+§ 12/12/2016
+------------
+
+Recuperar os campos importantes de qualquer ```<form>```:
+=========================================================
+```js
+// com jQuery
+const form = $('form')
+const login = $('input[type="email"], input[name="email"]')
+const passFiled =  $('input[type="password"], input[name="password"]')
+
+let email = login.value;
+let senha = passFiled.value;
+```
+> ou
+
+```js
+// iterar em
+const formChildren = document.getElementsByTagName('form')[0].children
+```
+> [climbing-up-and-down-the-dom-tree-with-vanilla-javascript/](https://gomakethings.com/climbing-up-and-down-the-dom-tree-with-vanilla-javascript/)
+> Teste no Github e Twitter
+
+
+
+------------
+§ 12/13/2016
+------------
+
+Como salvar/recuperar valores do BD do GreaseMonkey:
+====================================================
+```js
+// ==UserScript==
+// ...
+// @require http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js
+// @grant   GM_getValue
+// @grant   GM_setValue
+// ==/UserScript==
+(function(){
+	var minhaVar;
+
+	// get valor
+	function getValues(){
+		minhaVar = GM_getValue('varMaquinaLocal');
+	}(getValues());
+
+	// set valor ao clicar com o botão direito na caixa de texto do stackoverflow
+	$("#wmd-input").on ("contextmenu", function (e) {
+		e.preventDefault ();
+		GM_setValue('varMaquinaLocal', "valor da variável local no BD");
+		getValues(); // para definir as variáveis recuperadas.
+	});
+
+	console.log('VALOR:', minhaVar);
+})();
 ```

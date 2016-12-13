@@ -25,6 +25,7 @@
 - [ ]	migrar com a mesma ideia, para o [PasteBin](http://pastebin.com/api) que posta realmente privado
 - [x]	alterar modo de obtenção da data/horario corrente utilizar [Formatador de Data](http://jsfromhell.com/geral/date-format)
 - [ ]	criar função que recebe uma String no formato JSON e converte para objeto com campo 'senha' descriptografado
+- [ ]	utilizar o [GM_getValue](https://wiki.greasespot.net/GM_getValue) e [GM_setValue](https://wiki.greasespot.net/GM_setValue) para recuperar/salvar dados localmente ```(sem usar GIST)```
 
 
 ⨳ testePostPastebin.user.js
