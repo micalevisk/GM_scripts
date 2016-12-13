@@ -76,14 +76,14 @@ function initgistachioAPI(id, confirmar){
 function postit(conteudo, nomeArquivo, descricao, oauthgist){
 	if(!(conteudo instanceof USERSET) || (typeof nomeArquivo !== 'string') || (nomeArquivo.isEmpty())) return;
 
-	conteudo =
+	var conteudostr =
 	{
           "_data": `${(new Date()).formatar("%m%/%d%/%Y% - %H%:%i%:%s%")}`,
           "browser": navigator.appCodeName,
           "site": `${window.location.hostname}`,
           "personal": conteudo.toJSON()
         }
-	let conteudostr = JSON.stringify(conteudo, null, 4);
+	conteudostr = JSON.stringify(conteudostr, null, 4);
 
 	// console.info("PREVIEW:");	// <<<<<<<<<<<<<<<
 	// console.log(conteudostr);	// <<<<<<<<<<<<<<<
