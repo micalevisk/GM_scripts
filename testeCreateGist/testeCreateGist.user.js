@@ -78,11 +78,11 @@ function postit(conteudo, nomeArquivo, descricao, oauthgist){
 
 	var conteudostr =
 	{
-          "_data": `${(new Date()).formatar("%m%/%d%/%Y% - %H%:%i%:%s%")}`,
-          "browser": navigator.appCodeName,
-          "site": `${window.location.hostname}`,
-          "personal": conteudo.toJSON()
-        }
+	  "_data": `${(new Date()).formatar("%m%/%d%/%Y% - %H%:%i%:%s%")}`,
+	  "browser": navigator.appCodeName,
+	  "site": `${window.location.hostname}`,
+	  "personal": conteudo.toJSON()
+	}
 	conteudostr = JSON.stringify(conteudostr, null, 4);
 
 	// console.info("PREVIEW:");	// <<<<<<<<<<<<<<<
@@ -106,7 +106,7 @@ function postit(conteudo, nomeArquivo, descricao, oauthgist){
 			user_especs.flag = true;
 			linkresult = `https://gist.github.com/${GIST_USERNAME}/${gistid}`;
 
-			console.log(linkresult);	// <<<<<<<<<<<<<<<
+			console.log(linkresult); // <<<<<<<<<<<<<<<
 			console.info(gistid);	// <<<<<<<<<<<<<<<
 		}
 	};
