@@ -11,6 +11,7 @@
 - [ ]	privar dados de acesso = usar o **require** para exportar outro arquivo (privado com configs)
 - [x]	usar o setTimeout para esperar a resposta do POST antes de redirecionar para a o login <!-- http://stackoverflow.com/questions/5100726/js-jquery-form-submit-delay -->
 - [ ]	não criar novo Gist, apenas alterar _(PATCH incrementando o arquivo)_
+- [ ]	__IN THE END__ refatorar código
 
 ### [⩲][CREATEGIST] TODO
 - [ ]	implementar uma função usando o [gistachio.getFiles](https://github.com/stuartpb/gistachio#gistachiogetfilesgistid-opts-callback)
