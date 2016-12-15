@@ -66,7 +66,7 @@ ELIMINAR COM ids REPETIDAS
 	/// CRIANDO A CAIXA
 	$('body').append('<div id="yt-blacklist-options" style="display: none">' +
 			'<div style="width: 100%; text-align: center"><span id="saveblacklist" title="salvar no BD">registrar</span></div>' +
-			'<div class="textarea wl"><div id="lbltextarea" title="uma questão por linha">Atividades Requisitadas</div><textarea rows="4" id="whitelist-words">' + questoesSalvas + '</textarea></div>' +
+			'<div class="textarea wl"><div id="lbltextarea" title="uma questão por linha">Atividades Requisitadas</div><textarea rows="4" id="whitelist-words" style="margin-top: 14px;">' + questoesSalvas + '</textarea></div>' +
 			'</div>');
 
 
