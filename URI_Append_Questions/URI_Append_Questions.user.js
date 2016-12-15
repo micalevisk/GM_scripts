@@ -6,7 +6,7 @@
 // @author	Micael Levi
 // @locale	pt-br
 // @include	*://www.urionlinejudge.com.br/judge/pt/disciplines/view/2040*
-// @icon	https://raw.githubusercontent.com/micalevisk/GM_scripts/master/URI_Append_Questions/URI.ico?token=AM1nQxmXCHVlnW1_PZIgmmSR-fz48IXbks5YW0ZxwA%3D%3D
+// @icon	https://raw.githubusercontent.com/micalevisk/GM_scripts/master/URI_Append_Questions/URI.ico?token=AM1nQ377JYru74Y339rgUM4ZLfoZE8L0ks5YW0ahwA%3D%3D
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @grant       GM_getValue
 // @grant       GM_setValue
