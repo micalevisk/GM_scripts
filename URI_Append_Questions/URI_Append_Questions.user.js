@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name	URI Append Questions
-// @description	Adiciona questões na página
+// @description	Adiciona questões na página Academic/Desafios de Programação II (2016/02)
 // @version	1.14-2
 // @namespace	https://github.com/micalevisk/GM_scripts
 // @author	Micael Levi
