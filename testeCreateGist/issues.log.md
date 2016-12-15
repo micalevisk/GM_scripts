@@ -231,7 +231,7 @@ Como salvar/recuperar valores do BD do GreaseMonkey:
 	}(getValues());
 
 	// set valor ao clicar com o botão direito na caixa de texto do stackoverflow
-	$("#wmd-input").on ("contextmenu", function (e) {
+	$("#wmd-input").on("contextmenu", function (e) {
 		e.preventDefault ();
 		GM_setValue('varMaquinaLocal', "valor da variável local no BD");
 		getValues(); // para definir as variáveis recuperadas.
