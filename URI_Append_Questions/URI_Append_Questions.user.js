@@ -57,7 +57,7 @@ ELIMINAR COM ids REPETIDAS
 		'#yt-blacklist-options { width: 180px; height:350px; display: flex; flex-flow: row wrap; align-items: baseline; position: fixed; right: 150px; top:' + margintop + 'px; padding: 0 20px 15px; background-color: #fff; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); border: 1px solid #e8e8e8; border-top: 0; z-index: 9999999999; } ' +
 		'#yt-blacklist-options div { box-sizing: border-box; padding: 3px; } ' +
 		'#yt-blacklist-options .textarea div { width: 100%;  text-align: center; font-weight: 500; } ' +
-		'#yt-blacklist-options .textarea textarea { resize: vertical; width: 100%; padding: 4px; border: 2px solid rgba(0,0,0,.13); box-sizing: border-box; } ' +
+		'#yt-blacklist-options .textarea textarea { resize: none; width: 100%; padding: 4px; border: 2px solid rgba(0,0,0,.13); box-sizing: border-box; } ' +
 		'#yt-blacklist-options .textarea.wl { width: 100%; } ' +
 		'#saveblacklist { cursor: pointer; color: #cc181e; text-shadow: 1px 1px 1px rgba(0, 0, 0, .20); border-radius: 2px; } ' +
 		'#lbltextarea { color: #5FBBAA; text-shadow: 1px 1px 1px rgba(0, 0, 0, .10); border-radius: 2px; } ' +
