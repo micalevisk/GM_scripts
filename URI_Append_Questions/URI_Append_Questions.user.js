@@ -180,11 +180,11 @@ ELIMINAR COM ids REPETIDAS
 
 			// Definindo o status de cada questão:
 			$.get(link, null).done(function(text){
-				let cor = "rgba(143, 16, 16, 0.75)"; // vermelho
+				let cor = "rgba(143, 16, 16, 0.49)"; // vermelho
 				let qStatus = $(text).find('#place').find('h3');
 				if(qStatus.length === 0) qStatus = "PENDENTE";
-				else{  qStatus="RESOLVIDO"; cor="rgba(16, 143, 18, 0.48)"; } // verde
-				qStatus = `&nbsp;<b style='color:${cor};'>${qStatus}</b>`
+				else{  qStatus="RESOLVIDO"; cor = "rgba(16, 143, 18, 0.48)"; } // verde
+				qStatus = `&nbsp;<b style="color:${cor};">${qStatus}</b>`
 				$(id).append(qStatus);
 			});
 
