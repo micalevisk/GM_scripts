@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name	URI Append Questions
 // @description	Adiciona questões na página Academic/Desafios de Programação II (2016/02)
-// @version	1.14-2
+// @version	1.15-2
 // @namespace	https://github.com/micalevisk/GM_scripts
 // @author	Micael Levi
 // @locale	pt-br
@@ -24,7 +24,7 @@ IDENTIFICAR QUESTÕES QUE JÁ VENCERAM E FAZER style="cursor:not-allowed"
 RENOMEAR VALORES PARA ADEQUAR AO OBJETIVO
 Implementar escolha do separador (1 caractere)
 TORNAR FUNCIONAL
-→  VERIFICAR QUESTÕES NÃO ENCONTRADAS (arrumar banco)
+→ VERIFICAR QUESTÕES NÃO ENCONTRADAS (arrumar banco)
 FILTRAR ids DO ARRAY banco
 ELIMINAR COM ids REPETIDAS
 ***************************************************************************/
@@ -35,7 +35,7 @@ ELIMINAR COM ids REPETIDAS
 (function($) {
 
 	String.prototype.isEmpty = function(){ return !(this.trim());	}
-	String.prototype.isValid = function(){ return /^\d{4}.\d{4}..+$/m.test(this); } // verifica se a requisição em um formato válido.
+	String.prototype.isValid = function(){ return this.isEmpty() || /^\d{4}.\d{4}..+$/m.test(this); } // verifica se a requisição em um formato válido.
 	String.prototype.formatLikeDate = function(lang){
 		let anoAtual=new Date().getFullYear().toString();
 		return this.replace(/(.{2})(.{2})/, (lang==='en') ? `$2/$1/${anoAtual}` : `$1/$2/${anoAtual}`);
@@ -81,13 +81,15 @@ ELIMINAR COM ids REPETIDAS
 	$('#saveblacklist').on('click', function() {
 		// save new values
 		let listagem = $('#whitelist-words').val();
-		listagem.isEmpty() ? GM_deleteValue('savedquestions') : GM_setValue('savedquestions', listagem);
-		// add notification
-		$(this).before($saved);
-		setTimeout(function() { $saved.fadeOut(); }, 300);
-		setTimeout(function() { location.reload(); }, 500); // F5
-		// research
-		getSavedValues();
+		if(listagem.isValid()){
+			listagem.isEmpty() ? GM_deleteValue('savedquestions') : GM_setValue('savedquestions', listagem);
+			// add notification
+			$(this).before($saved);
+			setTimeout(function() { $saved.fadeOut(); }, 300);
+			setTimeout(function() { location.reload(); }, 500); // F5
+			// research
+			getSavedValues();
+		}
 	});
 
 
