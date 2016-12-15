@@ -10,10 +10,6 @@
 // @grant       none
 // ==/UserScript==
 
-//TODO
-//====
-//Copiar a ideia do https://github.com/Schegge/Userscripts/blob/master/Block%20Youtube%20Users.js
-//Criar caixa de texto para adicionar/remover as questões do banco.
 
 
 /// [id],[ddmm],[autor] ///
