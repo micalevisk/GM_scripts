@@ -3,8 +3,9 @@
 // @description	Adiciona questões na página Academic/Desafios de Programação II (2016/02)
 // @version	1.15-2
 // @namespace	https://github.com/micalevisk/GM_scripts
+// @supportURL	https://github.com/micalevisk/
 // @author	Micael Levi
-// @locale	pt-br
+// @language	pt-BR
 // @include	*://www.urionlinejudge.com.br/judge/pt/disciplines/view/2040*
 // @icon	https://raw.githubusercontent.com/micalevisk/GM_scripts/master/URI_Append_Questions/URI.ico?token=AM1nQ377JYru74Y339rgUM4ZLfoZE8L0ks5YW0ahwA%3D%3D
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
@@ -18,6 +19,13 @@
 // http://www.bootply.com/
 
 /**************************************************************************
+WORKS ON
+========
+→ Firefox 50.1.0
+→ Edge 38.14393.0.0
+→ Chrome 55.0.2883.87
+
+
 TODO
 ====
 → tornar funcional
@@ -33,12 +41,12 @@ TODO
  	/// GLOBAL
 	var questoesSalvas, banco=[], sep = ',';
 
-	String.prototype.isEmpty = function(){ return !(this.trim()); }
-	String.prototype.isValid = function(){ return (/^\d{4}.\d{4}..+$/m).test(this); }// FIXME o multiline não funciona.
+	String.prototype.isEmpty = function(){ return !(this.trim()); };
+	String.prototype.isValid = function(){ return (/^\d{4}.\d{4}..+$/m).test(this); };// FIXME o multiline não funciona.
 	String.prototype.formatLikeDate = function(lang){
 		let anoAtual=new Date().getFullYear().toString();
 		return this.replace(/(.{2})(.{2})/, (lang==='en') ? `$2/$1/${anoAtual}` : `$1/$2/${anoAtual}`);
-	}
+	};
 
 
 	/// RECUPERANDO DADOS DO BD SQL
@@ -54,7 +62,7 @@ TODO
 		'#lista-bloco-questoes { width: 180px; height:360px; display: flex; flex-flow: row wrap; align-items: baseline; position: fixed; right: 150px; top:' + margintop + 'px; padding: 0 5px 20px 5px; background-color: rgba(255, 255, 255, 0.85); box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); border: 1px solid #e8e8e8; border-top: 0; z-index: 9999999999; } ' +
 		'#lista-bloco-questoes div { box-sizing: border-box; padding: 3px; } ' +
 		'#lista-bloco-questoes .textarea div { width: 100%;  text-align: center; font-weight: 500; } ' +
-		'#lista-bloco-questoes .textarea textarea { resize: auto; width: 100%; padding: 4px; border: 2px solid rgba(0,0,0,.13); box-sizing: border-box; margin-top:5px; margin-bottom:0px; } ' +
+		'#lista-bloco-questoes .textarea textarea { resize: none; width: 100%; padding: 4px; border: 2px solid rgba(0,0,0,.13); box-sizing: border-box; margin-top:5px; margin-bottom:0px; } ' +
 		'#lista-bloco-questoes .textarea.wl { width: 100%; } ' +
 		'#btnsave { font-size:10px; height: 25px; width: 180px; float: none; padding: 5px; margin: 5px; } ' +
 		'#lbltextarea { color: #61B9A9; text-shadow: 1px 1px 1px rgba(6, 94, 78, 0.40); } ' +
@@ -89,7 +97,7 @@ TODO
 
 
 
-	//||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||[ LESS jQuery ]||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||//
+	//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| [ LESS jQuery ] ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||//
 	const links = {
 		questao: function(id){
 			return 'https://www.urionlinejudge.com.br/judge/pt/problems/view/'+id;
@@ -100,7 +108,7 @@ TODO
 		enviar_questao: function(id){
 			return 'https://www.urionlinejudge.com.br/judge/pt/runs/add/'+id;
 		}
-	}
+	};
 
 	/**
 	 * @param {String} id - O identificador exclusivo da questão do URI
@@ -189,15 +197,16 @@ TODO
 					cor = "rgba(16, 143, 18, 0.5)";
 					qStatus="RESOLVIDO";
 				}
-				let lblStatus = `&nbsp;<b style="color:${cor};">${qStatus}</b>`
+				let lblStatus = `&nbsp;<b style="color:${cor};">${qStatus}</b>`;
 				$(id).append(lblStatus);
 				$(id).addClass(qStatus);
 			});
 
 			/// extra:
 			$(id).find('a[alt]').hover(
-				function(){ $(this).html('enviar'); },		// handlerIN
-				function(){ $(this).html($(this).attr('alt')); })// handlerOUT
+				function(){ $(this).html('enviar'); },
+				function(){ $(this).html($(this).attr('alt')); }
+			);
 		}
 	})();
 
