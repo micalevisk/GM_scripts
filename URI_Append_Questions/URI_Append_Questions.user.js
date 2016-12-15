@@ -20,13 +20,9 @@
 /**************************************************************************
 TODO
 ====
-IDENTIFICAR QUESTÕES QUE JÁ VENCERAM E FAZER style="cursor:not-allowed"
-RENOMEAR VALORES PARA ADEQUAR AO OBJETIVO
-Implementar escolha do separador (1 caractere)
-TORNAR FUNCIONAL
-→ VERIFICAR QUESTÕES NÃO ENCONTRADAS (arrumar banco)
-FILTRAR ids DO ARRAY banco
-ELIMINAR COM ids REPETIDAS
+→ tornar funcional
+→ não verifica (corretamente) a formatação do texto
+→ implementar escolha do separador (1 caractere)
 ***************************************************************************/
 
 
@@ -34,67 +30,66 @@ ELIMINAR COM ids REPETIDAS
 
 (function($) {
 
-	String.prototype.isEmpty = function(){ return !(this.trim());	}
-	String.prototype.isValid = function(){ return this.isEmpty() || /^\d{4}.\d{4}..+$/m.test(this); } // verifica se a requisição em um formato válido.
+ 	/// GLOBAL
+	var questoesSalvas, banco=[], sep = ',';
+
+	String.prototype.isEmpty = function(){ return !(this.trim()); }
+	String.prototype.isValid = function(){ return (/^\d{4}.\d{4}..+$/m).test(this); }// FIXME o multiline não funciona.
 	String.prototype.formatLikeDate = function(lang){
 		let anoAtual=new Date().getFullYear().toString();
 		return this.replace(/(.{2})(.{2})/, (lang==='en') ? `$2/$1/${anoAtual}` : `$1/$2/${anoAtual}`);
 	}
 
 
-	var questoesSalvas, banco=[], sep = ',';
-
-	/// CARREGANDO DADOS DO BD
+	/// RECUPERANDO DADOS DO BD SQL
 	function getSavedValues(){
-		questoesSalvas = GM_getValue('savedquestions', `id${sep}ddmm${sep}autor`);
-		banco = questoesSalvas.isValid() ? questoesSalvas.split('\n') : [];
+		questoesSalvas = GM_getValue('savedquestions', '');
+		banco = questoesSalvas.isValid() ? questoesSalvas.split('\n') : []; // TODO melhorar verificação.
 	}(getSavedValues());
 
-	/// ADICIONAR CSS	FIXME = resizable ao ajustar o textarea;
+	/// ADICIONAR CSS
 	var margintop = $('.ribbon').height() + parseInt( $('.ribbon').css('padding-top') ) + parseInt( $('.ribbon').css('padding-bottom') );
 	$('head').append('<style> ' +
-		'.uri-skill { color: #a11909; } ' +
-		'#yt-blacklist-options { width: 180px; height:350px; display: flex; flex-flow: row wrap; align-items: baseline; position: fixed; right: 150px; top:' + margintop + 'px; padding: 0 20px 15px; background-color: #fff; box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); border: 1px solid #e8e8e8; border-top: 0; z-index: 9999999999; } ' +
-		'#yt-blacklist-options div { box-sizing: border-box; padding: 3px; } ' +
-		'#yt-blacklist-options .textarea div { width: 100%;  text-align: center; font-weight: 500; } ' +
-		'#yt-blacklist-options .textarea textarea { resize: none; width: 100%; padding: 4px; border: 2px solid rgba(0,0,0,.13); box-sizing: border-box; } ' +
-		'#yt-blacklist-options .textarea.wl { width: 100%; } ' +
-		'#saveblacklist { cursor: pointer; color: #cc181e; text-shadow: 1px 1px 1px rgba(0, 0, 0, .20); border-radius: 2px; } ' +
-		'#lbltextarea { color: #5FBBAA; text-shadow: 1px 1px 1px rgba(0, 0, 0, .10); border-radius: 2px; } ' +
+		'.uri-skill { color: #a11909; font-weight: bold; } ' +
+		'#lista-bloco-questoes { width: 180px; height:360px; display: flex; flex-flow: row wrap; align-items: baseline; position: fixed; right: 150px; top:' + margintop + 'px; padding: 0 5px 20px 5px; background-color: rgba(255, 255, 255, 0.85); box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); border: 1px solid #e8e8e8; border-top: 0; z-index: 9999999999; } ' +
+		'#lista-bloco-questoes div { box-sizing: border-box; padding: 3px; } ' +
+		'#lista-bloco-questoes .textarea div { width: 100%;  text-align: center; font-weight: 500; } ' +
+		'#lista-bloco-questoes .textarea textarea { resize: auto; width: 100%; padding: 4px; border: 2px solid rgba(0,0,0,.13); box-sizing: border-box; margin-top:5px; margin-bottom:0px; } ' +
+		'#lista-bloco-questoes .textarea.wl { width: 100%; } ' +
+		'#btnsave { font-size:10px; height: 25px; width: 180px; float: none; padding: 5px; margin: 5px; } ' +
+		'#lbltextarea { color: #61B9A9; text-shadow: 1px 1px 1px rgba(6, 94, 78, 0.40); } ' +
 	'</style>');
 
 	/// CRIANDO A CAIXA
-	$('body').append('<div id="yt-blacklist-options" style="display: none">' +
-			'<div style="width: 100%; text-align: center"><span id="saveblacklist" title="salvar no BD">registrar</span></div>' +
-			'<div class="textarea wl"><div id="lbltextarea" title="uma questão por linha">Atividades Requisitadas</div><textarea rows="4" id="whitelist-words" style="margin-top: 14px;">' + questoesSalvas + '</textarea></div>' +
+	$('body').append('<div id="lista-bloco-questoes" style="display: none">' +
+			'<input id="btnsave" title="salvar no banco de dados" class="send-green send-right" value="registrar" type="submit">' +
+			`<div class="textarea wl"><div id="lbltextarea">Atividades Requisitadas</div><textarea placeholder=id${sep}ddmm${sep}autor rows="4" id="whitelist-words" title="uma questão por linha">` + questoesSalvas + '</textarea></div>' +
 			'</div>');
 
 
 	/// OBJETO PRINCIPAL
 	$barra = $('#menu');
-	$saved = $('<span style="margin-right: 7px; font-size: 80%; color:green">salvo!</span>');
+	$saved = $('<span style="font-size: 90%; color:green">salvo!</span>');
 
 	/// OBJETO QUE SERÁ CONSTRUÍDO
 	$barra.append('<li><a href="#" class="uri-skill" id="btnmain">banco</a></li>');
-	$('#btnmain').on('click', () => $('#yt-blacklist-options').slideToggle());
+	$('#btnmain').on('click', () => $('#lista-bloco-questoes').slideToggle());
 
-	$('#saveblacklist').on('click', function() {
+	$('#btnsave').on('click', function() {
 		// save new values
 		let listagem = $('#whitelist-words').val();
-		if(listagem.isValid()){
+		if(listagem.isValid()){ // FIXME arrumar identificação.
 			listagem.isEmpty() ? GM_deleteValue('savedquestions') : GM_setValue('savedquestions', listagem);
 			// add notification
 			$(this).before($saved);
-			setTimeout(function() { $saved.fadeOut(); }, 300);
-			setTimeout(function() { location.reload(); }, 500); // F5
-			// research
-			getSavedValues();
+			$saved.fadeOut("slow");
+			setTimeout(function() { location.reload(); }, 650); // refresh
 		}
 	});
 
 
 
-	//||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||//
+	//||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||[ LESS jQuery ]||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||//
 	const links = {
 		questao: function(id){
 			return 'https://www.urionlinejudge.com.br/judge/pt/problems/view/'+id;
@@ -173,28 +168,36 @@ ELIMINAR COM ids REPETIDAS
 			const rawlink = links.raw_questao(id);
 			id='#'+x[0];
 
-			// Definindo os títulos nas linhas adicionadas:
+			/// Definindo os títulos nas linhas adicionadas:
 			$.get(rawlink, null).done(function(text){
 				let tituloQuestao = $(text).find('h1').html();
-				tituloQuestao = `&nbsp;&#187;&nbsp;<a target='_blank' href=${rawlink} style='color:#af5302;'>${tituloQuestao}</a>&nbsp;`;
+				tituloQuestao = `&nbsp;&#187;&nbsp;<a target='_blank' href=${rawlink} style='color:#af5302;' title="abrir em tela cheia">${tituloQuestao}</a>&nbsp;`;
 				$(id).append(tituloQuestao);
-			}).fail(function(err){ console.error("questão não encontrada",err);})
-
-			// Definindo o status de cada questão:
-			$.get(link, null).done(function(text){
-				let cor = "rgba(143, 16, 16, 0.49)"; // vermelho
-				let qStatus = $(text).find('#place').find('h3');
-				if(qStatus.length === 0) qStatus = "PENDENTE";
-				else{  qStatus="RESOLVIDO"; cor = "rgba(16, 143, 18, 0.48)"; } // verde
-				qStatus = `&nbsp;<b style="color:${cor};">${qStatus}</b>`
-				$(id).append(qStatus);
+			}).fail(function(xhr, status, error){
+				console.error("Erro questão "+id+": "+error);
+				$(id).parent().children().remove();
 			});
 
-			// extra:
-			$(id).find('a[alt]').hover(
-				function(){ $(this).html('enviar'); },
-				function(){ $(this).html($(this).attr('alt')); })
+			/// Definindo o status de cada questão:
+			$.get(link, null).done(function(text){
+				let cor, qStatus = $(text).find('#place').find('h3');
+				if(qStatus.length === 0){
+					cor = "rgba(221, 0, 0, 0.5)";
+					qStatus = "PENDENTE";
+				}
+				else{
+					cor = "rgba(16, 143, 18, 0.5)";
+					qStatus="RESOLVIDO";
+				}
+				let lblStatus = `&nbsp;<b style="color:${cor};">${qStatus}</b>`
+				$(id).append(lblStatus);
+				$(id).addClass(qStatus);
+			});
 
+			/// extra:
+			$(id).find('a[alt]').hover(
+				function(){ $(this).html('enviar'); },		// handlerIN
+				function(){ $(this).html($(this).attr('alt')); })// handlerOUT
 		}
 	})();
 
