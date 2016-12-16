@@ -158,7 +158,7 @@ TODO
 		})(dia_inicio);
 
 		return ""+
-			`<td class='id'><a target='_blank' href=${links.questao(id_questao)}>${id_questao}</a></td>` +
+			`<td class='id'><a target='_blank' href=${links.questao(id_questao)} title="abrir descrição">${id_questao}</a></td>` +
 			`<td class='large' id=${id_questao}><a target='_blank' alt="${rotulo}" href=${links.enviar_questao(id_questao)}>${rotulo}</a></td>` +
 			`<td class='medium'>${dia_inicio}</td>` +
 			`<td class='medium'>${dia_final}</td>`
