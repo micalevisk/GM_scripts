@@ -1,12 +1,12 @@
 // ==UserScript==
 // @name	URI Append Questions
-// @description	Adiciona questões na página Academic/Desafios de Programação II (2016/02)
+// @description	Adiciona questões na página Academic
 // @version	1.16-2
 // @namespace	https://github.com/micalevisk/GM_scripts
 // @supportURL	https://github.com/micalevisk/
 // @author	Micael Levi
 // @language	pt-BR
-// @include	*://www.urionlinejudge.com.br/judge/pt/disciplines/view/2040*
+// @include	*://www.urionlinejudge.com.br/judge/pt/disciplines/view/*
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -23,6 +23,7 @@ WORKS ON
 → Firefox 50.1.0
 → Edge 38.14393.0.0
 → Chrome 55.0.2883.87
+→ Opera
 
 
 TODO
@@ -84,7 +85,7 @@ TODO
 
 	/**
 	 * Define os eventos de cliques dos novos objetos criados.
-	*/
+	 */
 	function botaoPrincipal_initEventos(){
 		$saved = $('<span style="font-size: 90%; color:green">salvo!</span>');
 		/// OBJETO QUE SERÁ CONSTRUÍDO
