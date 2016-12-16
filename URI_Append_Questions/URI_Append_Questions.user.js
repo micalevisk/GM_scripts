@@ -1,13 +1,12 @@
 // ==UserScript==
 // @name	URI Append Questions
 // @description	Adiciona questões na página Academic/Desafios de Programação II (2016/02)
-// @version	1.15-2
+// @version	1.16-2
 // @namespace	https://github.com/micalevisk/GM_scripts
 // @supportURL	https://github.com/micalevisk/
 // @author	Micael Levi
 // @language	pt-BR
 // @include	*://www.urionlinejudge.com.br/judge/pt/disciplines/view/2040*
-// @icon	https://raw.githubusercontent.com/micalevisk/GM_scripts/master/URI_Append_Questions/URI.ico?token=AM1nQ377JYru74Y339rgUM4ZLfoZE8L0ks5YW0ahwA%3D%3D
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @grant       GM_getValue
 // @grant       GM_setValue
@@ -28,7 +27,6 @@ WORKS ON
 
 TODO
 ====
-→ tornar funcional
 → não verifica (corretamente) a formatação do texto
 → implementar escolha do separador (1 caractere)
 ***************************************************************************/
@@ -49,55 +47,65 @@ TODO
 	};
 
 
-	/// RECUPERANDO DADOS DO BD SQL
+	/**
+	 * Recupera a listagem salva no banco de dados local.
+	 */
 	function getSavedValues(){
 		questoesSalvas = GM_getValue('savedquestions', '');
 		banco = questoesSalvas.isValid() ? questoesSalvas.split('\n') : []; // TODO melhorar verificação.
-	}(getSavedValues());
+	}
 
-	/// ADICIONAR CSS
-	var margintop = $('.ribbon').height() + parseInt( $('.ribbon').css('padding-top') ) + parseInt( $('.ribbon').css('padding-bottom') );
-	$('head').append('<style> ' +
-		'.uri-skill { color: #a11909; font-weight: bold; } ' +
-		'#lista-bloco-questoes { width: 180px; height:360px; display: flex; flex-flow: row wrap; align-items: baseline; position: fixed; right: 150px; top:' + margintop + 'px; padding: 0 5px 20px 5px; background-color: rgba(255, 255, 255, 0.85); box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); border: 1px solid #e8e8e8; border-top: 0; z-index: 9999999999; } ' +
-		'#lista-bloco-questoes div { box-sizing: border-box; padding: 3px; } ' +
-		'#lista-bloco-questoes .textarea div { width: 100%;  text-align: center; font-weight: 500; } ' +
-		'#lista-bloco-questoes .textarea textarea { resize: none; width: 100%; padding: 4px; border: 2px solid rgba(0,0,0,.13); box-sizing: border-box; margin-top:5px; margin-bottom:0px; } ' +
-		'#lista-bloco-questoes .textarea.wl { width: 100%; } ' +
-		'#btnsave { font-size:10px; height: 25px; width: 180px; float: none; padding: 5px; margin: 5px; } ' +
-		'#lbltextarea { color: #61B9A9; text-shadow: 1px 1px 1px rgba(6, 94, 78, 0.40); } ' +
-	'</style>');
+	/**
+	 * Cria e adiciona os estilos do campo de texto e botão extra na página.
+	 */
+	function botaoPrincipal_adicionarEstilo(){
+		/// CRIANDO E ADICIONANDO CSS
+		var margintop = $('.ribbon').height() + parseInt( $('.ribbon').css('padding-top') ) + parseInt( $('.ribbon').css('padding-bottom') );
+		$('head').append('<style> ' +
+			'.uri-skill { color: #a11909; font-weight: bold; } ' +
+			'#lista-bloco-questoes { width: 180px; height:360px; display: flex; flex-flow: row wrap; align-items: baseline; position: fixed; right: 150px; top:' + margintop + 'px; padding: 0 5px 20px 5px; background-color: rgba(255, 255, 255, 0.85); box-shadow: 0 1px 1px 0 rgba(0,0,0,.1); border: 1px solid #e8e8e8; border-top: 0; z-index: 9999999999; } ' +
+			'#lista-bloco-questoes div { box-sizing: border-box; padding: 3px; } ' +
+			'#lista-bloco-questoes .textarea div { width: 100%;  text-align: center; font-weight: 500; } ' +
+			'#lista-bloco-questoes .textarea textarea { resize: none; width: 100%; padding: 4px; border: 2px solid rgba(0,0,0,.13); box-sizing: border-box; margin-top:5px; margin-bottom:0px; } ' +
+			'#lista-bloco-questoes .textarea.wl { width: 100%; } ' +
+			'#btnsave { font-size:10px; height: 25px; width: 180px; float: none; padding: 5px; margin: 5px; } ' +
+			'#lbltextarea { color: #61B9A9; text-shadow: 1px 1px 1px rgba(6, 94, 78, 0.40); } ' +
+		'</style>');
 
-	/// CRIANDO A CAIXA
-	$('body').append('<div id="lista-bloco-questoes" style="display: none">' +
-			'<input id="btnsave" title="salvar no banco de dados" class="send-green send-right" value="registrar" type="submit">' +
-			`<div class="textarea wl"><div id="lbltextarea">Atividades Requisitadas</div><textarea placeholder=id${sep}ddmm${sep}autor rows="4" id="whitelist-words" title="uma questão por linha">` + questoesSalvas + '</textarea></div>' +
-			'</div>');
+		/// CRIANDO A CAIXA
+		$('body').append('<div id="lista-bloco-questoes" style="display: none">' +
+				'<input id="btnsave" title="salvar no banco de dados" class="send-green send-right" value="registrar" type="submit">' +
+				`<div class="textarea wl"><div id="lbltextarea">Atividades Requisitadas</div><textarea placeholder=id${sep}ddmm${sep}autor rows="4" id="whitelist-words" title="uma questão por linha">` + questoesSalvas + '</textarea></div>' +
+				'</div>');
 
+		/// OBJETO PRINCIPAL, A BARRA
+		$('#menu').append('<li><a href="#" class="uri-skill" id="btnmain">banco</a></li>');
+	}
 
-	/// OBJETO PRINCIPAL
-	$barra = $('#menu');
-	$saved = $('<span style="font-size: 90%; color:green">salvo!</span>');
+	/**
+	 * Define os eventos de cliques dos novos objetos criados.
+	*/
+	function botaoPrincipal_initEventos(){
+		$saved = $('<span style="font-size: 90%; color:green">salvo!</span>');
+		/// OBJETO QUE SERÁ CONSTRUÍDO
+		$('#btnmain').on('click', () => $('#lista-bloco-questoes').slideToggle());
 
-	/// OBJETO QUE SERÁ CONSTRUÍDO
-	$barra.append('<li><a href="#" class="uri-skill" id="btnmain">banco</a></li>');
-	$('#btnmain').on('click', () => $('#lista-bloco-questoes').slideToggle());
-
-	$('#btnsave').on('click', function() {
-		// save new values
-		let listagem = $('#whitelist-words').val();
-		if(listagem.isValid()){ // FIXME arrumar identificação.
-			listagem.isEmpty() ? GM_deleteValue('savedquestions') : GM_setValue('savedquestions', listagem);
-			// add notification
-			$(this).before($saved);
-			$saved.fadeOut("slow");
-			setTimeout(function() { location.reload(); }, 650); // refresh
-		}
-	});
-
+		$('#btnsave').on('click', function() {
+			// save new values
+			let listagem = $('#whitelist-words').val().replace(/ /g, "").trim();
+			if(listagem.isValid()){ // FIXME arrumar identificação.
+				listagem.isEmpty() ? GM_deleteValue('savedquestions') : GM_setValue('savedquestions', listagem);
+				// add notification
+				$(this).before($saved);
+				$saved.fadeOut("slow");
+				setTimeout(function() { location.reload(); }, 650); // refresh
+			}
+		});
+	}
 
 
 	//|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||| [ LESS jQuery ] ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||//
+
 	const links = {
 		questao: function(id){
 			return 'https://www.urionlinejudge.com.br/judge/pt/problems/view/'+id;
@@ -167,6 +175,10 @@ TODO
 
 	//////////////////////////////////////////// [ MAIN ] ////////////////////////////////////////////
 	(function(){
+		getSavedValues();
+		botaoPrincipal_adicionarEstilo();
+		botaoPrincipal_initEventos();
+
 		banco = banco.map(x => x.replace(/ /g,'').split(','));
 		banco.map(arrDadosQuestao => inserirQuestao(...arrDadosQuestao) );
 
