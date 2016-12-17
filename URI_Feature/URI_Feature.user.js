@@ -4,7 +4,8 @@
 // @namespace   https://github.com/micalevisk/GM_scripts
 // @author      Micael Levi
 // @locale      pt-br
-// @include     https://www.urionlinejudge.com.br/repository/*
+// @include     *://www.urionlinejudge.com.br/repository/*
+// @include     *://www.urionlinejudge.com.br/judge/pt/problems/view/*
 // @version     1.10-2
 // @grant       none
 // @run-at      document-end
@@ -26,5 +27,8 @@
 	para.appendChild(anode);
 
 	document.getElementsByTagName('strong')[0].append(para)
+
+	if($('a.place-view'))
+		$('a.place-view').removeAttr("target")
 
 })();
