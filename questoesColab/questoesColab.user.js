@@ -25,4 +25,4 @@ script.type= 'text/javascript';
 script.src = gitsrc.replace(REGEX_RAW_REPO_URL, 'https://' + 'rawgit.com' + '/$1/$2');
 document.head.appendChild(script);
 
-});
+})();
