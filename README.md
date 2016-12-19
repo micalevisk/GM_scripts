@@ -34,6 +34,7 @@
 
 ### [⩯][POSTPASTEBIN] FIXME
 - [ ]	na função **getAPI_USER_KEY** definir obtenção de argumentos para a função de _callback_
+- [ ]	argumentos para o _callback_ deve ser um array
 
 ### [⩲][POSTPASTEBIN] TODO
 - [ ]	generalizar para gerenciamento de _pastes_ no PasteBin
