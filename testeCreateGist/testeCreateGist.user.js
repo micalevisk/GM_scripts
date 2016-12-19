@@ -206,7 +206,7 @@ Date.prototype.formatar = function(n){
 
 
 /**
- * @param {?} texto - se for {String} então será criptografado, se for {Array}, será descriptografado.
+ * @param {String} texto - o texto que será criptografado
  * @param {String} strKey - o chave privada.
  * @param {String} separador - (opcional) - define a sequência de caracteres que separam os valores visualmente.
  * @return {?} Se o 'separador' estiver definido, retorna {String}, senão, retorna {Array}.
