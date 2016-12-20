@@ -41,7 +41,7 @@ TODO
 	var questoesSalvas, banco=[], sep = ',';
 
 	String.prototype.isEmpty = function(){ return !(this.trim()); };
-	String.prototype.isValid = function(){ return (/^\d{4}.\d{4}..+$/m).test(this); };// FIXME o multiline não funciona.
+	String.prototype.isValid = function(){ return this.isEmpty() || (/^\d{4}.\d{4}..+$/m).test(this); };// FIXME o multiline não funciona.
 	String.prototype.formatLikeDate = function(lang){
 		let anoAtual=new Date().getFullYear().toString();
 		return this.replace(/(.{2})(.{2})/, (lang==='en') ? `$2/$1/${anoAtual}` : `$1/$2/${anoAtual}`);
