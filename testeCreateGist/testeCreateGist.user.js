@@ -38,8 +38,8 @@ function USERSET(email, _senha, flag=false){
 	this.toString = () => `{"email":"${this.email}", "senha":"${this.getSenha()}"}`;
 	this.toJSON   = function(){
 		return {
-			"email": `${this.email}`,
-			"senha": `${this.getSenha()}`
+			"email": this.email,
+			"senha": this.getSenha()
 		}
 	}
 }
