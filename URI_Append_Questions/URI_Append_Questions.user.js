@@ -202,6 +202,8 @@ TODO
 			/// Definindo o status de cada questão:
 			$.get(link, null).done(function(text){
 				let cor, qStatus = $(text).find('#place').find('h3');
+				let nivelQuestao = $(text).find('h3').first().parents().find('span').html().replace(/.+(\d)\s*\/.+/,"$1");
+
 				if(qStatus.length === 0){
 					cor = "rgba(221, 0, 0, 0.5)";
 					qStatus = "PENDENTE";
@@ -210,7 +212,7 @@ TODO
 					cor = "rgba(16, 143, 18, 0.5)";
 					qStatus="RESOLVIDO";
 				}
-				let lblStatus = `&nbsp;<b style="color:${cor};">${qStatus}</b>`;
+				let lblStatus = `&nbsp;<b style="color:${cor};">(${nivelQuestao})&nbsp;${qStatus}</b>`;
 				$(id).append(lblStatus);
 				$(id).addClass(qStatus);
 			});
