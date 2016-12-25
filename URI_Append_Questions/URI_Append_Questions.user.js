@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name	URI Append Questions
 // @description	Adiciona questões na página Academic
-// @version	1.16-2
+// @version	1.25-2
 // @namespace	https://github.com/micalevisk/GM_scripts
 // @supportURL	https://github.com/micalevisk/
 // @author	Micael Levi
@@ -158,13 +158,13 @@ TODO
 	function questaoHTML(id_questao, dia_inicio, prof){
 		var rotulo= `Autor: ${prof}`;
 
-		var dia_final= ( (inicio) => {
+		var dia_final= ( () => {
+			var d = dia_inicio.formatLikeDate('en'); // (ddmmyy) -> mm/dd/yyyy
 			dia_inicio = dia_inicio.formatLikeDate(); // (ddmmyy) -> dd/mm/yyyy
-			var d = inicio.formatLikeDate('en'); // (ddmmyy) -> mm/dd/yyyy
 			var diaFinal = new Date(d);
 			diaFinal.setDate(diaFinal.getDate() + 7);
 			return diaFinal.toLocaleDateString('pt-BR');
-		})(dia_inicio);
+		})();
 
 		return ""+
 			`<td class='id'><a target='_blank' href=${links.questao(id_questao)} title="abrir descrição">${id_questao}</a></td>` +
@@ -204,15 +204,10 @@ TODO
 				let cor, qStatus = $(text).find('#place').find('h3');
 				let nivelQuestao = $(text).find('h3').first().parents().find('span').html().replace(/.+(\d)\s*\/.+/,"$1");
 
-				if(qStatus.length === 0){
-					cor = "rgba(221, 0, 0, 0.5)";
-					qStatus = "PENDENTE";
-				}
-				else{
-					cor = "rgba(16, 143, 18, 0.5)";
-					qStatus="RESOLVIDO";
-				}
-				let lblStatus = `&nbsp;<b style="color:${cor};">(${nivelQuestao})&nbsp;${qStatus}</b>`;
+				if(qStatus.length === 0) cor = "rgba(221, 0, 0, 0.5)";
+				else cor = "rgba(16, 143, 18, 0.5)";
+
+				let lblStatus = `&nbsp;<b style="color:${cor};">(${nivelQuestao})</b>`;
 				$(id).append(lblStatus);
 				$(id).addClass(qStatus);
 			});
