@@ -1,11 +1,8 @@
 // ==UserScript==
 // @name        mysession
-// @description	salvar sessões em (3) sites
+// @description	salvar sessão no Netflix
 // @namespace   http://pastebin.com/EGAuDuhr
 // @include     *://www.netflix.com/*Login*
-// @include     *://accounts.google.com/*ServiceLogin*
-// @include     *://accounts.google.com/*signin*
-// @include     *://ecampus.ufam.edu.br/ecampus/*login*
 // @version     1.20-2
 // @require	https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @grant       GM_getValue
