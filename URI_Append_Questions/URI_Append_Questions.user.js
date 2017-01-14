@@ -28,6 +28,7 @@ WORKS ON
 
 TODO
 ====
+→ opção de "comentar" questão/linha (para não exibi-lá)
 → não verifica (corretamente) a formatação do texto
 → implementar escolha do separador (1 caractere)
 ***************************************************************************/
@@ -53,13 +54,15 @@ TODO
 	 */
 	function getSavedValues(){
 		questoesSalvas = GM_getValue('savedquestions', '');
-		banco = questoesSalvas.isValid() ? questoesSalvas.split('\n') : []; // TODO melhorar verificação.
+		// TODO ao recuperar as questões, filtrar apenas elementos válidos (sem tag de comentário e corretamente formatado).
+		banco = questoesSalvas.isValid() ? questoesSalvas.split('\n') : []; // FIXME remover verificação aqui.
 	}
 
 	/**
 	 * Cria e adiciona os estilos do campo de texto e botão extra na página.
 	 */
 	function botaoPrincipal_adicionarEstilo(){
+		var caixaPlaceholder = `id${sep}ddmm${sep}autor`;
 		/// CRIANDO E ADICIONANDO CSS
 		var margintop = $('.ribbon').height() + parseInt( $('.ribbon').css('padding-top') ) + parseInt( $('.ribbon').css('padding-bottom') );
 		$('head').append('<style> ' +
@@ -76,7 +79,7 @@ TODO
 		/// CRIANDO A CAIXA
 		$('body').append('<div id="lista-bloco-questoes" style="display: none">' +
 				'<input id="btnsave" title="salvar no banco de dados" class="send-green send-right" value="registrar" type="submit">' +
-				`<div class="textarea wl"><div id="lbltextarea">Atividades Requisitadas</div><textarea placeholder=id${sep}ddmm${sep}autor rows="4" id="whitelist-words" title="uma questão por linha">` + questoesSalvas + '</textarea></div>' +
+				`<div class="textarea wl"><div id="lbltextarea">Atividades Requisitadas</div><textarea placeholder=${caixaPlaceholder} rows="4" id="whitelist-words" title="uma questão por linha">` + questoesSalvas + '</textarea></div>' +
 				'</div>');
 
 		/// OBJETO PRINCIPAL, A BARRA
