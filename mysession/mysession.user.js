@@ -16,6 +16,7 @@
 → Ecampus
 */
 
+//TODO criptografar senha
 //TODO adicionar/criar a gist/pastebin
 (function($) {
 	String.prototype.isNotEmpty = function() { return (this.trim()); };
