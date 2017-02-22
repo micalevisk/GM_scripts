@@ -58,9 +58,21 @@
 	};
 	$("p").hover(colorir);
 	*/
+	let colorir = function(){
+		var corAtual = $(this).css('background-color');
+		if(corAtual != "transparent") corAtual = "transparent";
+		else corAtual = 'rgba(161, 221, 133, 0.4)';
+
+		$(this).mousemove(function(e) {
+			var relativePos = e.pageY - this.offsetTop;
+			var textRow = (Math.ceil(relativePos / 18) * 18) - 18;
+			if(textRow >= 0) $(this).css('background-color', corAtual);
+		});
+	};
+	$("p").hover(colorir);
 
 	var hltr = new TextHighlighter(document.body);
-	hltr.setColor('rgba(255, 255, 122,0.3)');
+	hltr.setColor('rgba(255, 255, 122, 0.5)');
 
 	var btnRemover = document.createElement('BUTTON');
 	btnRemover.id= 'remove-highlights';
