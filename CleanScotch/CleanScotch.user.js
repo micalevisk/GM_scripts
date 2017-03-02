@@ -16,4 +16,6 @@
 	$('header.site-header').remove(); $('div.super-search').remove(); // barra de pesquisa
 	$('.single-top-scotcherisment').remove(); // espaço vazio do topo
 	$('.clearfix').remove(); // related course
+	$('div.inner-guts,guts,no-top-margin').attr('class',''); // "expande" o artigo
+	$('.site-footer').remove(); // rodapé
 })(jQuery)
