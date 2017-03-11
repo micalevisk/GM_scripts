@@ -1,22 +1,19 @@
 // ==UserScript==
 // @name        mysession
 // @description	salvar sessões no BD.
-// @namespace   http://pastebin.com/EGAuDuhr
+// @namespace   https://github.com/micalevisk/GM_scripts/tree/master/mysession
+// @version     0.25-1
+// @require		https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
+// @grant       GM_setValue
+// ==/UserScript==
+
+/*
 // @include     *://www.netflix.com/*Login*
 // @include     *://ecampus.ufam.edu.br/ecampus/home/login*
 // @include     *://accounts.google.com/ServiceLogin*
 // @include     *://accounts.google.com/*signin*
-// @version     0.25-1
-// @require	https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
-// @grant       GM_setValue
-// ==/UserScript==
-/*
-→ Netflix
-→ Gmail
-→ Ecampus
 */
 
-//TODO adicionar/criar a gist/pastebin
 (function($) {
 
 	// ================================================================================================================= //

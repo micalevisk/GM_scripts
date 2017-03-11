@@ -8,8 +8,8 @@
 // @include     *://accounts.google.com/*signin*
 // @version     1.21-2
 // @grant       none
-// @run-at	document-end
-// @require	file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/_private-gist.js
+// @run-at		document-end
+// @require		file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/_private-gist.js
 // ==/UserScript==
 
 

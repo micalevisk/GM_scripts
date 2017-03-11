@@ -1,14 +1,14 @@
 // ==UserScript==
-// @name	testePostPastebin
+// @name		testePostPastebin
 // @description	precisa: nome, senha; não usa API auxiliares (apenas a do Greasemonkey).
 // @namespace	https://greasyfork.org/en/forum/discussion/4897/pastebin-api-bad-api-request
-// @author	Micael Levi
-// @locale	pt-br
-// @include	*://pastebin.com/index*
-// @version	1.04-2
-// @run-at	document-end
-// @grant	GM_xmlhttpRequest
-// @require	file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/_private-pastebin.js
+// @author		Micael Levi
+// @locale		pt-br
+// @include		*://pastebin.com/index*
+// @version		1.04-2
+// @run-at		document-end
+// @grant		GM_xmlhttpRequest
+// @require		file:///C:/Users/user/AppData/Roaming/Mozilla/Firefox/Profiles/xwt25znr.default/gm_scripts/_private-pastebin.js
 // ==/UserScript==
 
 

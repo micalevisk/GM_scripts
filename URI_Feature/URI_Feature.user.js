@@ -11,7 +11,6 @@
 // @run-at      document-end
 // ==/UserScript==
 
-///FIXME exibe na pagína que já tem um botão de enviar.
 (function() {
 	'use strict';
 

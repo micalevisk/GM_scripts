@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name	URI Append Questions
+// @name		URI Append Questions
 // @description	Adiciona questões na página Academic
-// @version	1.25-2
+// @version		1.25-2
 // @namespace	https://github.com/micalevisk/GM_scripts
 // @supportURL	https://github.com/micalevisk/
-// @author	Micael Levi
+// @author		Micael Levi
 // @language	pt-BR
-// @include	*://www.urionlinejudge.com.br/judge/pt/disciplines/view/*
+// @include		*://www.urionlinejudge.com.br/judge/pt/disciplines/view/*
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @grant       GM_getValue
 // @grant       GM_setValue
