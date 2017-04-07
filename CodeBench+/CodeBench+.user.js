@@ -25,7 +25,7 @@ function initSystem(){
 	if(! $('a[id^=menu_submeter_codigo_]').length ) return;//verifica se o trabalho ainda pode ser submetido
 	const ID_INPUT_TEXT = "hard_acao_";
 	
-	$("div.ide-menu .ide-menu-item:nth-child(4)").each(() => {
+	$("div.ide-menu .ide-menu-item:nth-child(4)").each(function(){
 		let pai = $(this).find('ul.dropdown-menu');//barra de menu
 		const exercicio_id = pai.attr('aria-labelledby').match(/\d+$/)[0];
 
@@ -58,7 +58,7 @@ function euQuero(acao, exercicio_id){
 
 	///Função para editar as cartas geradas pela submissão correta
 	let editarCartas = () => {
-		$('#block_result_' + exercicio_id + ' .card').each(() => {
+		$('#block_result_' + exercicio_id + ' .card').each(function(){
 			let $dados= $('span[data-cartaid]', this);
 			$dados.attr('data-acao', acao);
 			$dados.attr('data-title', __getMessageFor(acao));
