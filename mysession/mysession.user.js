@@ -3,12 +3,12 @@
 // @description	salvar sessões no BD.
 // @namespace   https://github.com/micalevisk/GM_scripts/tree/master/mysession
 // @version     0.25-1
+// @include     *://www.netflix.com/*Login*
 // @require		https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @grant       GM_setValue
 // ==/UserScript==
 
 /*
-// @include     *://www.netflix.com/*Login*
 // @include     *://ecampus.ufam.edu.br/ecampus/home/login*
 // @include     *://accounts.google.com/ServiceLogin*
 // @include     *://accounts.google.com/*signin*
