@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name        CodeBench+
 // @namespace   https://github.com/micalevisk/GM_scripts/tree/master/CodeBench+
+// @supportURL	https://github.com/micalevisk
 // @description	Aumenta em 100% as chances de a carta sorteada ser a desejada. (ES6)
-// @author      Micael Levi
+// @author      Micael Levi L. C.
 // @language    pt-br
 // @include     *//codebench.icomp.ufam.edu.br/index.php?r=trabalho%2Fview&id=*&turma=*
 // @version     0.07-4
@@ -11,53 +12,50 @@
 // ==/UserScript==
 
 (function(){
-	initSystem();
+	if($('a[id^=menu_submeter_codigo_]').length);//verifica se o trabalho ainda pode ser submetido
+		initSystem();
 })();
 
 
 const REGEX_ACAO = new RegExp(/(andar|forca)=(\d+)/);//[1] contém o tipo, [2] a quantidade
 
 /**
- * Cria um novo "botão" no menu
+ * Cria um novo "botão" no menu.
  * e caixa de texto para o novo tipo de submissão.
  */
 function initSystem(){
-	if(! $('a[id^=menu_submeter_codigo_]').length ) return;//verifica se o trabalho ainda pode ser submetido
 	const ID_INPUT_TEXT = "hard_acao_";
-	
+
 	$("div.ide-menu .ide-menu-item:nth-child(4)").each(function(){
 		let pai = $(this).find('ul.dropdown-menu');//barra de menu
 		const exercicio_id = pai.attr('aria-labelledby').match(/\d+$/)[0];
 
-		///Novos elementos para a página
+		///Novos elementos para a página:
 		const texto = '<li>'+ '<a>' + `<input type="text" id="${ID_INPUT_TEXT}${exercicio_id}" value="andar=5">&nbsp;` + '</a>' +'</li>';
 		const botao = $( '<li>'+ `<a href="#" id=menu_submeter_hard_${exercicio_id}>`+ '<span style="float: left">Submeter Hard</span>&nbsp;'+ '</a>'+ '</li>' );
 
-		///Ação do eveno de click do novo botão de submissão
-		let submeter_hard = () => {
+		let submeter_hard = () => {///Ação do eveno de click do novo botão de submissão
 			let acao = $('#'+ ID_INPUT_TEXT + exercicio_id).val();
 			euQuero(acao, exercicio_id);
 		};
 
-		///Adicionando no HTML
+		///Adicionando no HTML:
 		pai.append(texto);
 		pai.append( () => botao.click(submeter_hard) );
 	});
 }
 
 /**
- * Utilizado para submeter uma questão e alterar
- * @param {String} acao - A ação que as cartas deverão receber; casa com a RegEx 'REGEX_ACAO'
+ * Utilizado para submeter uma questão e alterar.
+ * @param {String} acao - A ação que as cartas deverão receber; casa com a RegEx 'REGEX_ACAO'.
  * @param {String} exercicio_id - id da questão que será submetida.
  */
 function euQuero(acao, exercicio_id){
 	if(!acao || typeof acao !== 'string' || !REGEX_ACAO.test(acao)) return;
 
-	///Submeter
-	$('#submeter_' + exercicio_id).trigger('click');
+	$('#submeter_' + exercicio_id).trigger('click');///Submeter
 
-	///Função para editar as cartas geradas pela submissão correta
-	let editarCartas = () => {
+	let editarCartas = () => {///Função para editar as cartas geradas pela submissão correta
 		$('#block_result_' + exercicio_id + ' .card').each(function(){
 			let $dados= $('span[data-cartaid]', this);
 			$dados.attr('data-acao', acao);
@@ -65,13 +63,12 @@ function euQuero(acao, exercicio_id){
 		});
 	};
 
-	///Esperar 1 segundo e editar as cartas
-	setTimeout(editarCartas, 1000);
+	setTimeout(editarCartas, 1000);///Esperar 1 segundo e editar as cartas
 }
 
 /**
  * Utilizado para criar uma mensagem para as cartas (atributo 'data-title').
- * @param {String} acao
+ * @param {String} acao - A ação desejada; casa com a RegEx 'REGEX_ACAO'.
  * @return {String} A mensagem especfica para a ação dada.
  */
 function __getMessageFor(acao){
@@ -84,3 +81,30 @@ function __getMessageFor(acao){
 	let num = _acao[2];
 	return (_acao[1] === 'forca') ? msg.forca(num) : msg.andar(num);
 }
+
+
+
+
+
+/******************************** [OUTRO MÉTODO] *******************************
+///Função que submete e busca a carta com a ação (válida) desejada:
+function euQuero(acao){
+  	if(!acao || typeof acao !== 'string' || !/(andar|forca)=[1-5]/.test(acao)) return;
+	$('#submeter_' + exercicio_id).trigger('click');
+
+	let go = () => {
+		$('#block_result_' + exercicio_id + ' .card').each(function() {
+			let card = $(this);
+			let acao_card = card.find('span').data('acao');///Valor do atributo 'data-acao'
+
+			if (acao_card === acao){
+				$(this).css('z-index', 100);///Traz para o topo
+				$(this).click();///"Clica" na carta
+				return false;
+			}
+		});
+	};
+
+	setTimeout(go, 1000);
+}
+******************************************************************************/
