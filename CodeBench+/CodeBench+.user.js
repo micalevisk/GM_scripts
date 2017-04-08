@@ -31,7 +31,7 @@ function initSystem(){
 		const exercicio_id = pai.attr('aria-labelledby').match(/\d+$/)[0];
 
 		///Novos elementos para a página:
-		const texto = '<li>'+ '<a>' + `<input type="text" id="${ID_INPUT_TEXT}${exercicio_id}" value="andar=5">&nbsp;` + '</a>' +'</li>';
+		const texto = '<li>'+ '<a>' + `<input type="text" class="form-control" style="display:initial;" id="${ID_INPUT_TEXT}${exercicio_id}" value="andar=5" required>&nbsp;` + '</a>' +'</li>';
 		const botao = $( '<li>'+ `<a href="#" id=menu_submeter_hard_${exercicio_id}>`+ '<span style="float: left">Submeter Hard</span>&nbsp;'+ '</a>'+ '</li>' );
 
 		let submeter_hard = () => {///Ação do eveno de click do novo botão de submissão
