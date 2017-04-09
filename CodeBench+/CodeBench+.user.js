@@ -24,22 +24,23 @@ const REGEX_ACAO = new RegExp(/(andar|forca)=(\d+)/);//[1] contém o tipo, [2] a
  * e caixa de texto para o novo tipo de submissão.
  */
 function initSystem(){
-	const ID_INPUT_TEXT = "hard_acao_";
+	const ID_INPUT_TEXT    = "hard_acao_";
+	const ID_SUBMIT_BUTTON = "menu_submeter_hard_";
 
 	$("div.ide-menu .ide-menu-item:nth-child(4)").each(function(){
-		let pai = $(this).find('ul.dropdown-menu');//barra de menu
+		let pai = $(this).find('ul.dropdown-menu');///barra de menu
 		const exercicio_id = pai.attr('aria-labelledby').match(/\d+$/)[0];
 
 		///Novos elementos para a página:
 		const texto = '<li>'+ '<a>' + `<input type="text" class="form-control" style="display:initial;" id="${ID_INPUT_TEXT}${exercicio_id}" value="andar=5" required>&nbsp;` + '</a>' +'</li>';
-		const botao = $( '<li>'+ `<a href="#" id=menu_submeter_hard_${exercicio_id}>`+ '<span style="float: left">Submeter Hard</span>&nbsp;'+ '</a>'+ '</li>' );
+		const botao = $( '<li>'+ `<a href="#" id=${ID_SUBMIT_BUTTON}${exercicio_id}>`+ '<span style="float: left">Submeter Hard</span>&nbsp;'+ '</a>'+ '</li>' );
 
-		let submeter_hard = () => {///Ação do eveno de click do novo botão de submissão
+		let submeter_hard = () => {///Ação do evento de click do novo botão de submissão
 			let acao = $('#'+ ID_INPUT_TEXT + exercicio_id).val();
 			euQuero(acao, exercicio_id);
 		};
 
-		///Adicionando no HTML:
+		///Adicionando ao HTML:
 		pai.append(texto);
 		pai.append( () => botao.click(submeter_hard) );
 	});
@@ -52,7 +53,6 @@ function initSystem(){
  */
 function euQuero(acao, exercicio_id){
 	if(!acao || typeof acao !== 'string' || !REGEX_ACAO.test(acao)) return;
-
 	$('#submeter_' + exercicio_id).trigger('click');///Submeter
 
 	let editarCartas = () => {///Função para editar as cartas geradas pela submissão correta
@@ -72,7 +72,7 @@ function euQuero(acao, exercicio_id){
  * @return {String} A mensagem especfica para a ação dada.
  */
 function __getMessageFor(acao){
-	const _acao = acao.match(REGEX_ACAO); if(!_acao) return;
+	const _acao = acao.match(REGEX_ACAO);
 	const msg = {
 		 andar:(num) => `Parabéns! Sua habilidade na resolução desta questão lhe deu o direito de andar ${num} casas!`
 		,forca:(num) => `Parabéns! Você encontrou uma poção mágica e ganhou ${num} unidades de força!`
