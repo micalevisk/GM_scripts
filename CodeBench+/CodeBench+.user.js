@@ -33,7 +33,7 @@ function initSystem(){
 
 		///Novos elementos para a página:
 		const texto = '<li>'+ '<a>' + `<input type="text" class="form-control" style="display:initial;" id="${ID_INPUT_TEXT}${exercicio_id}" value="andar=5" required>&nbsp;` + '</a>' +'</li>';
-		const botao = $( '<li>'+ `<a href="#" id=${ID_SUBMIT_BUTTON}${exercicio_id}>`+ '<span style="float: left">Submeter Hard</span>&nbsp;'+ '</a>'+ '</li>' );
+		const botao = $( '<li>'+ `<a href="#" id=${ID_SUBMIT_BUTTON}${exercicio_id}>`+ '<span style="float: left">Submeter Hard</span>' + '<span style="float: right;color:#AAAAAA80">(by Micael)</span>&nbsp;'+ '</a>'+ '</li>' );
 
 		let submeter_hard = () => {///Ação do evento de click do novo botão de submissão
 			let acao = $('#'+ ID_INPUT_TEXT + exercicio_id).val();
