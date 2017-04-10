@@ -6,7 +6,7 @@
 // @author      Micael Levi L. C.
 // @language    pt-br
 // @include     *//codebench.icomp.ufam.edu.br/index.php?r=trabalho%2Fview&id=*&turma=*
-// @version     0.08-4
+// @version     0.09-4
 // @grant       none
 // @run-at		document-end
 // ==/UserScript==
