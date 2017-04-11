@@ -12,7 +12,7 @@
 // ==/UserScript==
 
 (function(){
-	if($('a[id^=menu_submeter_codigo_]').length);//verifica se o trabalho ainda pode ser submetido
+	if($('a[id^=menu_submeter_codigo_]').length)//verifica se o trabalho ainda pode ser submetido
 		initSystem();
 })();
 
