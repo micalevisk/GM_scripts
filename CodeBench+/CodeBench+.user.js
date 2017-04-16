@@ -73,11 +73,11 @@ function euQuero(acao, exercicio_id){
 function getMessagemPara(acao){
 	const [nomeAcao, qtdAcao] = acao.match(REGEX_ACAO).slice(1);
 	const msg = {
-		 andar:(qtd) => `Parabéns! Sua habilidade na resolução desta questão lhe deu o direito de andar ${qtd} casas!`
-		,forca:(qtd) => `Parabéns! Você encontrou uma poção mágica e ganhou ${qtd} unidades de força!`
+		 andar: `Parabéns! Sua habilidade na resolução desta questão lhe deu o direito de andar ${qtdAcao} casas!`
+		,forca: `Parabéns! Você encontrou uma poção mágica e ganhou ${qtdAcao} unidades de força!`
 	};
 
-	return nomeAcao.startsWith('f') ? msg.forca(qtdAcao) : msg.andar(qtdAcao);
+	return nomeAcao.startsWith('f') ? msg.forca : msg.andar;
 }
 
 
