@@ -68,7 +68,7 @@ function euQuero(acao, exercicio_id){
 /**
  * Utilizado para criar uma mensagem para as cartas (atributo 'data-title').
  * @param {String} acao - A ação desejada; casa com a RegEx 'REGEX_ACAO'.
- * @return {String} A mensagem especfica para a ação dada.
+ * @return {String} A mensagem especifica para a ação dada.
  */
 function __getMessageFor(acao){
 	const [nomeAcao, qtdAcao] = acao.match(REGEX_ACAO).slice(1);
