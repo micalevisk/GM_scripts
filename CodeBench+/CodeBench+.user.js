@@ -13,23 +13,23 @@
 
 (function(){
 	if($("a[id^=menu_submeter_codigo_]").length)//verifica se o trabalho ainda pode ser submetido
-		initSystem();
+		initSistema();
 })();
 
 
 const REGEX_ACAO = new RegExp(/(andar|forca)=([1-9]+)/);//[1] contém o tipo, [2] a quantidade
 
 /**
- * Cria um novo "botão" no menu.
- * e caixa de texto para o novo tipo de submissão.
+ * Cria um novo "botão" no menu e
+ * uma caixa de texto para o novo tipo de submissão.
  */
-function initSystem(){
+function initSistema(){
 	const ID_INPUT_TEXT    = 'hard_acao_';
 	const ID_SUBMIT_BUTTON = 'menu_submeter_hard_';
 
 	$("div.ide-menu .ide-menu-item:nth-child(4)").each(function(){
-		const pai = $(this).find("ul.dropdown-menu");///barra de menu
-		const exercicio_id = pai.attr("aria-labelledby").match(/\d+$/)[0];
+		const menu = $(this).find("ul.dropdown-menu");///barra de menu
+		const exercicio_id = menu.attr("aria-labelledby").match(/\d+$/)[0];
 
 		///Novos elementos para a página:
 		const texto = '<li>'+ '<a>' + `<input type="text" class="form-control" style="display:initial;" id="${ID_INPUT_TEXT}${exercicio_id}" value="andar=5" required>&nbsp;` + '</a>' +'</li>';
@@ -41,8 +41,8 @@ function initSystem(){
 		};
 
 		///Adicionando ao HTML da página:
-		pai.append(texto);
-		pai.append( () => botao.click(submeter_hard) );
+		menu.append(texto);
+		menu.append( () => botao.click(submeter_hard) );
 	});
 }
 
@@ -57,7 +57,7 @@ function euQuero(acao, exercicio_id){
 		$("#block_result_" + exercicio_id + " .card").each(function(){
 			const $dados= $("span[data-cartaid]", this);
 			$dados.attr("data-acao", acao);
-			$dados.attr("data-title", __getMessageFor(acao));
+			$dados.attr("data-title", getMessagemPara(acao));
 		});
 	};
 
@@ -68,16 +68,16 @@ function euQuero(acao, exercicio_id){
 /**
  * Utilizado para criar uma mensagem para as cartas (atributo 'data-title').
  * @param {String} acao - A ação desejada; casa com a RegEx 'REGEX_ACAO'.
- * @return {String} A mensagem especifica para a ação dada.
+ * @return {String} A mensagem específica para a ação dada.
  */
-function __getMessageFor(acao){
+function getMessagemPara(acao){
 	const [nomeAcao, qtdAcao] = acao.match(REGEX_ACAO).slice(1);
 	const msg = {
 		 andar:(qtd) => `Parabéns! Sua habilidade na resolução desta questão lhe deu o direito de andar ${qtd} casas!`
 		,forca:(qtd) => `Parabéns! Você encontrou uma poção mágica e ganhou ${qtd} unidades de força!`
 	};
 
-	return (nomeAcao.startsWith('f')) ? msg.forca(qtdAcao) : msg.andar(qtdAcao);
+	return nomeAcao.startsWith('f') ? msg.forca(qtdAcao) : msg.andar(qtdAcao);
 }
 
 
@@ -87,13 +87,12 @@ function __getMessageFor(acao){
 /******************************** [OUTRO MÉTODO] *******************************
 ///Função que submete e busca a carta com a ação (válida) desejada:
 function euQuero(acao){
-  	if(!acao || typeof acao !== 'string' || !/(andar|forca)=[1-5]/.test(acao)) return;
-	$('#submeter_' + exercicio_id).trigger('click');
+  	if(!acao || !/(andar|forca)=[1-5]/.test(acao)) return;
 
-	let go = () => {
+	const buscarEClicar = () => {
 		$('#block_result_' + exercicio_id + ' .card').each(function() {
-			let card = $(this);
-			let acao_card = card.find('span').data('acao');///Valor do atributo 'data-acao'
+			const card = $(this);
+			const acao_card = card.find('span').data('acao');///Valor do atributo 'data-acao'
 
 			if (acao_card === acao){
 				$(this).css('z-index', 100);///Traz para o topo
@@ -103,7 +102,8 @@ function euQuero(acao){
 		});
 	};
 
-	setTimeout(go, 1000);
+	$('#submeter_' + exercicio_id).trigger('click');
+	setTimeout(buscarEClicar, 1000);
 }
 ******************************************************************************/
 
@@ -112,7 +112,7 @@ function euQuero(acao){
 
 /********************** [EXIBIR O ID DE CADA EXERCÍCIO] **********************
 $('a:has(span)[id*=tab_id_]').each((i,aba) => {
-	let tabid = aba.id.replace(/tab_id_(.+)/, '$1');
+	const tabid = aba.id.replace(/tab_id_(.+)/, '$1');
 	$(`span[id=tab_acerto_${tabid}]`).append(`(${tabid})`);
 });
 *****************************************************************************/
