@@ -17,7 +17,7 @@
 })();
 
 
-const REGEX_ACAO = new RegExp(/(andar|forca)=([1-9]+)/);//[1] contém o tipo, [2] a quantidade
+const REGEX_ACAO = new RegExp(/(andar|forca)=([1-9]\d*)/);//[1] contém o tipo, [2] a quantidade
 
 /**
  * Cria um novo "botão" no menu e
