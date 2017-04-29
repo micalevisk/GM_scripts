@@ -33,12 +33,21 @@ function initSistema(){
 
 		///Novos elementos para a página:
 		const texto = '<li>'+ '<a>' + `<input type="text" class="form-control" style="display:initial;" id="${ID_INPUT_TEXT}${exercicio_id}" value="andar=5" required>&nbsp;` + '</a>' +'</li>';
-		const botao = $( '<li>'+ `<a href="#" id=${ID_SUBMIT_BUTTON}${exercicio_id}>`+ '<span style="float: left">Submeter Hard</span>' + '<span style="float: right;color:#AAAAAA80">(by Micael)</span>&nbsp;'+ '</a>'+ '</li>' );
+		const botao = $( '<li>'+ `<a href="#" id=${ID_SUBMIT_BUTTON}${exercicio_id}>`+ '<span style="float: left">Submeter Hard</span>' + '<span style="float: right;color:#AAA">F9</span>' + '&nbsp;' + '</a>'+ '</li>' );
 
 		const submeter_hard = () => {///Ação do evento de click do novo botão de submissão
 			const acao = $('#'+ ID_INPUT_TEXT + exercicio_id).val();
 			euQuero(acao, exercicio_id);
 		};
+
+		///Adicionando o evento de tecla de atalho para ativar o 'submeter_hard'
+		$(`div[id^=codigo_fonte][id$=${exercicio_id}]`).keydown(function(e){// $("#codigo_fonte_1_" + exercicio_id)
+			if(e.which === 120){/// F9
+				e.preventDefault();
+				e.stopImmediatePropagation();
+				$('#' + ID_SUBMIT_BUTTON + exercicio_id).click();
+			}
+		});
 
 		///Adicionando ao HTML da página:
 		menu.append(texto);
