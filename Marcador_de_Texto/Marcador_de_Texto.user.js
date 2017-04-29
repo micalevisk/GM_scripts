@@ -5,6 +5,7 @@
 // @author		Micael Levi
 // @language	pt-br
 // @include		*://github.com/cezaraugusto/You-Dont-Know-JS/blob/portuguese-translation/*
+// @include		*://github.com/ericdouglas/traduz-ai/blob/master/javascript/*
 // @version		0.22-2
 // @require		https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @require		https://cdn.rawgit.com/mir3z/texthighlighter/master/src/TextHighlighter.js
