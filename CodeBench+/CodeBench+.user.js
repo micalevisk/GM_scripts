@@ -6,7 +6,7 @@
 // @author      Micael Levi L. C.
 // @language    pt-br
 // @include     *//codebench.icomp.ufam.edu.br/index.php?r=trabalho%2Fview&id=*&turma=*
-// @version     0.20-4
+// @version     0.29-4
 // @grant       none
 // @run-at		document-end
 // ==/UserScript==
@@ -17,7 +17,7 @@
 })();
 
 
-const REGEX_ACAO = new RegExp(/(andar|forca)=([1-9]\d*)/);//[1] contém o tipo, [2] a quantidade
+const REGEX_ACAO = new RegExp(/(andar|forca)=([1-9]\d*)\s*$/);//[1] contém o tipo, [2] a quantidade
 
 /**
  * Cria um novo "botão" no menu e
