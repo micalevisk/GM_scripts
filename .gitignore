@@ -1,6 +1,7 @@
-*.swp
-*.xml
-*.db
+**/*.swp
+**/*.xml
+**/*.db
+**/*.txt
 
 /Block_Youtube_Users/*
 /Includes_Persist_BETA/*
