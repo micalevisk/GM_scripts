@@ -2,22 +2,24 @@
 // @name        CodeBench+
 // @namespace   https://github.com/micalevisk/GM_scripts/tree/master/CodeBench+
 // @supportURL	https://github.com/micalevisk
-// @description	Aumenta em 100% as chances de a carta sorteada ser a desejada. (ES6)
+// @description	Aumenta em 100% as chances de a carta sorteada ser a carta desejada com maior valor. (ES6)
 // @author      Micael Levi L. C.
 // @language    pt-br
 // @include     *//codebench.icomp.ufam.edu.br/index.php?r=trabalho%2Fview&id=*&turma=*
-// @version     0.29-4
+// @version     0.06-5
 // @grant       none
 // @run-at		document-end
 // ==/UserScript==
 
+//TODO usar versão alternativa e procurar a carta com maior valor e com a ação dada
 (function(){
 	if($("a[id^=menu_submeter_codigo_]").length)//verifica se o trabalho ainda pode ser submetido
 		initSistema();
+		// console.log.apply(console, ['%c Sistema Em Construção', 'font:1.5em/1.5 italic comic sans,chalkboard,tscu_comic,fantasy;color:hotpink;']);
 })();
 
 
-const REGEX_ACAO = new RegExp(/(andar|forca)=([1-9]\d*)\s*$/);//[1] contém o tipo, [2] a quantidade
+const REGEX_ACAO = new RegExp(/(andar|forca)(?:=(\d+))?/);//[1] contém o tipo, [2] a quantidade
 
 /**
  * Cria um novo "botão" no menu e
@@ -32,7 +34,7 @@ function initSistema(){
 		const exercicio_id = menu.attr("aria-labelledby").match(/\d+$/)[0];
 
 		///Novos elementos para a página:
-		const texto = '<li>'+ '<a>' + `<input type="text" class="form-control" style="display:initial;" id="${ID_INPUT_TEXT}${exercicio_id}" value="andar=5" required>&nbsp;` + '</a>' +'</li>';
+		const texto = '<li>'+ '<a>' + `<input type="text" class="form-control" style="display:initial;" id="${ID_INPUT_TEXT}${exercicio_id}" value="andar" title="andar|forca" required>&nbsp;` + '</a>' +'</li>';
 		const botao = $( '<li>'+ `<a href="#" id=${ID_SUBMIT_BUTTON}${exercicio_id}>`+ '<span style="float: left">Submeter Hard</span>' + '<span style="float: right;color:#AAA">F9</span>' + '&nbsp;' + '</a>'+ '</li>' );
 
 		const submeter_hard = () => {///Ação do evento de click do novo botão de submissão
@@ -58,35 +60,45 @@ function initSistema(){
 /**
  * Utilizado para submeter uma questão e alterar.
  * @param {String} acao - A ação que as cartas deverão receber; casa com a RegEx 'REGEX_ACAO'.
- * @param {String} exercicio_id - id da questão que será submetida.
+ * @param {String} idExercicio - (opcional) id da questão que será submetida.
  */
-function euQuero(acao, exercicio_id){
+function euQuero(acao, idExercicio=exercicio_id){
 	if(!acao || !REGEX_ACAO.test(acao)) return;
-	const editarCartas = () => {///Função para editar as cartas geradas pela submissão correta
-		$("#block_result_" + exercicio_id + " .card").each(function(){
-			const $dados= $("span[data-cartaid]", this);
-			$dados.attr("data-acao", acao);
-			$dados.attr("data-title", getMessagemPara(acao));
-		});
+	const cardsSelector = "#block_result_" + idExercicio + " div.card";
+
+	const buscarEClicar = () => {
+		const cardFound = findCardWithMaxValue(acao, cardsSelector);
+		const card = $(cardsSelector + ` > span[data-cartaid=${cardFound.id}]`).parent()
+		card.css('z-index', 100);///Traz para o topo
+		card.click();///"Clica" na carta encontrada
 	};
 
-	$("#submeter_" + exercicio_id).trigger('click');///Submeter
-	setTimeout(editarCartas, 1000);///Esperar 1 segundo e editar as cartas
+	$('#submeter_' + idExercicio).trigger('click');///Submeter
+	setTimeout(buscarEClicar, 3500);///Esperar 3,5 segundos e executa o 'buscarEClicar'
 }
 
 /**
- * Utilizado para criar uma mensagem para as cartas (atributo 'data-title').
- * @param {String} acao - A ação desejada; casa com a RegEx 'REGEX_ACAO'.
- * @return {String} A mensagem específica para a ação dada.
+ * Utilizado para procurar a carta que
+ * possui maior valor associado de acordo com a acao dada.
+ * @param {String} tipoAcao - A ação buscada, deve ser "andar" ou "forca".
+ * @param {String} selector - Seletor para as cartas.
+ * @return {Object} - Objeto com as keys: "acao", "max" e "id" (da carta encontrada).
  */
-function getMessagemPara(acao){
-	const [nomeAcao, qtdAcao] = acao.match(REGEX_ACAO).slice(1);
-	const msg = {
-		 andar: `Parabéns! Sua habilidade na resolução desta questão lhe deu o direito de andar ${qtdAcao} casas!`
-		,forca: `Parabéns! Você encontrou uma poção mágica e ganhou ${qtdAcao} unidades de força!`
-	};
+function findCardWithMaxValue(tipoAcao, selector){
+	const dados = { max:-1 };
 
-	return nomeAcao.startsWith('f') ? msg.forca : msg.andar;
+	$(selector).each(function(){
+		const card = $(this);
+		const id_card   = card.find("span").data("cartaid");
+		const acao_card = card.find("span").data("acao");
+		const [, key, value] = acao_card.match(REGEX_ACAO);
+		const valor_card = Number(value);
+
+		if((key !== tipoAcao) || !(valor_card > dados.max)) return true;///next
+		Object.assign(dados, {acao:key, max:valor_card, id:id_card});
+	});
+
+	return dados;
 }
 
 
@@ -96,7 +108,7 @@ function getMessagemPara(acao){
 /******************************** [OUTRO MÉTODO] *******************************
 ///Função que submete e busca a carta com a ação (válida) desejada:
 function euQuero(acao){
-  	if(!acao || !/(andar|forca)=[1-5]/.test(acao)) return;
+  	if(!acao || !/(andar|forca)=\d+/.test(acao)) return;
 
 	const buscarEClicar = () => {
 		$('#block_result_' + exercicio_id + ' .card').each(function() {
@@ -112,7 +124,7 @@ function euQuero(acao){
 	};
 
 	$('#submeter_' + exercicio_id).trigger('click');
-	setTimeout(buscarEClicar, 1000);
+	setTimeout(buscarEClicar, 2000);
 }
 ******************************************************************************/
 
