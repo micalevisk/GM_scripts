@@ -44,7 +44,7 @@ function initSistema(){
 
 		///Adicionando o evento de tecla de atalho para ativar o 'submeter_hard'
 		$(`div[id^=codigo_fonte][id$=${exercicio_id}]`).keydown(function(e){// $("#codigo_fonte_1_" + exercicio_id)
-			if(e.which === 111){/// F4
+			if(e.which === 115){/// F4
 				e.preventDefault();
 				e.stopImmediatePropagation();
 				$('#' + ID_SUBMIT_BUTTON + exercicio_id).click();
