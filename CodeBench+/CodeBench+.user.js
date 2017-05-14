@@ -11,7 +11,6 @@
 // @run-at		document-end
 // ==/UserScript==
 
-//TODO usar versão alternativa e procurar a carta com maior valor e com a ação dada
 (function(){
 	if($("a[id^=menu_submeter_codigo_]").length)//verifica se o trabalho ainda pode ser submetido
 		initSistema();
