@@ -18,7 +18,7 @@
 })();
 
 
-const REGEX_ACAO = new RegExp(/(andar|forca)(?:=(\d+))?/);//[1] contém o tipo, [2] a quantidade
+const REGEX_ACAO = new RegExp(/(andar|for[cç]a)(?:=(\d+))?/);//[1] contém o tipo, [2] a quantidade
 
 /**
  * Cria um novo "botão" no menu e
@@ -34,7 +34,7 @@ function initSistema(){
 
 		///Novos elementos para a página:
 		const texto = '<li>'+ '<a>' + `<input type="text" class="form-control" style="display:initial;" id="${ID_INPUT_TEXT}${exercicio_id}" value="andar" title="andar|forca" required>&nbsp;` + '</a>' +'</li>';
-		const botao = $( '<li>'+ `<a href="#" id=${ID_SUBMIT_BUTTON}${exercicio_id}>`+ '<span style="float: left">Submeter Hard</span>' + '<span style="float: right;color:#AAA">F4</span>' + '&nbsp;' + '</a>'+ '</li>' );
+		const botao = $( '<li>' +`<a href="#" id=${ID_SUBMIT_BUTTON}${exercicio_id}>` + '<span style="float: left">Submeter</span>' + '<span style="float: right;color:#AAA">F4</span>' + '<span style="padding: .1em .4em .7em"><i class="fa fa-bolt" style="color:#D9534F;"/>&nbsp;Katiau</span>' + '&nbsp;' + '</a>' + '</li>' );
 
 		const submeter_hard = () => {///Ação do evento de click do novo botão de submissão
 			const acao = $('#'+ ID_INPUT_TEXT + exercicio_id).val();
