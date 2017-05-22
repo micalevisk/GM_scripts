@@ -11,3 +11,8 @@ que, ao ser clicado, exibe uma caixa de texo onde a resposta deverá ser escrita
 que, ao ser clicado, "converte" o quebra-cabeça para texto (onde "2" representa uma célula vazio)
 
 ![new-button](https://image.prntscr.com/image/eb26d36ee48c4c37866d21cd5a2b129e.png)
+
+<!-- TODO
+vide http://koen.kivits.com/articles/pure-css-menu/ (pensar em alternativa com melhor UX)
+dropdown menu https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_dropdown_filter
+-->
