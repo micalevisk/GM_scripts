@@ -6,19 +6,25 @@
 // @language    pt-br
 // @include     *binarypuzzle.com/puzzles.php?size=*
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
-// @version     0.21-5
+// @version     0.22-5
 // @grant       none
 // ==/UserScript==
 
+//TODO usar JS Vanilla e full ES6
 (function($){
 
+	const getAttrAction   = (el)  => el.attr('action')
+	const matchSize       = (str) => str.match(/size=(\d+)/)
+	const removeFirstElem = (arr) => arr.slice(1)
+	const strToInt        = (str) => parseInt(str)
+
 	// =============================== GLOBAL =============================== //
-	const ORDEM_MATRIZ = parseInt(
-		$('form#selectpuzzle')
-			.attr('action')
-			.match(/size=(\d+)/)
-			.slice(1)
-	)
+	const ORDEM_MATRIZ = pipe(
+		 getAttrAction
+		,matchSize
+		,removeFirstElem
+		,strToInt
+	 )( $('form#selectpuzzle') )
 	//========================================================================//
 
 
@@ -26,8 +32,7 @@
 		if( $('#puzzle-plain').length > 0 ) $('#puzzle-plain').remove();
 
 		const puzzleHTML = puzzleToStringHTML(ORDEM_MATRIZ)
-		$('<p id="puzzle-plain" class="center">' + puzzleHTML)
-			.insertBefore( $('#deleteall').next() )
+		$('<p id="puzzle-plain" class="center">' + puzzleHTML).insertBefore( $('#deleteall').next() )
 	}
 
 	(function initElementos(){
@@ -78,59 +83,88 @@
 })(jQuery);
 
 
+
+/**
+ * @param {Number} ordem
+ * @return {String}
+ */
 function puzzleToStringHTML(ordem){
-	const arr = document.getElementsByClassName('puzzlecel')
-	let convertido=""
-	for(let i=1; i <= arr.length; ++i ){
-		let cell = arr[i-1].textContent.trim().replace(/^$/, '2')
-		convertido += cell
-		if(i%ordem == 0) convertido += '<br>'
-		else convertido += '&nbsp;'
+	const getElementsByClassName = (className) => document.getElementsByClassName(className)
+	const convertHTMLCollection  = (collection)=> [].slice.call(collection)
+
+	const construirMatriz = (arr) => {
+		return arr.reduce((acc, curr, i) => {
+			const cell = curr.textContent.trim().replace(/^$/, '2')
+			return acc + cell + ( ((i+1)%ordem) ? '&nbsp;' : '<br>' )
+		}, "")
 	}
-	return convertido;
+
+	return pipe(
+		 getElementsByClassName
+		,convertHTMLCollection
+		,construirMatriz
+	)('puzzlecel')
 }
 
 
+/**
+ * @param {String} strMatriz
+ */
 function preencherCom(strMatriz){
-	const strToMatriz = (m) => {
-		return m.split('\n')
-			.filter(x => x.trim())
-			.map(x => x.trim())
-			.map(x => x.split(' '))
-	}
-
-	const celulaNaoEditavel = (i,j) => {
-		const celula = document.getElementById(`cel_${i}_${j}`)
-		return (celula.style.color === 'rgb(0, 0, 0)')
-	}
+	if(! strMatriz.trim()) return;
 
 	const valores = { '':'0' , '0':'1' , '1':'' }
-	const matriz = strToMatriz(strMatriz)
+	const celulaNaoEditavel = (i, j) => {
+		const celula = document.getElementById(`cel_${i}_${j}`)
+		return celula.style.color.includes('(0, 0, 0)')
+	}
 
-	matriz.forEach((linha, i) => {
-		linha.forEach((n, j) => {
-			let l=i+1, c=j+1
-			if(celulaNaoEditavel(l,c)) return false
+	strToMatriz(strMatriz).map((linha, i) => {
+		linha.map((n, j) => {
+			const l=i+1, c=j+1;
+			if(celulaNaoEditavel(l,c)) return false;
 
-			let currVal = $(`#celpar_${l}_${c}`).text().trim()
+			let currVal = $(`#celpar_${l}_${c}`).text().trim();
 			switch(currVal){
 				case '':{
-					currVal = valores[currVal]
-					CelClick(l,c)
+					currVal = valores[currVal];
+					CelClick(l,c);
 				}
 				case '0':{
-					if(n === '1') CelClick(l,c)
+					if(n === '1') CelClick(l,c);
 					break;
 				}
 				case '1':{
 					if(n === '0'){
-						CelClick(l,c)
-						CelClick(l,c)
+						CelClick(l,c);
+						CelClick(l,c);
 					}
 					break;
 				}
 			}
+		});
+	});
+}
 
-		})
-	})
+
+
+// --------------------------------- EXTRAS --------------------------------- //
+function pipe(...fns){
+	const pipe = (f, g) => (...args) => g( f(...args) )
+	return fns.reduce(pipe)
+}
+
+function strToMatriz(matrizStr){
+	const dividirLinhas  = (arr) => arr.split('\n')///f
+	const retirarBrancos = (arr) => arr.filter(x => x.trim())///g
+	const removerBrancos = (arr) => arr.map(x => x.trim())///h
+	const separarCelulas = (arr) => arr.map(x => x.split(' '))///i
+
+	/// run like i( h( g( f(x) ) ) )
+	return pipe(
+		 dividirLinhas
+		,retirarBrancos
+		,removerBrancos
+		,separarCelulas
+	)(matrizStr)
 }
