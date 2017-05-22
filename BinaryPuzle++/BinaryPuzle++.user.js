@@ -4,7 +4,7 @@
 // @namespace   www.binarypuzzle.com
 // @author      Micael Levi
 // @language    pt-br
-// @include     http://www.binarypuzzle.com/puzzles.php?size=*
+// @include     *binarypuzzle.com/puzzles.php?size=*
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @version     0.21-5
 // @grant       none
