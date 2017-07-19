@@ -15,6 +15,7 @@
 **/*.min.js
 **/*private*
 
-testes/*
+testes
+ShowData
 
 testeCreateGist/Date.prototype.formatar.js
