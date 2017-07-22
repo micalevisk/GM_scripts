@@ -50,7 +50,7 @@
         "functions": "ignore"
     }],
 
-    "one-var": ["error", { "let": "always", "const": "always" }],
+    "one-var": 0,
 
     "default-case": 0,
     "no-else-return": 0,
