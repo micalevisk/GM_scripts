@@ -2,20 +2,22 @@
 **/*.xml
 **/*.db
 **/*.txt
-
-/Block_Youtube_Users/*
-/Includes_Persist_BETA/*
-/YouTube_+/*
-/Download_YouTube_Videos_as_MP4/*
-/TextHighlighter/*
-/questoesColab/*
-/Pergamum_features/*
-/CodeBench_Minimal/*
-/YoutubeTags/Disable_SPF_Youtube.user.js
 **/*.min.js
 **/*private*
 
-testes
-ShowData
+node_modules/
+
+/Block_Youtube_Users/
+/Includes_Persist_BETA/
+/YouTube_+/
+/Download_YouTube_Videos_as_MP4/
+/TextHighlighter/
+/questoesColab/
+/Pergamum_features/
+/CodeBench_Minimal/
+/YoutubeTags/Disable_SPF_Youtube.user.js
+
+testes/
+ShowData/
 
 testeCreateGist/Date.prototype.formatar.js
