@@ -30,34 +30,31 @@ const REGEX_ACAO = new RegExp(/(for[c\xE7]a|andar)(?:=(\d+))?/);// [1] contém o
 function initSistema() {
   const ID_INPUT_TEXT    = 'hard_acao_';
   const ID_SUBMIT_BUTTON = 'menu_submeter_hard_';
+  const itensMenu = $('div.ide-menu .ide-menu-item:nth-child(4)').find('ul.dropdown-menu');
+  const idExercicio = itensMenu.attr('aria-labelledby').match(/\d+$/)[0];
 
-  $('div.ide-menu .ide-menu-item:nth-child(4)').each(function adicionarElementosNaBarra() {
-    const menu = $(this).find('ul.dropdown-menu');// barra de menu
-    const idExercicio = menu.attr('aria-labelledby').match(/\d+$/)[0];
+  // Novos elementos para a página:
+  const texto = `<li> <a><input type="text" class="form-control" style="display:initial; text-transform:lowercase;" id="${ID_INPUT_TEXT}${idExercicio}" value="andar" title="'andar' ou 'força'" required>&nbsp;</a> </li>`;
+  const botao = $(`<li> <a href="#" id=${ID_SUBMIT_BUTTON}${idExercicio}> <span style="float: left">Submeter</span> <span style="float: right;color:#AAA">F4</span> <span style="padding: .1em .4em .7em"><i class="fa fa-bolt" style="color:#D9534F;"/>&nbsp;Katiau</span>&nbsp;</a> </li>`);
 
-    // Novos elementos para a página:
-    const texto = `<li> <a> <input type="text" class="form-control" style="display:initial;" id="${ID_INPUT_TEXT}${idExercicio}" value="andar" title="'andar' ou 'força'" required>&nbsp; </a> </li>`;
-    const botao = $(`<li> <a href="#" id=${ID_SUBMIT_BUTTON}${idExercicio}> <span style="float: left">Submeter</span> <span style="float: right;color:#AAA">F4</span> <span style="padding: .1em .4em .7em"><i class="fa fa-bolt" style="color:#D9534F;"/>&nbsp;Katiau</span>&nbsp;</a></li>`);
+  const submeterHard = () => { // ação do evento de click do novo botão de submissão
+    const acaoDesejada = $('#' + ID_INPUT_TEXT + idExercicio).val().trim().toLowerCase();
+    euQuero(acaoDesejada, idExercicio);
+  };
 
-    const submeterHard = () => { // ação do evento de click do novo botão de submissão
-      const acaoDesejada = $('#' + ID_INPUT_TEXT + idExercicio).val().trim().toLowerCase();
-      euQuero(acaoDesejada, idExercicio);
-    };
-
-    // Adicionando o evento de tecla de atalho para ativar o 'submeterHard'
-    $(`div[id^=codigo_fonte][id$=${idExercicio}]`).keydown(( e ) => { // $("#codigo_fonte_1_" + idExercicio)
-      if (e.which === 115) { // F4
-        e.preventDefault();
-        e.stopImmediatePropagation();
-        $('#' + ID_SUBMIT_BUTTON + idExercicio).click();
-      }
-    });
-
-    // Adicionando ao HTML da página:
-    menu.append('<li role="separator" class="divider"></li>');// separador
-    menu.append(texto);
-    menu.append( () => botao.click(submeterHard) );
+  // Adicionando o evento de tecla de atalho para ativar o 'submeterHard'
+  $(`div[id^=codigo_fonte][id$=${idExercicio}]`).keydown(( e ) => { // $("#codigo_fonte_1_" + idExercicio)
+    if (e.which === 115) { // F4
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      $('#' + ID_SUBMIT_BUTTON + idExercicio).click();
+    }
   });
+
+  // Adicionando ao HTML da página:
+  itensMenu.append('<li role="separator" class="divider"></li>');// separador
+  itensMenu.append(texto);
+  itensMenu.append( () => botao.click(submeterHard) );
 }
 
 /**
