@@ -9,13 +9,18 @@
   },
 
   "globals": {
-    "CelClick": true
+    "CelClick": true,
+    "exercicio_id": true
   },
 
   "rules": {
     "no-multi-spaces": ["error", { "exceptions": { "ImportDeclaration": true, "VariableDeclarator": true, "Property": true } }],
-    "one-var": 0,
     "indent": ["error", 2, { "VariableDeclarator": { "var": 2, "let": 2, "const": 3 } }],
-    "space-in-parens": 0 // space-in-parents only in functions params
+    "no-use-before-define": ["error", { "functions": false }],
+    "spaced-comment": ["error", "always", { "exceptions": ["-","*","="] } ],
+    "max-len": 0,
+    "one-var": 0,
+    "prefer-template": 0, // prefer-template only if has space between concatenation
+    "space-in-parens": 0  // space-in-parents only in functions params
   }
 }
