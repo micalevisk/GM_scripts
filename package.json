@@ -1,7 +1,10 @@
 {
   "name": "micalevisk_gmscripts",
   "version": "1.0.0",
-  "description": "Meus scripts para o Greasemonkey",
+  "description": "Meus scripts para o Greasemonkey [linter-eslint]",
+  "scripts": {
+    "lint": "eslint"
+  },
   "devDependencies": {
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^15.0.2",
