@@ -1,89 +1,27 @@
 {
-    "env": {
-      "browser": true,
-      "commonjs": true,
-      "es6": true,
-      "jquery": true,
-      "greasemonkey": true
-    },
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "jquery": true
+  },
 
-    "globals": {
-      "CelClick": true,
-      "exercicio_id": true
-    },
+  "globals": {
+    "CelClick": true
+  },
 
-    "rules": {
-
-      "indent": ["error", 2, {  "SwitchCase": 1, "VariableDeclarator": { "let": 2, "const": 3 } }],
-      // "indent": 2,
-      "no-undef": 2,
-      "semi": 2,
-      "prefer-const": 2,
-      "no-const-assign": 2,
-      "no-var": 2,
-      "no-new-object": 2,
-      "object-shorthand": 2,
-      "quote-props": ["error", "as-needed", { "keywords": true }],
-      "no-array-constructor": 2,
-      "array-callback-return": 2,
-      "quotes": ["error", "single"],
-      // "prefer-template": 2,
-      "template-curly-spacing": 2,
-      "no-eval": 2,
-      "no-useless-escape": 2,
-      // "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
-      "wrap-iife": 2,
-      "no-loop-func": 2,
-      "prefer-rest-params": 2,
-      "no-new-func": 2,
-      "space-before-function-paren": ["error", {"anonymous": "always", "named": "never", "asyncArrow": "always"}],
-      "no-param-reassign": ["error", { "props": true }],
-      "prefer-spread": 2,
-      // "comma-style": [2, "first"],
-      // "comma-dangle": ["error", "always-multiline"],
-      // "comma-dangle": ["error", {"functions": "always"}],
-      "prefer-arrow-callback": 2,
-      "arrow-spacing": 2,
-      "arrow-parens": ["error", "as-needed", { "requireForBlockBody": true }],
-      "arrow-body-style": 2,
-      "no-confusing-arrow": ["error", {"allowParens": true}],
-      "no-class-assign": 2,
-      "no-prototype-builtins": 2,
-      "no-useless-constructor": 2,
-      "no-dupe-class-members": 2,
-      "no-duplicate-imports": 2,
-      "no-iterator": 2,
-      "no-restricted-syntax": 2,
-      "generator-star-spacing": ["error", {"before": false, "after": true}],
-      "dot-notation": 2,
-      "one-var": ["error", { "let": "never", "const": "never" }],
-      // "one-var": ["error", { "let": "always", "const": "always" }],
-      "no-plusplus": 2,
-      "space-infix-ops": 2,
-      // "space-in-parens": 2,
-      "eqeqeq": 2,
-      "no-case-declarations": 2,
-      "no-nested-ternary": 2,
-      "no-unneeded-ternary": 2,
-      "curly": ["error", "multi-line"],
-      "brace-style": 2,
-      "spaced-comment": 2,
-      "space-before-blocks": 2,
-      "keyword-spacing": 2,
-      "eol-last": 2,
-      "newline-per-chained-call": 2,
-      "no-whitespace-before-property": 2,
-      "padded-blocks": ["error", "never"],
-      // "array-bracket-spacing ": 2,
-      "object-curly-spacing": ["error", "always"],
-      "max-len": ["error", 100, { "ignoreComments": true, "ignoreStrings": true, "ignoreTemplateLiterals": true}],
-      "radix": ["error", "as-needed"],
-      // "id-length": 2,
-      "camelcase": 2,
-      "new-cap": 2,
-      "no-underscore-dangle": 2
-
-    }
+  "rules": {
+    "no-multi-spaces": ["error", { "exceptions": { "ImportDeclaration": true, "VariableDeclarator": true, "Property": true } }],
+    "indent": ["error", 2, { "VariableDeclarator": { "var": 2, "let": 2, "const": 3 } }],
+    "no-use-before-define": ["error", { "functions": false }],
+    "comma-dangle": ["error", "always-multiline"],
+    "radix": ["error", "as-needed"],
+    "max-len": 0,
+    "one-var": 0,
+    "prefer-template": 0, // prefer-template only if has space between concatenation
+    "space-in-parens": 0,
+    "no-underscore-dangle": 0,
+    "spaced-comment": 0
+  }
 }
-
-// from https://github.com/airbnb/javascript

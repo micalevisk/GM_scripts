@@ -5,6 +5,8 @@
 **/*.min.js
 **/*private*
 
+node_modules
+
 /Block_Youtube_Users/
 /Includes_Persist_BETA/
 /YouTube_+/
