@@ -24,9 +24,9 @@
 const REGEX_ACAO = new RegExp(/(for[c\xE7]a|andar)(?:=(\d+))?/);// [1] contém o tipo, [2] a quantidade
 
 /**
-* Cria um novo "botão" no menu e
-* uma caixa de texto para o novo tipo de submissão.
-*/
+ * Cria um novo "botão" no menu e
+ * uma caixa de texto para o novo tipo de submissão.
+ */
 function initSistema() {
   const ID_INPUT_TEXT    = 'hard_acao_';
   const ID_SUBMIT_BUTTON = 'menu_submeter_hard_';
@@ -38,7 +38,9 @@ function initSistema() {
   const botao = $(`<li> <a href="#" id=${ID_SUBMIT_BUTTON}${idExercicio}> <span style="float: left">Submeter</span> <span style="float: right;color:#AAA">F4</span> <span style="padding: .1em .4em .7em"><i class="fa fa-bolt" style="color:#D9534F;"/>&nbsp;Katiau</span>&nbsp;</a> </li>`);
 
   const submeterHard = () => { // ação do evento de click do novo botão de submissão
-    const acaoDesejada = $('#' + ID_INPUT_TEXT + idExercicio).val().trim().toLowerCase();
+    const acaoDesejada = $('#' + ID_INPUT_TEXT + idExercicio).val()
+                        .trim()
+                        .toLowerCase();
     euQuero(acaoDesejada, idExercicio);
   };
 
@@ -58,11 +60,12 @@ function initSistema() {
 }
 
 /**
-* Utilizado para submeter uma questão e alterar.
-* @param {String} acao - A ação que as cartas deverão receber; casa com a RegEx 'REGEX_ACAO'.
-* @param {String} idExercicio - (opcional) id da questão que será submetida.
-*/
-function euQuero( acao = '', idExercicio = exercicio_id ) {
+ * euQuero :: (String, String)
+ * Utilizado para submeter uma questão e alterar.
+ * @param {string} acao - A ação que as cartas deverão receber; casa com a RegEx 'REGEX_ACAO'.
+ * @param {string} [idExercicio] - id da questão que será submetida.
+ */
+function euQuero(acao = '', idExercicio = exercicio_id) {
   if (!REGEX_ACAO.test(acao)) return;
   const exerciseSelector = '#block_result_' + idExercicio;
 
@@ -78,12 +81,13 @@ function euQuero( acao = '', idExercicio = exercicio_id ) {
 }
 
 /**
-* Utilizado para procurar a carta que
-* possui maior valor associado de acordo com a acao dada.
-* @param {String} tipoAcao - A ação buscada, deve ser "andar" ou "forca".
-* @param {String} selector - Seletor para as cartas do exercício corrente.
-* @return {Object} - Objeto com as keys: "acao", "max" e "id" (da carta encontrada).
-*/
+ * findCardWithMaxValue :: (String, String) -> {acao:a, max:b, id:c}
+ * Utilizado para procurar a carta que
+ * possui maior valor associado de acordo com a acao dada.
+ * @param {string} tipoAcao - A ação buscada, deve ser "andar" ou "forca".
+ * @param {string} selector - Seletor para as cartas do exercício corrente.
+ * @return {object} - Objeto com as keys: "acao", "max" e "id" (da carta encontrada).
+ */
 function findCardWithMaxValue( tipoAcao, selector ) {
   const arrOfSelected = Array.from($(selector));
   const returnLarger = ( acc, card ) => {
