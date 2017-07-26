@@ -2,121 +2,115 @@
 // @name        YoutubeTags
 // @namespace   https://gist.github.com/micalevisk/8cf208b3522ab935eec65c10ba13cd13
 // @supportURL  https://gist.github.com/micalevisk/8cf208b3522ab935eec65c10ba13cd13
-// @version     1.04-2
+// @version     0.26-7
 // @description Show tags on Youtube videos.
 // @author      Micael Levi
 // @match       *://www.youtube.com/*
 // @grant       GM_getResourceText
-// @resource 	spfremove https://greasyfork.org/scripts/16935-disable-spf-youtube/code/Disable%20SPF%20Youtube.user.js
-// @locale		pt-br
+// @resource    spfremove https://greasyfork.org/scripts/16935-disable-spf-youtube/code/Disable%20SPF%20Youtube.user.js
+// @locale      pt-br
 // ==/UserScript==
 
-// TODO		traduzir para inglês
-// TODO		identificar (e indicar) que não há tags
-// FIXME	Usar o GM_getValue(?) para obter o json respectivo
-// FIXME	melhorar código (se baser no Block Youtube Users)
-// TODO		alterar separação das tags
+
+eval(GM_getResourceText('spfremove'));
 
 
+/**
+ * @param {string} path
+ * @param {function} success - Execute this callback on success.
+ * @param {function} [error] - Execute this callback on error.
+ */
+function loadJSON(path, success = () => {}, error) {
+  const xhr = new XMLHttpRequest();
 
-(function () {
-	"use strict";
-	eval(GM_getResourceText("spfremove"));
+  xhr.onreadystatechange = () => {
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+      if (xhr.status === 200) {
+        success(JSON.parse(xhr.responseText));
+      } else if (error) {
+        error(xhr);
+      }
+    }
+  };
 
-	var YouTags = {
+  xhr.open('GET', path, true);
+  xhr.send();
+}
 
-		// loadJSON
-		loadJSON: function (path, success, error){
-			var xhr = new XMLHttpRequest();
-			xhr.onreadystatechange = function(){
-				if(xhr.readyState === XMLHttpRequest.DONE){
-					if(xhr.status === 200)
-						if(success) success(JSON.parse(xhr.responseText));
-					else
-						if(error) error(xhr);
-				}
-			};
+/**
+ * @param {object} json - An object from Youtube API.
+ * @return {object} With properties 'tags' (string[]) and 'quantidade' (number)
+ */
+function getTagsFrom(json = {}) {
+  const tags = json.items[0].snippet.tags;
+  if (tags === null) return null;
 
-			xhr.open("GET", path, true);
-			xhr.send();
-		},
+  return {
+    tags: tags.toString().replace(/,/g, '; '),
+    quantidade: tags.length,
+  };
+}
 
-		// getTags
-		getTags: function (json){
-			var tags = json.items[0].snippet.tags;
+/**
+ * @param {object} data
+ */
+function viewTags(data) {
+  const tagsArray = getTagsFrom(data);
+  if (!tagsArray || tagsArray.length < 0) return;
 
-			if(tags === null) return null;
-			return {
-				"tags": tags.toString().replace(/,/g, "; "),
-				"quantidade": tags.length
-			};
-		},
+  const qtdTags = tagsArray.quantidade;
+  const tagsStr = tagsArray.tags;
+  const titleTags = `${qtdTags} Tags`;
 
-		// viewTags
-		viewTags: function(data){
-			var tagsArray = YouTags.getTags(data);
-			if(tagsArray === null) return;
-			var qtdTags = tagsArray.quantidade;
-			var tagsStr = tagsArray.tags;
+  const elementoTags = document.getElementById('tags-field');
+  if (elementoTags === null) {
+    const lix = document.createElement('LI');
+    const elTitulo = document.createElement('H4');
+    const luy = document.createElement('UL');
+    const liy = document.createElement('LI');
 
-			var titleTags = qtdTags+" Tags";
-			if(tagsStr.length === 0) tagsStr = "[nenhuma]";
+    lix.className = 'watch-meta-item yt-uix-expander-body';
+    elTitulo.className = 'title';
+    luy.className = 'content watch-info-tag-list';
 
-			var elementoTags = document.getElementById('tags-field');
-			if( elementoTags === null ){
-				var lix = document.createElement("LI");
-				lix.className = "watch-meta-item yt-uix-expander-body";
-				//   lix.id = "info-tags";
+    lix.id = 'info-tags';
+    elTitulo.id = 'tag-title';
+    liy.id = 'tags-field';
 
-				var titulo = document.createElement("H4");
-				titulo.className = "title";
-				titulo.id = 'tag-title';
-				titulo.appendChild( document.createTextNode(titleTags) );
+    elTitulo.appendChild( document.createTextNode(titleTags) );
+    lix.appendChild( elTitulo );
 
-				var luy = document.createElement("UL");
-				luy.className = "content watch-info-tag-list";
+    luy.appendChild( liy );
+    liy.appendChild( document.createTextNode(tagsStr) ); // document.getElementById('tags-field').innerHTML = getTagsFrom(data)
+    lix.appendChild( luy );
 
-				var liy = document.createElement("LI");
-				liy.id = 'tags-field';
+    document.getElementsByClassName('watch-extras-section')[0].appendChild(lix);
+  } else {
+    document.getElementById('tag-title').innerHTML = titleTags;
+    elementoTags.innerHTML = tagsStr;
+  }
+}
 
+/**
+ * main function.
+ */
+function startYouTags() {
+  /* for new YouTube UI
+  const videoURL = document.querySelector('div.ytp-title-text').childNodes[0].getAttribute('href');
+  const videoID  = videoURL.match(/(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/)[1];
+  */
+  const videoID = document.querySelector('meta[itemprop=videoId').getAttribute('content');
+  const jsonLink = 'https://www.googleapis.com/youtube/v3/videos?key=AIzaSyAZiST8vkBnAbxFIZO_KfhQ7YU0amBv0To&fields=items(snippet(tags))&part=snippet&id=' + videoID;
 
-				liy.appendChild( document.createTextNode(tagsStr) ); // document.getElementById('tags-field').innerHTML = getTags(data)
-				luy.appendChild(liy);
-
-				lix.appendChild(titulo);
-				lix.appendChild(luy);
-				document.getElementsByClassName('watch-extras-section')[0].appendChild(lix);
-			}
-			else{
-				document.getElementById('tag-title').innerHTML = titleTags;
-				elementoTags.innerHTML = tagsStr;
-			}
-		},
-
-		//
-		showTags: function (){
-			var videoID = document.querySelector("meta[itemprop='videoId'").getAttribute("content"); // = $("meta[itemprop='videoId']").getAttribute("content");
-			var jsonLink = 'https://www.googleapis.com/youtube/v3/videos?key=AIzaSyAZiST8vkBnAbxFIZO_KfhQ7YU0amBv0To&fields=items(snippet(tags))&part=snippet&id='+videoID;
-			YouTags.loadJSON(jsonLink, YouTags.viewTags, function(xhr) { console.error(xhr); });
-		}
-
-	};
-
-	if(/^.+watch\?v=.+$/i.test(document.location.href))
-		YouTags.showTags();
-}());
-
+  loadJSON(
+    jsonLink,
+    viewTags,
+    xhr => console.error(xhr),
+  );
+}
 
 
-// (c) http://tutorialzine.com/2014/06/10-tips-for-writing-javascript-without-jquery/
-// (c) http://blog.garstasio.com/you-dont-need-jquery/ajax/#jsonp
-// (c) http://stackoverflow.com/questions/9838812/how-can-i-open-a-json-file-in-javascript-without-jquery
-/*
-var videoID = $("meta[itemprop='videoId']").attr("content");
-// don't work on Youtube:
-$.get('https://www.googleapis.com/youtube/v3/videos?key=AIzaSyAZiST8vkBnAbxFIZO_KfhQ7YU0amBv0To&fields=items(snippet(title,description,tags))&part=snippet&id='+videoID).then(function(json) {
-	console.log( json.items[0]['snippet'].title );
-	console.log( json.items[0]['snippet'].description );
-	console.log( json.items[0]['snippet'].tags.toString() );
-});
-*/
+if (/^.+watch\?v=.+$/i.test(document.location.href)) {
+  startYouTags();// adicionar tags
+  document.getElementById('action-panel-details').classList.remove('yt-uix-expander-collapsed');// abrir descrição
+}
