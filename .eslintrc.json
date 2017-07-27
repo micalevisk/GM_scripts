@@ -8,7 +8,9 @@
   },
 
   "globals": {
-    "CelClick": true
+    "CelClick": true,
+    "exercicio_id": true,
+    "GM_getResourceText": true
   },
 
   "rules": {
