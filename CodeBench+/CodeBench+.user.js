@@ -88,7 +88,7 @@ function euQuero(acao = '', idExercicio = exercicio_id) {
  * @param {string} selector - Seletor para as cartas do exercício corrente.
  * @return {object} - Objeto com as keys: "acao", "max" e "id" (da carta encontrada).
  */
-function findCardWithMaxValue( tipoAcao, selector ) {
+function findCardWithMaxValue(tipoAcao, selector) {
   const arrOfSelected = Array.from($(selector));
   const returnLarger = ( acc, card ) => {
     const idCard   = card.getAttribute('data-cartaid');
