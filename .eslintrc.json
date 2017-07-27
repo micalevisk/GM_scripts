@@ -17,6 +17,7 @@
     "no-use-before-define": ["error", { "functions": false }],
     "comma-dangle": ["error", "always-multiline"],
     "radix": ["error", "as-needed"],
+    "no-extra-boolean-cast": 0,
     "max-len": 0,
     "one-var": 0,
     "prefer-template": 0, // prefer-template only if has space between concatenation
