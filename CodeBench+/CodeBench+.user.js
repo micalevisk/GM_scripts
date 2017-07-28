@@ -6,10 +6,13 @@
 // @author      Micael Levi L. C.
 // @language    pt-br
 // @include     *//codebench.icomp.ufam.edu.br/index.php?r=*view&id=*&turma=*
-// @version     0.21-7
+// @version     0.28-7
 // @grant       none
 // @run-at      document-end
 // ==/UserScript==
+
+
+const REGEX_ACAO = new RegExp(/\b(for[c\xE7]a|andar)\b/);// [1] contém a ação
 
 (function iniciar() {
   // console.log.apply(console, ['%c Sistema Em Manutenção', 'font:1.5em/1.5 italic comic sans,chalkboard,tscu_comic,fantasy;color:hotpink;']);
@@ -21,65 +24,6 @@
 }());
 
 
-const REGEX_ACAO = new RegExp(/(for[c\xE7]a|andar)(?:=(\d+))?/);// [1] contém o tipo, [2] a quantidade
-
-/**
- * Cria um novo "botão" no menu e
- * uma caixa de texto para o novo tipo de submissão.
- */
-function initSistema() {
-  const ID_INPUT_TEXT    = 'hard_acao_';
-  const ID_SUBMIT_BUTTON = 'menu_submeter_hard_';
-  const itensMenu = $('div.ide-menu .ide-menu-item:nth-child(4)').find('ul.dropdown-menu');
-  const idExercicio = itensMenu.attr('aria-labelledby').match(/\d+$/)[0];
-
-  // Novos elementos para a página:
-  const texto = `<li> <a><input type="text" class="form-control" style="display:initial; text-transform:lowercase;" id="${ID_INPUT_TEXT}${idExercicio}" value="andar" title="'andar' ou 'força'" required>&nbsp;</a> </li>`;
-  const botao = $(`<li> <a href="#" id=${ID_SUBMIT_BUTTON}${idExercicio}> <span style="float: left">Submeter</span> <span style="float: right;color:#AAA">F4</span> <span style="padding: .1em .4em .7em"><i class="fa fa-bolt" style="color:#D9534F;"/>&nbsp;Katiau</span>&nbsp;</a> </li>`);
-
-  const submeterHard = () => { // ação do evento de click do novo botão de submissão
-    const acaoDesejada = $('#' + ID_INPUT_TEXT + idExercicio).val()
-                        .trim()
-                        .toLowerCase();
-    euQuero(acaoDesejada, idExercicio);
-  };
-
-  // Adicionando o evento de tecla de atalho para ativar o 'submeterHard'
-  $(`div[id^=codigo_fonte][id$=${idExercicio}]`).keydown(( e ) => { // $("#codigo_fonte_1_" + idExercicio)
-    if (e.which === 115) { // F4
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      $('#' + ID_SUBMIT_BUTTON + idExercicio).click();
-    }
-  });
-
-  // Adicionando ao HTML da página:
-  itensMenu.append('<li role="separator" class="divider"></li>');// separador
-  itensMenu.append(texto);
-  itensMenu.append( () => botao.click(submeterHard) );
-}
-
-/**
- * euQuero :: (String, String)
- * Utilizado para submeter uma questão e alterar.
- * @param {string} acao - A ação que as cartas deverão receber; casa com a RegEx 'REGEX_ACAO'.
- * @param {string} [idExercicio] - id da questão que será submetida.
- */
-function euQuero(acao = '', idExercicio = exercicio_id) {
-  if (!REGEX_ACAO.test(acao)) return;
-  const exerciseSelector = '#block_result_' + idExercicio;
-
-  const buscarEClicar = () => {
-    const cardFound = findCardWithMaxValue(acao.replace('ç', 'c'), `${exerciseSelector} [data-cartaid]`);
-    const card = $(`${exerciseSelector} span[data-cartaid=${cardFound.id}]`).parent();
-    card.css('z-index', 100);// traz para o topo
-    card.click();// "clica" na carta encontrada
-  };
-
-  $('#submeter_' + idExercicio).trigger('click');// ativa a ação submeter
-  setTimeout(buscarEClicar, 3500);// esperar 3,5 segundos e executar o 'buscarEClicar'
-}
-
 /**
  * findCardWithMaxValue :: (String, String) -> {acao:a, max:b, id:c}
  * Utilizado para procurar a carta que
@@ -87,6 +31,7 @@ function euQuero(acao = '', idExercicio = exercicio_id) {
  * @param {string} tipoAcao - A ação buscada, deve ser "andar" ou "forca".
  * @param {string} selector - Seletor para as cartas do exercício corrente.
  * @return {object} - Objeto com as keys: "acao", "max" e "id" (da carta encontrada).
+ * @api private
  */
 function findCardWithMaxValue(tipoAcao, selector) {
   const arrOfSelected = Array.from($(selector));
@@ -102,6 +47,71 @@ function findCardWithMaxValue(tipoAcao, selector) {
   };
 
   return arrOfSelected.reduce(returnLarger, { max: -1 });
+}
+
+/**
+ * euQuero :: (String, String)
+ * Utilizado para submeter uma questão e alterar.
+ * @param {string} acao - A ação que as cartas deverão receber; casa com a RegEx 'REGEX_ACAO'.
+ * @param {string} [idExercicio = exercicio_id] - id da questão que será submetida.
+ * @api private
+ */
+function euQuero(acao, idExercicio = exercicio_id) {
+  if (!REGEX_ACAO.test(acao)) return;
+  const exerciseSelector = '#block_result_' + idExercicio;
+
+  const buscarEClicar = () => {
+    const cardFound = findCardWithMaxValue(acao.replace('ç', 'c'), `${exerciseSelector} [data-cartaid]`);
+    const card = $(`${exerciseSelector} span[data-cartaid=${cardFound.id}]`).parent();
+    card.css('z-index', 100);// traz para o topo
+    card.click();// "clica" na carta encontrada
+  };
+
+  $('#submeter_' + idExercicio).trigger('click');// ativa a ação submeter
+  setTimeout(buscarEClicar, 3500);// esperar 3,5 segundos e executar o 'buscarEClicar'
+}
+
+/**
+ * Cria um novo "botão" no menu e
+ * uma caixa de texto para o novo tipo de submissão.
+ * @api public
+ */
+function initSistema() {
+  const ID_INPUT_TEXT    = 'hard_acao_';
+  const ID_SUBMIT_BUTTON = 'menu_submeter_hard_';
+  const menus = $('div.ide-menu .ide-menu-item:nth-child(4)');
+
+  function inserirNosMenus() {
+    const itensMenu   = $(this).find('ul.dropdown-menu');
+    const idExercicio = itensMenu.attr('aria-labelledby').match(/\d+$/)[0];
+
+    // Novos elementos para a página:
+    const texto = `<li> <a><input type="text" class="form-control" style="display:initial; text-transform:lowercase;" id="${ID_INPUT_TEXT}${idExercicio}" value="andar" title="'andar' ou 'força'" required>&nbsp;</a> </li>`;
+    const botao = $(`<li> <a href="#" id=${ID_SUBMIT_BUTTON}${idExercicio}> <span style="float: left">Submeter</span> <span style="float: right;color:#AAA">F4</span> <span style="padding: .1em .4em .7em"><i class="fa fa-bolt" style="color:#D9534F;"/>&nbsp;Katiau</span>&nbsp;</a> </li>`);
+
+    const submeterHard = () => { // ação do evento de click do novo botão de submissão
+      const acaoDesejada = $('#' + ID_INPUT_TEXT + idExercicio).val()
+                          .trim()
+                          .toLowerCase();
+      euQuero(acaoDesejada, idExercicio);
+    };
+
+    // Adicionando o evento de tecla de atalho para ativar o 'submeterHard'
+    $(`div[id^=codigo_fonte][id$=${idExercicio}]`).keydown((e) => { // $("#codigo_fonte_1_" + idExercicio)
+      if (e.which === 115) { // F4
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        $('#' + ID_SUBMIT_BUTTON + idExercicio).click();
+      }
+    });
+
+    // Adicionando ao HTML da página:
+    itensMenu.append('<li role="separator" class="divider"></li>');// separador
+    itensMenu.append(texto);
+    itensMenu.append( () => botao.click(submeterHard) );
+  }
+
+  menus.each(inserirNosMenus);
 }
 
 
