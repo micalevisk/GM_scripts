@@ -5,3 +5,6 @@ Na aba **Executar**, dada uma ação, que deve casar com `andar` ou `for[cç]a` 
 ---
 ![preview](http://image.prntscr.com/image/95b001e7743149478b9687438b1a330a.png)
 ![resultado](http://image.prntscr.com/image/f346a84c51c24b54baf80db644a820aa.png)
+
+---
+<small>testado apenas no navegador Firefox</small>
