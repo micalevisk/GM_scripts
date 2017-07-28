@@ -12,10 +12,22 @@
 // ==/UserScript==
 
 
+/*
+,ad8888ba,                         88              88888888ba                                        88
+d8"'    `"8b                        88              88      "8b                                       88               aa
+d8'                                  88              88      ,8P                                       88               88
+88              ,adPPYba,    ,adPPYb,88   ,adPPYba,  88aaaaaa8P'   ,adPPYba,  8b,dPPYba,    ,adPPYba,  88,dPPYba,   aaaa88aaaa
+88             a8"     "8a  a8"    `Y88  a8P_____88  88""""""8b,  a8P_____88  88P'   `"8a  a8"     ""  88P'    "8a  """"88""""
+Y8,            8b       d8  8b       88  8PP"""""""  88      `8b  8PP"""""""  88       88  8b          88       88      88
+Y8a.    .a8P  "8a,   ,a8"  "8a,   ,d88  "8b,   ,aa  88      a8P  "8b,   ,aa  88       88  "8a,   ,aa  88       88      ""
+`"Y8888Y"'    `"YbbdP"'    `"8bbdP"Y8   `"Ybbd8"'  88888888P"    `"Ybbd8"'  88       88   `"Ybbd8"'  88       88
+*/
+
+
 const REGEX_ACAO = new RegExp(/\b(for[c\xE7]a|andar)\b/);// [1] contém a ação
 
 (function iniciar() {
-  // console.log.apply(console, ['%c Sistema Em Manutenção', 'font:1.5em/1.5 italic comic sans,chalkboard,tscu_comic,fantasy;color:hotpink;']);
+  console.log.apply(console, ['%c  ________________________________\n< CodeBench+ injetado com sucesso! >\n  --------------------------------\n', 'font:1.5em/1.5 italic comic sans,chalkboard,tscu_comic,fantasy;color:hotpink;']);
 
   // verifica se o trabalho ainda pode ser submetido
   if ( $('a[id^=menu_submeter_codigo_]').length > 0 ) {
@@ -97,8 +109,8 @@ function initSistema() {
     };
 
     // Adicionando o evento de tecla de atalho para ativar o 'submeterHard'
-    $(`div[id^=codigo_fonte][id$=${idExercicio}]`).keydown((e) => { // $("#codigo_fonte_1_" + idExercicio)
-      if (e.which === 115) { // F4
+    $(`div[id^=codigo_fonte][id$=${idExercicio}]`).keydown((e) => {
+      if (e.which === 115) { // adicionar tecla de atalho (F4)
         e.preventDefault();
         e.stopImmediatePropagation();
         $('#' + ID_SUBMIT_BUTTON + idExercicio).click();
@@ -106,42 +118,10 @@ function initSistema() {
     });
 
     // Adicionando ao HTML da página:
-    itensMenu.append('<li role="separator" class="divider"></li>');// separador
+    itensMenu.append('<li role="separator" class="divider"></li>');// adicionar separador
     itensMenu.append(texto);
     itensMenu.append( () => botao.click(submeterHard) );
   }
 
   menus.each(inserirNosMenus);
 }
-
-
-/* ******************************* [OUTRO MÉTODO] *******************************
-///Função que submete e busca a carta com a ação (válida) desejada:
-function euQuero(acao){
-if(!acao || !/(andar|forca)=\d+/.test(acao)) return;
-
-const buscarEClicar = () => {
-$('#block_result_' + exercicio_id + ' .card').each(function() {
-const card = $(this);
-const acao_card = card.find('span').data('acao');///Valor do atributo 'data-acao'
-
-if (acao_card === acao){
-$(this).css('z-index', 100);///Traz para o topo
-$(this).click();///"Clica" na carta
-return false;
-}
-});
-};
-
-$('#submeter_' + exercicio_id).trigger('click');
-setTimeout(buscarEClicar, 2000);
-}
-******************************************************************************/
-
-
-/* ********************* [EXIBIR O ID DE CADA EXERCÍCIO] **********************
-$('a:has(span)[id*=tab_id_]').each((i,aba) => {
-const tabid = aba.id.replace(/tab_id_(.+)/, '$1');
-$(`span[id=tab_acerto_${tabid}]`).append(`(${tabid})`);
-});
-*****************************************************************************/
