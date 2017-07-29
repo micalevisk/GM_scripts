@@ -21,7 +21,6 @@
     "radix": ["error", "as-needed"],
     "no-extra-boolean-cast": 0,
     "max-len": 0,
-    "one-var": 0,
     "prefer-template": 0, // prefer-template only if has space between concatenation
     "space-in-parens": 0,
     "no-underscore-dangle": 0,
