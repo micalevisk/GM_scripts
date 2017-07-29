@@ -11,7 +11,7 @@
 // @locale      pt-br
 // ==/UserScript==
 
-
+/* eslint-disable no-eval */
 eval(GM_getResourceText('spfremove'));
 
 
@@ -98,6 +98,7 @@ function appendTagsOnDescription(data) {
   }
 }
 
+
 /**
  * main function.
  * @api public
@@ -111,6 +112,7 @@ function startYouTags() {
   const videoID = document.querySelector('meta[itemprop=videoId').getAttribute('content');
   const jsonLink = 'https://www.googleapis.com/youtube/v3/videos?key=AIzaSyAZiST8vkBnAbxFIZO_KfhQ7YU0amBv0To&fields=items(snippet(tags))&part=snippet&id=' + videoID;
 
+  /* eslint-disable no-console */
   loadJSON(jsonLink)
     .then(appendTagsOnDescription)
     .catch( err => console.error('YouTags:', err) );

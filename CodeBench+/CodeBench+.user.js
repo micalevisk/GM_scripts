@@ -27,8 +27,6 @@ Y8a.    .a8P  "8a,   ,a8"  "8a,   ,d88  "8b,   ,aa  88      a8P  "8b,   ,aa  88 
 const REGEX_ACAO = new RegExp(/\b(for[c\xE7]a|andar)\b/);// [1] contém a ação
 
 (function iniciar() {
-  console.log.apply(console, ['%c  ________________________________\n< CodeBench+ injetado com sucesso! >\n  --------------------------------\n', 'font:1.5em/1.5 italic comic sans,chalkboard,tscu_comic,fantasy;color:hotpink;']);
-
   // verifica se o trabalho ainda pode ser submetido
   if ( $('a[id^=menu_submeter_codigo_]').length > 0 ) {
     initSistema();
@@ -61,6 +59,7 @@ function findCardWithMaxValue(tipoAcao, selector) {
   return arrOfSelected.reduce(returnLarger, { max: -1 });
 }
 
+/* eslint-disable camelcase */
 /**
  * euQuero :: (String, String)
  * Utilizado para submeter uma questão e alterar.
