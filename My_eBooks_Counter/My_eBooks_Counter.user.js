@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name        My eBooks Counter
-// @description Adiciona no título a quantidade de livros adquiridos
+// @description Adiciona no título a quantidade de livros adquiridos e um botão para baixar os títulos.
 // @namespace   packtpub
 // @author      Micael Levi
 // @include     *://www.packtpub.com/account/my-ebooks
