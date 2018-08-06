@@ -6,12 +6,11 @@
 // @author      Micael Levi L. C.
 // @language    pt-br
 // @include     *//codebench.icomp.ufam.edu.br/index.php?r=*view&id=*&turma=*
-// @version     0.19-3
+// @version     0.19-4
 // @grant       none
 // @require     https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js
 // @run-at      document-end
 // ==/UserScript==
-// FIXME: não funciona 100% e nem quando executado pelo GM
 
 /*
 ,ad8888ba,                         88              88888888ba                                        88
@@ -25,7 +24,7 @@ Y8a.    .a8P  "8a,   ,a8"  "8a,   ,d88  "8b,   ,aa  88      a8P  "8b,   ,aa  88 
 */
 
 
-const REGEX_ACAO = new RegExp(/\b(for[c\xE7]a|andar)\b/);// [1] contém a ação
+const REGEX_ACAO = new RegExp(/(for[c\xE7]a|andar)(?:=(\d+))?/);// [1] contém o tipo, [2] a quantidade
 
 
 /**
@@ -43,7 +42,7 @@ function findCardWithMaxValue(tipoAcao, selector) {
     const idCard   = card.getAttribute('data-cartaid');
     const acaoCard = card.getAttribute('data-acao');
     const [, key, value] = acaoCard.match(REGEX_ACAO);
-    const valorCard = Number(value);
+    const valorCard = parseInt(value);
 
     return ((key === tipoAcao) && (valorCard > acc.max))
           ? { max: valorCard, id: idCard, acao: key }
