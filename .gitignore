@@ -19,6 +19,7 @@ node_modules
 
 testes/
 ShowData/
+mysession/
 mysession2/
 
 testeCreateGist/Date.prototype.formatar.js
