@@ -2,7 +2,7 @@
 // @name         Trello Cards Hyperlinks
 // @namespace    https://github.com/micalevisk/GM_scripts
 // @supportURL   https://github.com/micalevisk/GM_scripts/tree/master/Trello_Cards_Hyperlinks
-// @version      1.0
+// @version      1.1
 // @description  Adds support for clickable hyperlinks in your Trello card titles.
 // @author       Micael Levi
 // @license      MIT
@@ -19,7 +19,7 @@
   window.document.addEventListener('load', dispatchRender, true);
   window.document.addEventListener('blur', dispatchRender, true);
 
-  /* // Alternativa para disparar a atualização dos cards
+  /* // Alternativa para disparar a atualizaÃ§Ã£o dos cards
   const boardCanvasElement = document.querySelector('.board-canvas');
   const observer = new MutationObserver((mutations) => {
     if ( $(mutations[0].target).hasClass('list-card') ) {
@@ -44,15 +44,14 @@
     // if (!nodeElement) return;
     const innerHTML = $(nodeElement).html();
     const innerHTMLWithLinks = innerHTML.replace(linkRegExp, url =>
-                                                 `<span onclick='event.preventDefault();'><a class='gtd-link' onclick='event.stopPropagation();' href='${url}' target='_blank' rel='noopener'>${url}</a></span>`);
-    //                                            ^^^^^^^^^^^^^^ não deve conter espaços em branco
+                                                 `<a class='tcards-title-link' onclick='event.stopPropagation();' href='${url}' target='_blank' rel='noopener'>${url}</a>`);
     if (innerHTML !== innerHTMLWithLinks) $(nodeElement).html(innerHTMLWithLinks);
   }
 
   function renderCardLinks() {
     $('.list-card-title').each((_, e) => updateNode(e));
-    // Resolver o problema do `.replace` sobre um link já mapeado (parseado)
-    $('.list-card-title').find('.gtd-link:has(> span:empty)').remove();
+    // Resolver o problema do `.replace` sobre um link ja mapeado (parseado)
+    $('.list-card-title').find('a.tcards-title-link:empty').remove();
   }
 
 })(jQuery || unsafeWindow.jQuery);
