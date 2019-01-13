@@ -2,9 +2,11 @@
 // @name         Trello Cards Hyperlinks
 // @namespace    https://github.com/micalevisk/GM_scripts
 // @supportURL   https://github.com/micalevisk/GM_scripts/tree/master/Trello_Cards_Hyperlinks
+// @updateURL    https://openuserjs.org/meta/micalevisk/Trello_Cards_Hyperlinks.meta.js
 // @version      1.2
 // @description  Adds support for clickable hyperlinks in your Trello card titles.
 // @author       Micael Levi
+// @copyright    2019, micalevisk (https://openuserjs.org//users/micalevisk)
 // @license      MIT
 // @match        *://trello.com/*
 // @grant        none
