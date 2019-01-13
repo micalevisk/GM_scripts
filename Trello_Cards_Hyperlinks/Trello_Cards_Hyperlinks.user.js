@@ -2,7 +2,7 @@
 // @name         Trello Cards Hyperlinks
 // @namespace    https://github.com/micalevisk/GM_scripts
 // @supportURL   https://github.com/micalevisk/GM_scripts/tree/master/Trello_Cards_Hyperlinks
-// @version      1.1
+// @version      1.2
 // @description  Adds support for clickable hyperlinks in your Trello card titles.
 // @author       Micael Levi
 // @license      MIT
@@ -14,12 +14,12 @@
 (function($) {
   console.debug('------ Trello Cards Hyperlinks ------ ');
 
-  const linkRegExp = /https?:\/\/(www\.)?[-a-z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-z0-9@:%_\+.~#?&\/\/=]*)/gi;
+  const linkRegExp = /\b((https?:\/\/(www\.)?)|(www\.))[-a-z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-z0-9@:%_\+.~#?&\/\/=]*)/ig;
 
   window.document.addEventListener('load', dispatchRender, true);
   window.document.addEventListener('blur', dispatchRender, true);
 
-  /* // Alternativa para disparar a atualizaÃ§Ã£o dos cards
+  /* // Alternativa para disparar a atualização dos cards
   const boardCanvasElement = document.querySelector('.board-canvas');
   const observer = new MutationObserver((mutations) => {
     if ( $(mutations[0].target).hasClass('list-card') ) {
@@ -44,7 +44,7 @@
     // if (!nodeElement) return;
     const innerHTML = $(nodeElement).html();
     const innerHTMLWithLinks = innerHTML.replace(linkRegExp, url =>
-                                                 `<a class='tcards-title-link' onclick='event.stopPropagation();' href='${url}' target='_blank' rel='noopener'>${url}</a>`);
+                                                 `<a class='tcards-title-link' onclick='event.stopPropagation();' href='${url.startsWith('http') ? url : '//' + url}' target='_blank' rel='noopener'>${url}</a>`);
     if (innerHTML !== innerHTMLWithLinks) $(nodeElement).html(innerHTMLWithLinks);
   }
 
