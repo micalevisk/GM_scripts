@@ -4,6 +4,7 @@
 - Clickable links on cards titles
 - Multiple links on cards titles
 - Lightweight & Quick update
+- Customizable hyperlinks (just put the label between parentheses)
 
 ## Install
 - Just click on source [`Trello_Cards_Hyperlinks.user.js`](./Trello_Cards_Hyperlinks.user.js) and press `raw` or
