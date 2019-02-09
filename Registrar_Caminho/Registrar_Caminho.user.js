@@ -3,7 +3,7 @@
 // @description Adiciona marcações em itens e ajusta o scroll para o último item feito.
 // @include  http*://javascript.info/
 // @include  http*://interactivepython.org/runestone/static/CS152f17/index.html*
-// @version  2
+// @version  2.1
 // @grant    none
 // ==/UserScript==
 
@@ -47,7 +47,7 @@
           lastCheckedNode = targetNode
           targetNode.style.opacity = 0.5
         } else {
-          targetNode.appendChild(checkbox)
+          targetNode.firstElementChild.after(checkbox)
         }
    	 }
     )
