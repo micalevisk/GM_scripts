@@ -28,7 +28,7 @@
   // domain -> [itemSelector, fnNodeToScroll]
   const itemsSelectors = {
            'javascript.info': ['div.list-sub__title', node => node.parentElement.closest('div')],
-     'interactivepython.org': ['li.toctree-l2',       node => node.parentElement.parentElement.parentElement.childNodes[0]],
+     'interactivepython.org': ['li.toctree-l2',       node => node.parentElement.parentElement.childNodes[0]],
     'eloquentjavascript.net': ['.toc>li'],
   }
 
