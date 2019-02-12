@@ -3,6 +3,7 @@
 // @description Adiciona marcações em itens e ajusta o scroll para o último item feito.
 // @include  http*://javascript.info/
 // @include  http*://interactivepython.org/runestone/static/CS152f17/index.html*
+// @include  http*://eloquentjavascript.net/index.html*
 // @version  2.1
 // @grant    none
 // ==/UserScript==
@@ -26,10 +27,11 @@
 
   // domain -> [itemSelector, fnNodeToScroll]
   const itemsSelectors = {
-          'javascript.info': ['div.list-sub__title', node => node.parentElement.closest('div')],
-    'interactivepython.org': ['li.toctree-l2',       node => node.parentElement.parentElement.parentElement.childNodes[0]],
+           'javascript.info': ['div.list-sub__title', node => node.parentElement.closest('div')],
+     'interactivepython.org': ['li.toctree-l2',       node => node.parentElement.parentElement.parentElement.childNodes[0]],
+    'eloquentjavascript.net': ['.toc>li'],
   }
-  
+
   if (domain in itemsSelectors) {
     const input = document.createElement('input')
 		input.type = 'checkbox'
