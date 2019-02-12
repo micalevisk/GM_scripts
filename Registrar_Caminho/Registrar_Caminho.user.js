@@ -52,7 +52,7 @@
    	 }
     )
 
-    if (lastCheckedNode) itemsSelectors[domain][1](lastCheckedNode).scrollIntoView()
+    if (lastCheckedNode && itemsSelectors[domain][1]) itemsSelectors[domain][1](lastCheckedNode).scrollIntoView()
   }
 
 }(document.domain))
